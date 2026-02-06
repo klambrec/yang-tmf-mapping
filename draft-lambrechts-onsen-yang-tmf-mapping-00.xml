@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-model href="rfc7991bis.rnc"?>
+
+
+<!DOCTYPE rfc [
+  <!ENTITY nbsp    "&#160;">
+  <!ENTITY zwsp   "&#8203;">
+  <!ENTITY nbhy   "&#8209;">
+  <!ENTITY wj     "&#8288;">
+]>
+
+<rfc
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  category="info"
+  docName="draft-lambrechts-onsen-yang-tmf-mapping-00"
+  ipr="trust200902"
+  obsoletes=""
+  updates=""
+  submissionType="IETF"
+  xml:lang="en"
+  version="3">
+
+  <front>
+    <title abbrev="YANG-TMF Model &amp; Data Mapping">Mapping YANG Models and Instance Data to TM Forum Data Models and APIs</title>
+
+    <seriesInfo name="Internet-Draft" value="draft-lambrechts-onsen-yang-tmf-mapping-00"/>
+   
+    <author fullname="Kris Lambrechts" initials="K." surname="Lambrechts">
+      <organization>NetEdge</organization>
+      <address>
+        <email>kris@netedge.plus</email>  
+        <uri>https://www.netedge.plus</uri>
+      </address>
+    </author>
+   
+    <date year="2026"/>
+
+    <area>General</area>
+    <workgroup>Internet Engineering Task Force</workgroup>
+
+    <keyword>yang</keyword>
+    <keyword>tmf</keyword>
+    <keyword>tm forum</keyword>
+    <keyword>open api</keyword>
+    <keyword>service model</keyword>
+    <keyword>resource model</keyword>
+    <keyword>characteristic</keyword>
+    <keyword>catalog</keyword>
+    <keyword>ordering</keyword>
+    <keyword>activation</keyword>
+    <keyword>mapping</keyword>
+
+    <abstract>
+      <t>
+        This document describes a mapping between YANG models/instance data and TM Forum Open API
+        Data Models. It covers both service-facing and resource-facing APIs and their catalog
+        specifications, showing how YANG-defined structures can be represented as TMF
+        Characteristics and CharacteristicSpecifications. The document also outlines approaches
+        for handling nested YANG containers and lists, and provides implementation guidelines that
+        align YANG attributes with TMF constructs without prescribing a single mapping method.
+      </t>
+    </abstract>
+ 
+  </front>
+
+  <middle>
+    
+    <section>
+      <name>Introduction</name>
+      <t>
+        Service providers commonly use OSS systems with NETCONF/YANG interfaces (e.g., YANG models
+        <xref target="RFC7950"/>) to describe configuration and operational state for network and
+        service resources, while TM Forum Open APIs are increasingly used by BSS systems to order
+        and manage services and resources. These two ecosystems define different data models and interaction
+        styles for overlapping concepts, which can lead to duplicated modeling effort and
+        inconsistent behavior across interfaces.
+      </t>
+      <t>
+        This document specifies a mapping between YANG models/instance data and TM Forum data
+        models and APIs, with the goal of enabling consistent representation of resources and
+        services across management interfaces. The mapping is intended to facilitate translation
+        between YANG-defined structures and TM Forum resource/service constructs, while preserving
+        semantics such as hierarchy, identity, and constraints.
+      </t>
+      <t>
+        The mapping applies to YANG models in general and is particularly relevant to IETF service
+        and network models such as the L3SM <xref target="RFC8299"/>, L3NM <xref target="RFC9182"/>,
+        L2SM <xref target="RFC8466"/>, and L2NM <xref target="RFC9291"/>.
+      </t>
+      <t>
+        The scope of this document is limited to the mapping model and the associated transformation
+        rules. It does not define new protocols, nor does it mandate a specific implementation
+        architecture. Operational concerns such as service orchestration workflows and business
+        processes are out of scope, except where they affect the interpretation of the mapped data.
+      </t>
+
+      <section>
+        <name>Where the TMF Mapping Fits</name>
+        <t>
+          The framework in <xref target="RFC8969"/> separates service, network, and device layers.
+          The TMF interfaces addressed by this document typically sit at the product or service boundary
+          (customer or OSS/BSS-facing), while YANG models and controllers span service, network, and
+          device layers. The mapping defined here is intended to bridge those boundaries, enabling
+          service and resource definitions to be expressed consistently across TMF Open APIs and
+          YANG-based automation.
+        </t>
+        <t>
+          The following diagram illustrates the boundary between customer-facing TMF APIs and the
+          internal YANG-based orchestration and control layers:
+        </t>
+        <figure>
+          <name>TMF API Boundary at the Service Layer</name>
+          <artwork><![CDATA[
+   +-------------------+        +----------------------------+
+   | BSS/OSS / Customer|        |  Service Orchestrator      |
+   | (TMF Open APIs)   |<------>|  (YANG Service Models)     |
+   +-------------------+        +--------------+-------------+
+                                            |
+                                            v
+                                   +-------------------+
+                                   | Network Controllers|
+                                   | (YANG Network)     |
+                                   +---------+---------+
+                                             |
+                                             v
+                                   +-------------------+
+                                   | Devices / Elements|
+                                   | (YANG Device)     |
+                                   +-------------------+
+          TMF-to-YANG mapping boundary
+]]></artwork>
+        </figure>
+        <t>
+          A second boundary occurs between higher-layer BSS functions that use TMF Open APIs and
+          the internal service/resource models that drive YANG-based automation:
+        </t>
+        <figure>
+          <name>Open API Boundary for BSS Functions</name>
+          <artwork><![CDATA[
+   Higher-layer BSS Functions
+          |
+          v
+   +---------------------+      +---------------------------+
+   | TMF Open APIs       |<---->|  Internal Service Models  |
+   | (Service/Resource)  |      |  (YANG Service/Resource)  |
+   +---------------------+      +-------------+-------------+
+                                             |
+                                             v
+                                   +-------------------+
+                                   | Internal Control  |
+                                   | (YANG Network/Dev)|
+                                   +-------------------+
+        TMF Open API <-> YANG model alignment boundary
+]]></artwork>
+        </figure>
+        <t>
+          These boundaries are illustrative and can be adapted to operator architecture; the key
+          principle is that TMF Open APIs expose service and resource intent and catalog constraints,
+          while YANG-based components provide the detailed model-driven automation beneath.
+        </t>
+      </section>
+      
+      <section>
+        <name>Requirements Language</name>
+        <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL",
+          "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT
+          RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
+          interpreted as described in BCP 14 <xref target="RFC2119"/>
+          <xref target="RFC8174"/> when, and only when, they appear in
+          all capitals, as shown here.</t>
+      </section>
+
+    </section>
+
+    <section>
+      <name>YANG Instance Data in TMF Configuration and Ordering APIs</name>
+      <t>
+        In the Ordering/Activation and Configuration APIs, ordering is expressed through
+        <tt>ServiceOrder</tt> and <tt>ServiceOrderItem</tt> in TMF640 <xref target="TMF640"/> and TMF641
+        <xref target="TMF641"/>, and through <tt>ResourceOrder</tt> and <tt>ResourceOrderItem</tt> in
+        TMF652 <xref target="TMF652"/> and TMF702 <xref target="TMF702"/>. In these APIs, the
+        parameterization of a <tt>Service</tt> or <tt>Resource</tt> is conveyed primarily through
+        <tt>serviceCharacteristic</tt> or <tt>resourceCharacteristic</tt> entries, each with a
+        <tt>name</tt>, a <tt>value</tt>, and (where applicable) a <tt>valueType</tt>.
+      </t>
+      <t>
+        YANG instance data MUST be mapped into this Characteristic structure in a manner that
+        preserves the meaning of the source data. Leaf and leaf-list values SHOULD be represented
+        as individual Characteristic entries (service or resource as appropriate). The
+        Characteristic <tt>name</tt> SHOULD be derived from the YANG node identifier (or path, when
+        required for disambiguation), and the Characteristic <tt>value</tt> MUST reflect the
+        YANG-typed value using an appropriate encoding. Where YANG defines units or enumerations,
+        the resulting Characteristic values SHOULD be encoded consistently so that the receiver
+        can interpret them without additional schema inference.
+      </t>
+      <t>
+        Containers and lists introduce structure beyond a single value. Their mapping into
+        Characteristics is described in the following sections and can require decomposition,
+        flattening, or structured value representations depending on the chosen approach.
+      </t>
+    </section>
+
+    <section>
+      <name>YANG Models in TMF Catalog APIs</name>
+      <t>
+        TMF633 <xref target="TMF633"/> defines the Service Catalog model, where a <tt>ServiceSpecification</tt> captures the
+        design-time description of a service and its allowed parameters. Parameter definitions are
+        expressed as <tt>serviceSpecCharacteristic</tt> entries, each of which can include one or more
+        <tt>serviceSpecCharacteristicValue</tt> entries to constrain allowed values.
+      </t>
+      <t>
+        TMF634 <xref target="TMF634"/> defines the Resource Catalog model in a parallel fashion. A <tt>ResourceSpecification</tt>
+        carries <tt>resourceSpecCharacteristic</tt> entries and their associated
+        <tt>resourceSpecCharacteristicValue</tt> constraints, mirroring the service catalog structure.
+      </t>
+      <t>
+        A YANG schema SHOULD be mapped to a corresponding Service or Resource Specification such that
+        each relevant YANG leaf or leaf-list becomes a Characteristic specification entry. The
+        Characteristic definition SHOULD include the expected value type and, where applicable, the
+        permitted set of values. Enumerations and identityrefs SHOULD be mapped to discrete
+        Characteristic value entries, while ranges and patterns SHOULD be reflected in the
+        Characteristic constraints. YANG <tt>min-elements</tt> and <tt>max-elements</tt> statements
+        SHOULD inform the Characteristic cardinality where the TMF model supports it.
+      </t>
+      <t>
+        This mapping ensures that catalog-level specifications align with the instance-level
+        Characteristics used in TMF640/TMF641 and TMF652/TMF702, enabling consistent validation of
+        service or resource orders against the intended YANG-defined model.
+      </t>
+    </section>
+
+    <section>
+      <name>Mapping YANG leafs and leaf-lists to TMF Characteristics</name>
+      <t>
+        YANG leafs and leaf-lists represent the fundamental data elements in a YANG model. When
+        mapping these constructs to TMF Characteristics, each leaf or leaf-list SHOULD be represented
+        as a separate Characteristic entry within the corresponding Service or Resource instance.
+      </t>
+      <ul>
+        <li>
+          The Characteristic <tt>name</tt> SHOULD be derived from the YANG node identifier.
+        </li>
+        <li>
+          The Characteristic <tt>value</tt> MUST be encoded according to the YANG type.
+        </li>
+        <li>
+          For leaf-lists, the Characteristic <tt>value</tt> SHOULD be represented as an array, and
+          the <tt>valueType</tt> SHOULD indicate the array nature (e.g., <tt>stringArray</tt>,
+          <tt>integerArray</tt>).
+        </li>
+        <li>
+          Map YANG types as follows: boolean to boolean, string to string, integer types to integer,
+          decimal64 to number, and enumeration to string. For enumerations, the allowed values
+          SHOULD be constrained using the TMF characteristic value list (e.g.,
+          <tt>serviceSpecCharacteristicValue</tt> or <tt>resourceSpecCharacteristicValue</tt>) so
+          the instance Characteristic value is validated against the catalog-defined set.
+        </li>
+        <li>
+          Set <tt>minCardinality</tt> to 1 for key or mandatory leaves; otherwise set it to 0.
+        </li>
+        <li>
+          Use <tt>maxCardinality</tt> of 1 for leaves and the YANG <tt>max-elements</tt> value for
+          leaf-lists.
+        </li>
+        <li>
+          Map YANG string patterns to the Characteristic <tt>regex</tt> field.
+        </li>
+        <li>
+          Express YANG defaults as Characteristic default value specifications for TMF633/634.
+        </li>
+      </ul>
+    </section>
+    
+    <section>
+      <name>Mapping Approaches for YANG containers and lists</name>
+      <t>
+        YANG models commonly represent complex data structures by composing containers,
+        lists, leafs, and leaf-lists into YANG data trees that capture hierarchy, optionality,
+        and repeated elements. Mapping those constructs into TM Forum Service and Resource
+        Data Models can be approached in several ways, each with different trade-offs in
+        expressiveness, Catalog behavior, and operational clarity. This section enumerates
+        four approaches that may be applied.
+      </t>
+
+      <section>
+        <name>Approach 1: Complex Characteristics</name>
+        <t>
+          The structure can be embedded in a single Characteristic by using the TM Forum
+          "Any" value type. In this case, the concrete schema of the value MUST be provided
+          out-of-band, typically as a JSON Schema artifact. This preserves structure, but
+          it introduces an additional schema dependency and shifts validation responsibility
+          to implementers.
+        </t>
+      </section>
+
+      <section>
+        <name>Approach 2: Decomposition into Services/Resources</name>
+        <t>
+          Each data tree layer can be mapped to its own TM Forum Service or Resource, linked
+          through <tt>supportingService</tt> or corresponding Resource relationships. This
+          enables explicit decomposition and reuse; however, it causes each layer to appear
+          in the Service Catalog or Resource Catalog as a separately orderable item.
+          Implementations would then need to expose and manage the appropriate relationships
+          (e.g., parent-child, requires), and the resulting granularity can become too fine
+          to be operationally meaningful.
+        </t>
+      </section>
+
+      <section>
+        <name>Approach 3: Decomposition into Features</name>
+        <t>
+          Each data tree layer can be represented as a TM Forum Service Feature or Resource
+          Feature within an enclosing Service or Resource. This keeps Catalog entries
+          stable, but the current TM Forum model does not define feature nesting (i.e.,
+          there is no supportingFeature-like construct). Implementations could introduce a
+          controlled extension (e.g., via a schemaLocation extension) to represent feature
+          hierarchy, but such nesting SHOULD be standardized in a future TM Forum Open API
+          release for maximum interoperability.
+        </t>
+      </section>
+
+      <section>
+        <name>Approach 4: Encode Schema in Characteristic Names</name>
+        <t>
+          The structure can be flattened by encoding path-like information in Characteristic
+          names (e.g., a YANG path fragment). This is simple to implement but it cannot
+          represent cardinality accurately and tends to obscure the original YANG data tree,
+          making validation and processing ambiguous.
+        </t>
+      </section>
+    </section>
+
+    <section>
+      <name>Implementation Guidelines</name>
+      <t>
+        This section summarizes a practical mapping between common YANG attributes and TMF
+        constructs in both the Catalog and Ordering/Activation APIs. The guidelines are based on
+        experience gathered from a Proof of Concept implementation.
+      </t>
+      <t>
+        An implementation MAY support the ability to map an entire YANG schema into a TMF Service or
+        Resource Specification or it MAY allow the operator to specify a subtree of the YANG schema
+        that will be mapped to a particular Service or Resource Specification. In either case, the
+        mapping process MUST preserve the semantics of the YANG model, including data types,
+        constraints, and hierarchical relationships starting from the mapped subtree.
+      </t>
+      <t>
+        To indicate the part of the YANG schema that is mapped to a particular TMF Service or Resource
+        Specification, an implementation MAY use a YANG extension (e.g., <tt>tmf-cfs</tt>) to annotate
+        the relevant YANG node with a reference to the corresponding TMF Specification
+        (e.g., <tt>tmf-cfs="TMF633:ServiceSpec123"</tt>).
+      </t>
+      <t>
+        An implementation MAY use YANG extension to indicate which parts of a YANG tree are mapped into
+        TMF according to a particular method as described in the previous section. For example, a
+        <tt>tmf-mapping</tt> extension could be used to specify whether a container is mapped as a complex
+        Characteristic, as a separate Service/Resource, or as a Feature.
+      </t>
+    </section>
+    
+    <section anchor="IANA">
+      <name>IANA Considerations</name>
+      <t>This memo includes no request to IANA.</t>
+    </section>
+    
+    <section anchor="Security">
+      <name>Security Considerations</name>
+      <t>
+        This document defines a mapping between YANG models/instance data and TM Forum data
+        models and APIs. The mapping itself introduces no new protocol elements, but it can
+        affect how existing security properties are preserved when translating data between
+        representations.
+      </t>
+      <t>
+        Implementations of this mapping MUST preserve the confidentiality, integrity, and
+        authorization semantics of the source model. In particular, access control decisions
+        tied to YANG nodes (including read, write, and notification permissions) MUST be
+        enforced equivalently on the mapped TM Forum resources and operations. Failing to do
+        so can result in privilege escalation or unintended disclosure.
+      </t>
+      <t>
+        When mapping data across administrative or trust boundaries, operators MUST ensure
+        that transport security (e.g., TLS) and mutual authentication are used as appropriate
+        for the deployed APIs. The mapping process MUST NOT bypass auditing, logging, or
+        rate-limiting controls that are required for the underlying interfaces.
+      </t>
+      <t>
+        Finally, any reference data used by the mapping (such as schema registries, profiles,
+        or transformation rules) SHOULD be protected from unauthorized modification, as
+        tampering could lead to incorrect data interpretation or security policy violations.
+      </t>
+    </section>
+    
+  </middle>
+
+  <back>
+    <references>
+      <name>References</name>
+      <references>
+        <name>Normative References</name>
+        
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8299.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8466.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7950.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9182.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9291.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8969.xml"/>
+        
+      </references>
+      <references>
+        <name>Informative References</name>
+
+        <reference anchor="TMF633" target="https://www.tmforum.org/oda/open-apis/directory/service-catalog-management-api-TMF633/">
+          <front>
+            <title>TMF633 Service Catalog Management API</title>
+            <author>
+              <organization>TM Forum</organization>
+            </author>
+            <date year="2019"/>
+          </front>
+          <seriesInfo name="TMF" value="633"/>
+        </reference>
+
+        <reference anchor="TMF634" target="https://www.tmforum.org/oda/open-apis/directory/resource-catalog-management-api-TMF634/">
+          <front>
+            <title>TMF634 Resource Catalog Management API</title>
+            <author>
+              <organization>TM Forum</organization>
+            </author>
+            <date year="2019"/>
+          </front>
+          <seriesInfo name="TMF" value="634"/>
+        </reference>
+
+        <reference anchor="TMF640" target="https://www.tmforum.org/oda/open-apis/directory/service-activation-and-configuration-api-TMF640/">
+          <front>
+            <title>TMF640 Service Activation and Configuration API</title>
+            <author>
+              <organization>TM Forum</organization>
+            </author>
+            <date year="2019"/>
+          </front>
+          <seriesInfo name="TMF" value="640"/>
+        </reference>
+
+        <reference anchor="TMF641" target="https://www.tmforum.org/oda/open-apis/directory/service-ordering-api-TMF641/">
+          <front>
+            <title>TMF641 Service Ordering API</title>
+            <author>
+              <organization>TM Forum</organization>
+            </author>
+            <date year="2019"/>
+          </front>
+          <seriesInfo name="TMF" value="641"/>
+        </reference>
+
+        <reference anchor="TMF652" target="https://www.tmforum.org/oda/open-apis/directory/resource-ordering-management-api-TMF652/">
+          <front>
+            <title>TMF652 Resource Ordering Management API</title>
+            <author>
+              <organization>TM Forum</organization>
+            </author>
+            <date year="2019"/>
+          </front>
+          <seriesInfo name="TMF" value="652"/>
+        </reference>
+
+        <reference anchor="TMF702" target="https://www.tmforum.org/oda/open-apis/directory/resource-activation-and-configuration-api-TMF702/">
+          <front>
+            <title>TMF702 Resource Activation and Configuration API</title>
+            <author>
+              <organization>TM Forum</organization>
+            </author>
+            <date year="2019"/>
+          </front>
+          <seriesInfo name="TMF" value="702"/>
+        </reference>
+
+      </references>
+    </references>
+    
+ </back>
+</rfc>
