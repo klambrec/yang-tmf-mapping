@@ -1,0 +1,560 @@
+
+
+
+
+Internet Engineering Task Force                            K. Lambrechts
+Internet-Draft                                                   NetEdge
+Intended status: Informational                           6 February 2026
+Expires: 10 August 2026
+
+
+ Mapping YANG Models and Instance Data to TM Forum Data Models and APIs
+               draft-lambrechts-onsen-yang-tmf-mapping-00
+
+Abstract
+
+   This document describes a mapping between YANG models/instance data
+   and TM Forum Open API Data Models.  It covers both service-facing and
+   resource-facing APIs and their catalog specifications, showing how
+   YANG-defined structures can be represented as TMF Characteristics and
+   CharacteristicSpecifications.  The document also outlines approaches
+   for handling nested YANG containers and lists, and provides
+   implementation guidelines that align YANG attributes with TMF
+   constructs without prescribing a single mapping method.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 10 August 2026.
+
+Copyright Notice
+
+   Copyright (c) 2026 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+
+
+
+
+
+
+
+
+
+Lambrechts               Expires 10 August 2026                 [Page 1]
+
+Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
+
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+     1.1.  Where the TMF Mapping Fits  . . . . . . . . . . . . . . .   3
+     1.2.  Requirements Language . . . . . . . . . . . . . . . . . .   4
+   2.  YANG Instance Data in TMF Configuration and Ordering APIs . .   4
+   3.  YANG Models in TMF Catalog APIs . . . . . . . . . . . . . . .   5
+   4.  Mapping YANG leafs and leaf-lists to TMF Characteristics  . .   5
+   5.  Mapping Approaches for YANG containers and lists  . . . . . .   6
+     5.1.  Approach 1: Complex Characteristics . . . . . . . . . . .   6
+     5.2.  Approach 2: Decomposition into Services/Resources . . . .   7
+     5.3.  Approach 3: Decomposition into Features . . . . . . . . .   7
+     5.4.  Approach 4: Encode Schema in Characteristic Names . . . .   7
+   6.  Implementation Guidelines . . . . . . . . . . . . . . . . . .   7
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   8
+   8.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
+   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   8
+     9.1.  Normative References  . . . . . . . . . . . . . . . . . .   8
+     9.2.  Informative References  . . . . . . . . . . . . . . . . .   9
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  10
+
+1.  Introduction
+
+   Service providers commonly use OSS systems with NETCONF/YANG
+   interfaces (e.g., YANG models [RFC7950]) to describe configuration
+   and operational state for network and service resources, while TM
+   Forum Open APIs are increasingly used by BSS systems to order and
+   manage services and resources.  These two ecosystems define different
+   data models and interaction styles for overlapping concepts, which
+   can lead to duplicated modeling effort and inconsistent behavior
+   across interfaces.
+
+   This document specifies a mapping between YANG models/instance data
+   and TM Forum data models and APIs, with the goal of enabling
+   consistent representation of resources and services across management
+   interfaces.  The mapping is intended to facilitate translation
+   between YANG-defined structures and TM Forum resource/service
+   constructs, while preserving semantics such as hierarchy, identity,
+   and constraints.
+
+
+
+Lambrechts               Expires 10 August 2026                 [Page 2]
+
+Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
+
+
+   The mapping applies to YANG models in general and is particularly
+   relevant to IETF service and network models such as the L3SM
+   [RFC8299], L3NM [RFC9182], L2SM [RFC8466], and L2NM [RFC9291].
+
+   The scope of this document is limited to the mapping model and the
+   associated transformation rules.  It does not define new protocols,
+   nor does it mandate a specific implementation architecture.
+   Operational concerns such as service orchestration workflows and
+   business processes are out of scope, except where they affect the
+   interpretation of the mapped data.
+
+1.1.  Where the TMF Mapping Fits
+
+   The framework in [RFC8969] separates service, network, and device
+   layers.  The TMF interfaces addressed by this document typically sit
+   at the product or service boundary (customer or OSS/BSS-facing),
+   while YANG models and controllers span service, network, and device
+   layers.  The mapping defined here is intended to bridge those
+   boundaries, enabling service and resource definitions to be expressed
+   consistently across TMF Open APIs and YANG-based automation.
+
+   The following diagram illustrates the boundary between customer-
+   facing TMF APIs and the internal YANG-based orchestration and control
+   layers:
+
+      +-------------------+        +----------------------------+
+      | BSS/OSS / Customer|        |  Service Orchestrator      |
+      | (TMF Open APIs)   |<------>|  (YANG Service Models)     |
+      +-------------------+        +--------------+-------------+
+                                               |
+                                               v
+                                      +-------------------+
+                                      | Network Controllers|
+                                      | (YANG Network)     |
+                                      +---------+---------+
+                                                |
+                                                v
+                                      +-------------------+
+                                      | Devices / Elements|
+                                      | (YANG Device)     |
+                                      +-------------------+
+             TMF-to-YANG mapping boundary
+
+              Figure 1: TMF API Boundary at the Service Layer
+
+   A second boundary occurs between higher-layer BSS functions that use
+   TMF Open APIs and the internal service/resource models that drive
+   YANG-based automation:
+
+
+
+Lambrechts               Expires 10 August 2026                 [Page 3]
+
+Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
+
+
+      Higher-layer BSS Functions
+             |
+             v
+      +---------------------+      +---------------------------+
+      | TMF Open APIs       |<---->|  Internal Service Models  |
+      | (Service/Resource)  |      |  (YANG Service/Resource)  |
+      +---------------------+      +-------------+-------------+
+                                                |
+                                                v
+                                      +-------------------+
+                                      | Internal Control  |
+                                      | (YANG Network/Dev)|
+                                      +-------------------+
+           TMF Open API <-> YANG model alignment boundary
+
+               Figure 2: Open API Boundary for BSS Functions
+
+   These boundaries are illustrative and can be adapted to operator
+   architecture; the key principle is that TMF Open APIs expose service
+   and resource intent and catalog constraints, while YANG-based
+   components provide the detailed model-driven automation beneath.
+
+1.2.  Requirements Language
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in BCP
+   14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+2.  YANG Instance Data in TMF Configuration and Ordering APIs
+
+   In the Ordering/Activation and Configuration APIs, ordering is
+   expressed through ServiceOrder and ServiceOrderItem in TMF640
+   [TMF640] and TMF641 [TMF641], and through ResourceOrder and
+   ResourceOrderItem in TMF652 [TMF652] and TMF702 [TMF702].  In these
+   APIs, the parameterization of a Service or Resource is conveyed
+   primarily through serviceCharacteristic or resourceCharacteristic
+   entries, each with a name, a value, and (where applicable) a
+   valueType.
+
+   YANG instance data MUST be mapped into this Characteristic structure
+   in a manner that preserves the meaning of the source data.  Leaf and
+   leaf-list values SHOULD be represented as individual Characteristic
+   entries (service or resource as appropriate).  The Characteristic
+   name SHOULD be derived from the YANG node identifier (or path, when
+   required for disambiguation), and the Characteristic value MUST
+   reflect the YANG-typed value using an appropriate encoding.  Where
+
+
+
+Lambrechts               Expires 10 August 2026                 [Page 4]
+
+Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
+
+
+   YANG defines units or enumerations, the resulting Characteristic
+   values SHOULD be encoded consistently so that the receiver can
+   interpret them without additional schema inference.
+
+   Containers and lists introduce structure beyond a single value.
+   Their mapping into Characteristics is described in the following
+   sections and can require decomposition, flattening, or structured
+   value representations depending on the chosen approach.
+
+3.  YANG Models in TMF Catalog APIs
+
+   TMF633 [TMF633] defines the Service Catalog model, where a
+   ServiceSpecification captures the design-time description of a
+   service and its allowed parameters.  Parameter definitions are
+   expressed as serviceSpecCharacteristic entries, each of which can
+   include one or more serviceSpecCharacteristicValue entries to
+   constrain allowed values.
+
+   TMF634 [TMF634] defines the Resource Catalog model in a parallel
+   fashion.  A ResourceSpecification carries resourceSpecCharacteristic
+   entries and their associated resourceSpecCharacteristicValue
+   constraints, mirroring the service catalog structure.
+
+   A YANG schema SHOULD be mapped to a corresponding Service or Resource
+   Specification such that each relevant YANG leaf or leaf-list becomes
+   a Characteristic specification entry.  The Characteristic definition
+   SHOULD include the expected value type and, where applicable, the
+   permitted set of values.  Enumerations and identityrefs SHOULD be
+   mapped to discrete Characteristic value entries, while ranges and
+   patterns SHOULD be reflected in the Characteristic constraints.  YANG
+   min-elements and max-elements statements SHOULD inform the
+   Characteristic cardinality where the TMF model supports it.
+
+   This mapping ensures that catalog-level specifications align with the
+   instance-level Characteristics used in TMF640/TMF641 and TMF652/
+   TMF702, enabling consistent validation of service or resource orders
+   against the intended YANG-defined model.
+
+4.  Mapping YANG leafs and leaf-lists to TMF Characteristics
+
+   YANG leafs and leaf-lists represent the fundamental data elements in
+   a YANG model.  When mapping these constructs to TMF Characteristics,
+   each leaf or leaf-list SHOULD be represented as a separate
+   Characteristic entry within the corresponding Service or Resource
+   instance.
+
+   *  The Characteristic name SHOULD be derived from the YANG node
+      identifier.
+
+
+
+Lambrechts               Expires 10 August 2026                 [Page 5]
+
+Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
+
+
+   *  The Characteristic value MUST be encoded according to the YANG
+      type.
+
+   *  For leaf-lists, the Characteristic value SHOULD be represented as
+      an array, and the valueType SHOULD indicate the array nature
+      (e.g., stringArray, integerArray).
+
+   *  Map YANG types as follows: boolean to boolean, string to string,
+      integer types to integer, decimal64 to number, and enumeration to
+      string.  For enumerations, the allowed values SHOULD be
+      constrained using the TMF characteristic value list (e.g.,
+      serviceSpecCharacteristicValue or resourceSpecCharacteristicValue)
+      so the instance Characteristic value is validated against the
+      catalog-defined set.
+
+   *  Set minCardinality to 1 for key or mandatory leaves; otherwise set
+      it to 0.
+
+   *  Use maxCardinality of 1 for leaves and the YANG max-elements value
+      for leaf-lists.
+
+   *  Map YANG string patterns to the Characteristic regex field.
+
+   *  Express YANG defaults as Characteristic default value
+      specifications for TMF633/634.
+
+5.  Mapping Approaches for YANG containers and lists
+
+   YANG models commonly represent complex data structures by composing
+   containers, lists, leafs, and leaf-lists into YANG data trees that
+   capture hierarchy, optionality, and repeated elements.  Mapping those
+   constructs into TM Forum Service and Resource Data Models can be
+   approached in several ways, each with different trade-offs in
+   expressiveness, Catalog behavior, and operational clarity.  This
+   section enumerates four approaches that may be applied.
+
+5.1.  Approach 1: Complex Characteristics
+
+   The structure can be embedded in a single Characteristic by using the
+   TM Forum "Any" value type.  In this case, the concrete schema of the
+   value MUST be provided out-of-band, typically as a JSON Schema
+   artifact.  This preserves structure, but it introduces an additional
+   schema dependency and shifts validation responsibility to
+   implementers.
+
+
+
+
+
+
+
+Lambrechts               Expires 10 August 2026                 [Page 6]
+
+Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
+
+
+5.2.  Approach 2: Decomposition into Services/Resources
+
+   Each data tree layer can be mapped to its own TM Forum Service or
+   Resource, linked through supportingService or corresponding Resource
+   relationships.  This enables explicit decomposition and reuse;
+   however, it causes each layer to appear in the Service Catalog or
+   Resource Catalog as a separately orderable item.  Implementations
+   would then need to expose and manage the appropriate relationships
+   (e.g., parent-child, requires), and the resulting granularity can
+   become too fine to be operationally meaningful.
+
+5.3.  Approach 3: Decomposition into Features
+
+   Each data tree layer can be represented as a TM Forum Service Feature
+   or Resource Feature within an enclosing Service or Resource.  This
+   keeps Catalog entries stable, but the current TM Forum model does not
+   define feature nesting (i.e., there is no supportingFeature-like
+   construct).  Implementations could introduce a controlled extension
+   (e.g., via a schemaLocation extension) to represent feature
+   hierarchy, but such nesting SHOULD be standardized in a future TM
+   Forum Open API release for maximum interoperability.
+
+5.4.  Approach 4: Encode Schema in Characteristic Names
+
+   The structure can be flattened by encoding path-like information in
+   Characteristic names (e.g., a YANG path fragment).  This is simple to
+   implement but it cannot represent cardinality accurately and tends to
+   obscure the original YANG data tree, making validation and processing
+   ambiguous.
+
+6.  Implementation Guidelines
+
+   This section summarizes a practical mapping between common YANG
+   attributes and TMF constructs in both the Catalog and Ordering/
+   Activation APIs.  The guidelines are based on experience gathered
+   from a Proof of Concept implementation.
+
+   An implementation MAY support the ability to map an entire YANG
+   schema into a TMF Service or Resource Specification or it MAY allow
+   the operator to specify a subtree of the YANG schema that will be
+   mapped to a particular Service or Resource Specification.  In either
+   case, the mapping process MUST preserve the semantics of the YANG
+   model, including data types, constraints, and hierarchical
+   relationships starting from the mapped subtree.
+
+
+
+
+
+
+
+Lambrechts               Expires 10 August 2026                 [Page 7]
+
+Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
+
+
+   To indicate the part of the YANG schema that is mapped to a
+   particular TMF Service or Resource Specification, an implementation
+   MAY use a YANG extension (e.g., tmf-cfs) to annotate the relevant
+   YANG node with a reference to the corresponding TMF Specification
+   (e.g., tmf-cfs="TMF633:ServiceSpec123").
+
+   An implementation MAY use YANG extension to indicate which parts of a
+   YANG tree are mapped into TMF according to a particular method as
+   described in the previous section.  For example, a tmf-mapping
+   extension could be used to specify whether a container is mapped as a
+   complex Characteristic, as a separate Service/Resource, or as a
+   Feature.
+
+7.  IANA Considerations
+
+   This memo includes no request to IANA.
+
+8.  Security Considerations
+
+   This document defines a mapping between YANG models/instance data and
+   TM Forum data models and APIs.  The mapping itself introduces no new
+   protocol elements, but it can affect how existing security properties
+   are preserved when translating data between representations.
+
+   Implementations of this mapping MUST preserve the confidentiality,
+   integrity, and authorization semantics of the source model.  In
+   particular, access control decisions tied to YANG nodes (including
+   read, write, and notification permissions) MUST be enforced
+   equivalently on the mapped TM Forum resources and operations.
+   Failing to do so can result in privilege escalation or unintended
+   disclosure.
+
+   When mapping data across administrative or trust boundaries,
+   operators MUST ensure that transport security (e.g., TLS) and mutual
+   authentication are used as appropriate for the deployed APIs.  The
+   mapping process MUST NOT bypass auditing, logging, or rate-limiting
+   controls that are required for the underlying interfaces.
+
+   Finally, any reference data used by the mapping (such as schema
+   registries, profiles, or transformation rules) SHOULD be protected
+   from unauthorized modification, as tampering could lead to incorrect
+   data interpretation or security policy violations.
+
+9.  References
+
+9.1.  Normative References
+
+
+
+
+
+Lambrechts               Expires 10 August 2026                 [Page 8]
+
+Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
+
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/info/rfc2119>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
+   [RFC8299]  Wu, Q., Ed., Litkowski, S., Tomotaki, L., and K. Ogaki,
+              "YANG Data Model for L3VPN Service Delivery", RFC 8299,
+              DOI 10.17487/RFC8299, January 2018,
+              <https://www.rfc-editor.org/info/rfc8299>.
+
+   [RFC8466]  Wen, B., Fioccola, G., Ed., Xie, C., and L. Jalil, "A YANG
+              Data Model for Layer 2 Virtual Private Network (L2VPN)
+              Service Delivery", RFC 8466, DOI 10.17487/RFC8466, October
+              2018, <https://www.rfc-editor.org/info/rfc8466>.
+
+   [RFC7950]  Bjorklund, M., Ed., "The YANG 1.1 Data Modeling Language",
+              RFC 7950, DOI 10.17487/RFC7950, August 2016,
+              <https://www.rfc-editor.org/info/rfc7950>.
+
+   [RFC9182]  Barguil, S., Gonzalez de Dios, O., Ed., Boucadair, M.,
+              Ed., Munoz, L., and A. Aguado, "A YANG Network Data Model
+              for Layer 3 VPNs", RFC 9182, DOI 10.17487/RFC9182,
+              February 2022, <https://www.rfc-editor.org/info/rfc9182>.
+
+   [RFC9291]  Boucadair, M., Ed., Gonzalez de Dios, O., Ed., Barguil,
+              S., and L. Munoz, "A YANG Network Data Model for Layer 2
+              VPNs", RFC 9291, DOI 10.17487/RFC9291, September 2022,
+              <https://www.rfc-editor.org/info/rfc9291>.
+
+   [RFC8969]  Wu, Q., Ed., Boucadair, M., Ed., Lopez, D., Xie, C., and
+              L. Geng, "A Framework for Automating Service and Network
+              Management with YANG", RFC 8969, DOI 10.17487/RFC8969,
+              January 2021, <https://www.rfc-editor.org/info/rfc8969>.
+
+9.2.  Informative References
+
+   [TMF633]   TM Forum, "TMF633 Service Catalog Management API",
+              TMF 633, 2019, <https://www.tmforum.org/oda/open-
+              apis/directory/service-catalog-management-api-TMF633/>.
+
+   [TMF634]   TM Forum, "TMF634 Resource Catalog Management API",
+              TMF 634, 2019, <https://www.tmforum.org/oda/open-
+              apis/directory/resource-catalog-management-api-TMF634/>.
+
+
+
+
+Lambrechts               Expires 10 August 2026                 [Page 9]
+
+Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
+
+
+   [TMF640]   TM Forum, "TMF640 Service Activation and Configuration
+              API", TMF 640, 2019, <https://www.tmforum.org/oda/open-
+              apis/directory/service-activation-and-configuration-api-
+              TMF640/>.
+
+   [TMF641]   TM Forum, "TMF641 Service Ordering API", TMF 641, 2019,
+              <https://www.tmforum.org/oda/open-apis/directory/service-
+              ordering-api-TMF641/>.
+
+   [TMF652]   TM Forum, "TMF652 Resource Ordering Management API",
+              TMF 652, 2019, <https://www.tmforum.org/oda/open-
+              apis/directory/resource-ordering-management-api-TMF652/>.
+
+   [TMF702]   TM Forum, "TMF702 Resource Activation and Configuration
+              API", TMF 702, 2019, <https://www.tmforum.org/oda/open-
+              apis/directory/resource-activation-and-configuration-api-
+              TMF702/>.
+
+Author's Address
+
+   Kris Lambrechts
+   NetEdge
+   Email: kris@netedge.plus
+   URI:   https://www.netedge.plus
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lambrechts               Expires 10 August 2026                [Page 10]
