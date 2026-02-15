@@ -127,66 +127,86 @@
       <section>
         <name>Where the TMF Mapping Fits</name>
         <t>
-          The framework in <xref target="RFC8969"/> separates service, network, and device layers.
-          The TMF interfaces addressed by this document typically sit at the product or service boundary
-          (customer or OSS/BSS-facing), while YANG modules and controllers span service, network, and
-          device layers. The mapping defined here is intended to bridge those boundaries, enabling
-          service and resource definitions to be expressed consistently across TMF Open APIs and
-          YANG-based automation.
+          The TM Forum Open APIs can be divided into several categories. Three
+          of those categories are particularly relevant: Product, Service, and
+          Resource. The IETF Framework for Automating Service and Network
+          Management with YANG framework in <xref target="RFC8969"/> separates
+          service, network, and device models. All possible permutations on how
+          these two architectures can be reconciled are out of scope for this
+          document, but the mapping mechanism defined here is intended to be
+          flexible enough to operate at either the TMF Service or Resource layer.
         </t>
         <t>
-          The following diagram illustrates the boundary between customer-facing TMF APIs and the
-          internal YANG-based orchestration and control layers:
-        </t>
+          The following diagram illustrates a common architecture where TMF Open
+          APIs are exposed at the northbound interface of an OSS or Service
+          Orchestrator, while YANG-based models and automation drive the
+          southbound interfaces to network controllers and devices.
+          The mechanism for mapping defined in this document may operate.
+        </t> 
         <figure>
-          <name>TMF API Boundary at the Service Layer</name>
+          <name>TMF mapping northbound of OSS/Service Orchestrator</name>
           <artwork><![CDATA[
-   +-------------------+        +----------------------------+
-   | BSS/OSS / Customer|        |  Service Orchestrator      |
-   | (TMF Open APIs)   |<------>|  (YANG Service Models)     |
-   +-------------------+        +--------------+-------------+
-                                            |
-                                            v
-                                   +-------------------+
-                                   | Network Controllers|
-                                   | (YANG Network)     |
-                                   +---------+---------+
-                                             |
-                                             v
-                                   +-------------------+
-                                   | Devices / Elements|
-                                   | (YANG Device)     |
-                                   +-------------------+
-          TMF-to-YANG mapping boundary
-]]></artwork>
+         +----------------------------+
+         |   BSS / Customers          |
+         | (Consumes TMF APIs)        |
+         +-------------+--------------+
+                       |
+                       v  TMF Open APIs (Service/Resource)
+         +----------------------------+
+         | OSS / Service Orchestrator |
+         | (YANG Service Model)       |
+         +--------------+-------------+
+                        |
+                        v NETCONF/YANG
+         +----------------------------+
+         |  Network Controllers       |
+         |  (YANG Network Model)      |
+         +--------------+-------------+
+                        |
+                        v NETCONF/YANG
+         +----------------------------+
+         |           Devices          |
+         |        (YANG Device)       |
+         +----------------------------+
+      ]]></artwork>
         </figure>
         <t>
-          A second boundary occurs between higher-layer BSS functions that use TMF Open APIs and
-          the internal service/resource models that drive YANG-based automation:
+          For operators that handle more of the service lifecycle inside the
+          TMF framework, the mapping mechanism can also be applied at the
+          northbound interface of the Network Controller.
         </t>
         <figure>
-          <name>Open API Boundary for BSS Functions</name>
+          <name>TMF mapping northbound of Network Controller</name>
           <artwork><![CDATA[
-   Higher-layer BSS Functions
-          |
-          v
-   +---------------------+      +---------------------------+
-   | TMF Open APIs       |<---->|  Internal Service Models  |
-   | (Service/Resource)  |      |  (YANG Service/Resource)  |
-   +---------------------+      +-------------+-------------+
-                                             |
-                                             v
-                                   +-------------------+
-                                   | Internal Control  |
-                                   | (YANG Network/Dev)|
-                                   +-------------------+
-        TMF Open API <-> YANG module alignment boundary
-]]></artwork>
+         +----------------------------+
+         |   BSS / Customers          |
+         | (Consumes TMF APIs)        |
+         +-------------+--------------+
+                       |
+                       v TMF Open APIs (Product/Service/Resource)
+         +----------------------------+
+         |            OSS             |
+         |    (TMF Data Models)       |
+         +--------------+-------------+
+                        |
+                        v TMF Open APIs (Service/Resource)
+         +----------------------------+
+         |  Network Controllers       |
+         |  (YANG Network Model)      |
+         +--------------+-------------+
+                        |
+                        v NETCONF/YANG
+         +----------------------------+
+         |           Devices          |
+         |        (YANG Device)       |
+         +----------------------------+
+      ]]></artwork>
         </figure>
         <t>
-          These boundaries are illustrative and can be adapted to operator architecture; the key
-          principle is that TMF Open APIs expose service and resource intent and catalog constraints,
-          while YANG-based components provide the detailed model-driven automation beneath.
+          These boundaries are illustrative and can be adapted to operator
+          architecture; the key principle is that the mapping mechanism defined
+          in this document can be applied at any point where YANG-based models 
+          and TMF Open APIs intersect.
         </t>
       </section>
       
