@@ -226,10 +226,11 @@
     <section>
       <name>YANG Schema Trees and the TMF Data Models</name>
       <t>
-        Fully rendered YANG schema trees consist of four fundamental constructs:
-        containers, lists, leafs, and leaf-lists. In the next sections, we
+        YANG schema trees can contain data nodes. One of container, leaf, 
+        leaf-list, list, anydata and anyxml. In the next sections, we
         describe how each of those constructs can be mapped to the TMF
         Data Models and APIs.
+        <!-- TODO: Add mapping rules for anydata and anyxml.-->
       </t>
       <section>
         <name>Defining The Mapping Root</name>
@@ -244,7 +245,8 @@
         </t>
         <t>
           Implementations MAY use the following YANG extension to
-          indicate themapping root for each subtree:
+          annotate the mapping root and the mapping method for a particular
+          YANG subtree:
         </t>
         <sourcecode name="yang-tmf-map.yang"><![CDATA[
 module yang-tmf-map {
@@ -267,8 +269,8 @@ module yang-tmf-map {
   }
   extension ignore {
     description
-      "Indicates that the annotated YANG node and its subtree
-       are ignored by the mapping mechanism.";
+      "Indicates that the annotated YANG data node and its
+      subtree are ignored by the mapping mechanism.";
   }
 }
       ]]></sourcecode>
@@ -308,56 +310,153 @@ module netinfra {
   }
 }
       ]]></sourcecode>
+      <t>
+        In this example, the <tt>router</tt> list is annotated with the
+        <tt>tmf:cfs-service</tt> extension to indicate that it is mapped to a
+        TMF CFS Service named "Router". The mapping mechanism will then map
+        the child data nodes to the corresponding TMF schema elements based on
+        the mapping rules defined in the next sections.
+      </t>
       </section>
       <section>
-        <name>Mapping YANG Schemas to TMF Catalog Specifications</name>
+        <name>Mapping containers and lists to (sub)Features</name>
         <t>
-         One YANG module MAY
-        
-      
-         and it is not required to map the entire YANG schema tree.
-        The mapping mechanism is designed to preserve the semantics of the
-        original YANG schema tree such as hierarchy, identity, and constraints
-        while making them compatible with the TMF data structures and API
-        patterns. The mapping mechanism is flexible enough to allow for different approaches to represent YANG constructs in TMF, and the document
-         evaluates the trade-offs
-      </t>
-      <t>
-        TMF633 <xref target="TMF633"/> defines the Service Catalog model,
-        where a <tt>ServiceSpecification</tt> captures the design-time
-        description of a Service and its allowed parameters. Parameter
-        definitions are expressed as <tt>serviceSpecCharacteristic</tt> entries,
-        each of which can include one or more <tt>serviceSpecCharacteristicValue</tt>
-        entries to constrain allowed values.
-      </t>
-      <t>
-        TMF634 <xref target="TMF634"/> defines the Resource Catalog model in a
-        similar fashion. A <tt>ResourceSpecification</tt> carries
-        <tt>resourceSpecCharacteristic</tt> entries and their associated
-        <tt>resourceSpecCharacteristicValue</tt> constraints,
-        mirroring the service catalog structure.
-      </t>
-      <t>
-        The approach for mapping YANG schemas to TMF specifications is as
-        follows:
-        - A YANG schema SHOULD be mapped to a corresponding Service or
-         Resource Specification such that each relevant YANG leaf or leaf-list
-         becomes a Characteristic specification entry.
-        - The Characteristic definition SHOULD include the expected value type
-        and, where applicable, the permitted set of values.
-        
-        Enumerations and identityrefs SHOULD be mapped to discrete
-        permitted set of values. Enumerations and identityrefs SHOULD be mapped to discrete
-        Characteristic value entries, while ranges and patterns SHOULD be reflected in the
-        Characteristic constraints. YANG <tt>min-elements</tt> and <tt>max-elements</tt> statements
-        SHOULD inform the Characteristic cardinality where the TMF model supports it.
-      </t>
-      <t>
-        This mapping ensures that catalog-level specifications align with the instance-level
-        Characteristics used in TMF640/TMF641 and TMF652/TMF702, enabling consistent validation of
-        service or resource orders against the intended YANG-defined model.
-      </t>
+          Implementations MUST support mapping YANG schema trees of arbitrary
+          depth below the mapping root. Each container or list in the
+          schema tree can be represented as a TM Forum Service
+          Feature or Resource Feature within the Service or Resource that it
+          belongs to.
+        </t>
+        <t>
+          The current TM Forum Data Model does not support Feature nesting, 
+          i.e., there is no subFeature-like construct. This document proposes
+          a IETF Liaison to the TM Forum to standardize a nesting mechanism for
+          Features in a future TMF Open API release. The API design guidelines
+          would be analogous to the current supportingService approach in the
+          TMF Data Model.
+        </t>
+      </section>
+      <section>
+        <name>Mapping leafs and leaf-lists to Characteristics</name>
+         <t>
+          YANG leafs and leaf-lists represent the fundamental data elements in a
+          YANG data tree. Each leaf and leaf-list MUST be mapped to a TMF
+          Characteristic. YANG leafs and leaf-lists located directly under the
+          mapping root MUST be mapped to Service or Resource Characteristics.
+          Leafs and leaf-lists located in a first-level container or list are
+          mapped to Feature Characteristics, while those located in deeper
+          levels of the YANG schema tree are mapped to subFeature
+          Characteristics and so on.
+        </t>
+      </section>
     </section>
+    <section>
+      <name>Mapping YANG Statements</name>
+      <section>
+        <name>The "leaf" Statement</name>
+        <t>
+          Each YANG "leaf" statement MUST be mapped to a TMF Characteristic
+          entry. The Characteristic <tt>name</tt> SHOULD be derived from the
+          YANG node name. The Characteristic <tt>value</tt> MUST be encoded
+          according to the JSON Schema rules for the YANG type as described
+          in the next section.
+        </t>
+        <section>
+          <name>The leaf's "type" Statement</name>
+          <t>
+            The YANG "type" statement MUST be fully resolved to a YANG built-in
+            type and mapped to a JSON Schema type as follows:
+          </t>
+          <table>
+            <thead>
+              <tr><th>YANG Type</th><th>JSON Schema Type</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>boolean</td><td>boolean</td></tr>
+              <tr><td>string</td><td>string</td></tr>
+              <tr><td>integer types (e.g., int32, uint64)</td><td>integer</td></tr>
+              <tr><td>decimal64</td><td>number</td></tr>
+              <tr><td>enumeration</td><td>string</td></tr>
+              <tr><td>identityref</td><td>string</td></tr>
+            </tbody>
+          </table>
+        </section>
+      </section>
+    </section>
+    <section>
+      <name>Mapping YANG Built-In Types</name>
+      <section>
+        <name>The Integer Built-In Types</name>
+        <t>
+          All YANG integer built-in types (i.e., int8, int16, int32, int64,
+          uint8, uint16, uint32, uint64) MUST be mapped to the integer JSON
+          Schema type.
+        </t>
+        <section>
+          <name>The "range" Statement</name>
+          <t>
+            The YANG "range" statement MUST be mapped to one or more
+            CharacteristicValueSpecification entries with the "valueType" field
+            set to "integer" and the "rangeInterval" set to "open".
+            The "minValue" and "maxValue" fields MUST be set according to the
+            range constraints specified in the YANG model.
+            If the YANG "range" statement includes multiple intervals
+            (separated by "|"), each interval MUST be mapped to a separate
+            CharacteristicValueSpecification entry.
+          </t>
+        </section>
+      </section>
+      <section>
+        <name>The String Built-In Types</name>
+        <t>
+          The YANG built-in string type MUST be mapped to the string JSON
+          Schema type.
+        </t>
+        <section>
+          <name>The "length" Statement</name>
+          <t>
+            The YANG "length" statement MUST be mapped to one or more
+            CharacteristicValueSpecification entries with the "valueType" field
+            set to "string" and the "regex" field set to a regular expression
+            that enforces the length constraint.
+            For example, a length constraint of "1..10" would be mapped to a
+            regex of "^.{1,10}$". If the YANG "length" statement includes
+            multiple intervals (separated by "|"), each interval MUST be mapped
+            to a separate CharacteristicValueSpecification entry with the
+            corresponding regex.
+          </t>
+        </section>
+        <section>
+          <name>The "pattern" Statement</name>
+          <t>
+            The YANG "pattern" statement MUST be mapped to the
+            CharacteristicSpecification "regex" field with the same regular
+            expression as specified in the YANG model.
+          </t>
+          <!-- TODO: What are the regex flavors used in both YANG and TMF models? -->
+        </section>
+      </section>
+      <section>
+        <name>The Boolean Built-In Type</name>
+        <t>
+          The YANG boolean type MUST be mapped to the boolean JSON Schema type.
+        </t>
+      </section>
+      <section>
+        <name>The Enumeration Built-In Type</name>
+        <t>
+          The YANG enumeration type MUST be mapped to the string JSON Schema
+          type.
+        </t>
+        <section>
+          <name>The "enum" Statement</name>
+          <t>
+            Each enum value defined in the YANG model MUST be mapped to a
+            CharacteristicValueSpecification entry with the "valueType" field set
+            to "string" and the "value" field set to the enumeration value.
+          </t>
+        </section>
+      </section>
     </section>
 
     <section>
@@ -374,21 +473,6 @@ module netinfra {
         In these APIs, parameterization of a <tt>Service</tt> or <tt>Resource</tt> is conveyed primarily through
         <tt>serviceCharacteristic</tt> or <tt>resourceCharacteristic</tt> entries, each with a
         <tt>name</tt>, a <tt>value</tt>, and (where applicable) a <tt>valueType</tt>.
-      </t>
-      <t>
-        YANG instance data MUST be mapped into this Characteristic structure in a manner that
-        preserves the meaning of the source data. Leaf and leaf-list values SHOULD be represented
-        as individual Characteristic entries (service or resource as appropriate). The
-        Characteristic <tt>name</tt> SHOULD be derived from the YANG node identifier (or path, when
-        required for disambiguation), and the Characteristic <tt>value</tt> MUST reflect the
-        YANG-typed value using an appropriate encoding. Where YANG defines units or enumerations,
-        the resulting Characteristic values SHOULD be encoded consistently so that the receiver
-        can interpret them without additional schema inference.
-      </t>
-      <t>
-        Containers and lists introduce structure beyond a single value. Their mapping into
-        Characteristics is described in the following sections and can require decomposition,
-        flattening, or structured value representations depending on the chosen approach.
       </t>
     </section>
 
@@ -426,9 +510,6 @@ module netinfra {
           leaf-lists.
         </li>
         <li>
-          Map YANG string patterns to the Characteristic <tt>regex</tt> field.
-        </li>
-        <li>
           Express YANG defaults as Characteristic default value specifications for TMF633/634.
         </li>
       </ul>
@@ -459,6 +540,42 @@ module netinfra {
         TMF according to a particular method as described in the previous section. For example, a
         <tt>tmf-mapping</tt> extension could be used to specify whether a container is mapped as a complex
         Characteristic, as a separate Service/Resource, or as a Feature.
+      </t>
+
+      <t>
+        TMF633 <xref target="TMF633"/> defines the Service Catalog model,
+        where a <tt>ServiceSpecification</tt> captures the design-time
+        description of a Service and its allowed parameters. Parameter
+        definitions are expressed as <tt>serviceSpecCharacteristic</tt> entries,
+        each of which can include one or more <tt>serviceSpecCharacteristicValue</tt>
+        entries to constrain allowed values.
+      </t>
+      <t>
+        TMF634 <xref target="TMF634"/> defines the Resource Catalog model in a
+        similar fashion. A <tt>ResourceSpecification</tt> carries
+        <tt>resourceSpecCharacteristic</tt> entries and their associated
+        <tt>resourceSpecCharacteristicValue</tt> constraints,
+        mirroring the service catalog structure.
+      </t>
+      <t>
+        The approach for mapping YANG schemas to TMF specifications is as
+        follows:
+        - A YANG schema SHOULD be mapped to a corresponding Service or
+         Resource Specification such that each relevant YANG leaf or leaf-list
+         becomes a Characteristic specification entry.
+        - The Characteristic definition SHOULD include the expected value type
+        and, where applicable, the permitted set of values.
+        
+        Enumerations and identityrefs SHOULD be mapped to discrete
+        permitted set of values. Enumerations and identityrefs SHOULD be mapped to discrete
+        Characteristic value entries, while ranges and patterns SHOULD be reflected in the
+        Characteristic constraints. YANG <tt>min-elements</tt> and <tt>max-elements</tt> statements
+        SHOULD inform the Characteristic cardinality where the TMF model supports it.
+      </t>
+      <t>
+        This mapping ensures that catalog-level specifications align with the instance-level
+        Characteristics used in TMF640/TMF641 and TMF652/TMF702, enabling consistent validation of
+        service or resource orders against the intended YANG-defined model.
       </t>
     </section>
     
