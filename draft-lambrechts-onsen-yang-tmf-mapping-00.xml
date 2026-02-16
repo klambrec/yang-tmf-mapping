@@ -55,7 +55,7 @@
     <abstract>
       <t>
         This document describes a mechanism for mapping between YANG schemas
-        and instance data and TM Forum Data Models and APIs.
+        and instance data and TM Forum (TMF) Data Models and APIs.
         The mapping mechanism enables orchestrators to produce and expose TMF
         compliant interfaces that provide TMF API consumers direct access to a
         YANG data store.
