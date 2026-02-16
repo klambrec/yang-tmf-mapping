@@ -92,20 +92,20 @@ Table of Contents
      4.3.  The Boolean Built-In Type . . . . . . . . . . . . . . . .  11
      4.4.  The Enumeration Built-In Type . . . . . . . . . . . . . .  11
        4.4.1.  The "enum" Statement  . . . . . . . . . . . . . . . .  11
-   5.  YANG Instance Data in TMF Configuration and Ordering APIs . .  11
-   6.  Mapping YANG leafs and leaf-lists to TMF Characteristics  . .  11
-   7.  Implementation Guidelines . . . . . . . . . . . . . . . . . .  12
-   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  12
-     8.1.  YANG Module Registry  . . . . . . . . . . . . . . . . . .  12
-   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  12
-   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  13
-     10.1.  Normative References . . . . . . . . . . . . . . . . . .  13
-     10.2.  Informative References . . . . . . . . . . . . . . . . .  14
+   5.  Implementation Guidelines . . . . . . . . . . . . . . . . . .  11
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  12
+     6.1.  YANG Module Registry  . . . . . . . . . . . . . . . . . .  12
+   7.  Security Considerations . . . . . . . . . . . . . . . . . . .  12
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  12
+     8.1.  Normative References  . . . . . . . . . . . . . . . . . .  13
+     8.2.  Informative References  . . . . . . . . . . . . . . . . .  13
    Appendix A.  Evaluation of mapping approaches for nested
-           structures  . . . . . . . . . . . . . . . . . . . . . . .  15
+           structures  . . . . . . . . . . . . . . . . . . . . . . .  14
      A.1.  Approach 1: Strongly Typed Pattern  . . . . . . . . . . .  15
-     A.2.  Approach 2: Complex Characteristics . . . . . . . . . . .  16
-     A.3.  Approach 3: Decomposition into Services/Resources . . . .  17
+     A.2.  Approach 2: Complex Characteristics . . . . . . . . . . .  15
+     A.3.  Approach 3: Decomposition into Services/Resources . . . .  16
+     A.4.  Approach 4: Decomposition into Features . . . . . . . . .  17
+     A.5.  Approach 5: Encode Schema in Characteristic Names . . . .  17
 
 
 
@@ -114,9 +114,7 @@ Lambrechts               Expires 20 August 2026                 [Page 2]
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
-     A.4.  Approach 4: Decomposition into Features . . . . . . . . .  17
-     A.5.  Approach 5: Encode Schema in Characteristic Names . . . .  17
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  18
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  17
 
 1.  Introduction
 
@@ -160,6 +158,8 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
    architecture.  Operational concerns such as service orchestration
    workflows and business processes are out of scope, except where they
    affect the interpretation of the mapped data.
+
+
 
 
 
@@ -594,7 +594,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
    CharacteristicValueSpecification entry with the "valueType" field set
    to "string" and the "value" field set to the enumeration value.
 
-5.  YANG Instance Data in TMF Configuration and Ordering APIs
+5.  Implementation Guidelines
 
    In the TMF Ordering/Activation and Configuration APIs, ordering is
    expressed through ServiceOrder and ServiceOrderItem in TMF640
@@ -602,12 +602,12 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
    the ResourceOrder and ResourceOrderItem constructs have an equivalent
    role for resource ordering and activation.
 
-   In these APIs, parameterization of a Service or Resource is conveyed
-   primarily through serviceCharacteristic or resourceCharacteristic
-   entries, each with a name, a value, and (where applicable) a
-   valueType.
-
-6.  Mapping YANG leafs and leaf-lists to TMF Characteristics
+   TMF633 [TMF633] defines the Service Catalog model, where a
+   ServiceSpecification captures the design-time description of a
+   Service and its allowed parameters.  Parameter definitions are
+   expressed as serviceSpecCharacteristic entries, each of which can
+   include one or more serviceSpecCharacteristicValue entries to
+   constrain allowed values.
 
 
 
@@ -617,25 +617,6 @@ Lambrechts               Expires 20 August 2026                [Page 11]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
-
-   *  For leaf-lists, the Characteristic value SHOULD be represented as
-      an array, and the valueType SHOULD indicate the array nature
-      (e.g., stringArray, integerArray).
-
-   *  Use maxCardinality of 1 for leaves and the YANG max-elements value
-      for leaf-lists.
-
-   *  Express YANG defaults as Characteristic default value
-      specifications for TMF633/634.
-
-7.  Implementation Guidelines
-
-   TMF633 [TMF633] defines the Service Catalog model, where a
-   ServiceSpecification captures the design-time description of a
-   Service and its allowed parameters.  Parameter definitions are
-   expressed as serviceSpecCharacteristic entries, each of which can
-   include one or more serviceSpecCharacteristicValue entries to
-   constrain allowed values.
 
    TMF634 [TMF634] defines the Resource Catalog model in a similar
    fashion.  A ResourceSpecification carries resourceSpecCharacteristic
@@ -647,32 +628,22 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
    TMF702, enabling consistent validation of service or resource orders
    against the intended YANG-defined model.
 
-8.  IANA Considerations
+6.  IANA Considerations
 
-8.1.  YANG Module Registry
+6.1.  YANG Module Registry
 
    The YANG module defined in this document, yang-tmf-map, is intended
    to be registered in the IANA YANG Module registry.  The module
    defines extensions that can be used to annotate YANG modules with TMF
    mapping information.
 
-9.  Security Considerations
+7.  Security Considerations
 
    This document defines a mapping between YANG schemas/instance data
    and TM Forum data models and APIs.  The mapping itself introduces no
    new protocol elements, but it can affect how existing security
    properties are preserved when translating data between
    representations.
-
-
-
-
-
-
-Lambrechts               Expires 20 August 2026                [Page 12]
-
-Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
-
 
    Implementations of this mapping MUST preserve the confidentiality,
    integrity, and authorization semantics of the source model.  In
@@ -693,9 +664,17 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
    from unauthorized modification, as tampering could lead to incorrect
    data interpretation or security policy violations.
 
-10.  References
+8.  References
 
-10.1.  Normative References
+
+
+
+Lambrechts               Expires 20 August 2026                [Page 12]
+
+Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
+
+
+8.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -720,16 +699,6 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
               RFC 7950, DOI 10.17487/RFC7950, August 2016,
               <https://www.rfc-editor.org/info/rfc7950>.
 
-
-
-
-
-
-Lambrechts               Expires 20 August 2026                [Page 13]
-
-Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
-
-
    [RFC9182]  Barguil, S., Gonzalez de Dios, O., Ed., Boucadair, M.,
               Ed., Munoz, L., and A. Aguado, "A YANG Network Data Model
               for Layer 3 VPNs", RFC 9182, DOI 10.17487/RFC9182,
@@ -745,11 +714,21 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
               Management with YANG", RFC 8969, DOI 10.17487/RFC8969,
               January 2021, <https://www.rfc-editor.org/info/rfc8969>.
 
-10.2.  Informative References
+8.2.  Informative References
 
    [TMF633]   TM Forum, "TMF633 Service Catalog Management API",
               TMF 633, 2019, <https://www.tmforum.org/oda/open-
               apis/directory/service-catalog-management-api-TMF633/>.
+
+
+
+
+
+
+Lambrechts               Expires 20 August 2026                [Page 13]
+
+Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
+
 
    [TMF634]   TM Forum, "TMF634 Resource Catalog Management API",
               TMF 634, 2019, <https://www.tmforum.org/oda/open-
@@ -777,15 +756,6 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
               2021, <https://www.tmforum.org/resources/specifications/
               tmf630-rest-api-design-guidelines-4-2-0/>.
 
-
-
-
-
-Lambrechts               Expires 20 August 2026                [Page 14]
-
-Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
-
-
 Appendix A.  Evaluation of mapping approaches for nested structures
 
    YANG schema trees commonly represent complex data structures by
@@ -802,6 +772,19 @@ Appendix A.  Evaluation of mapping approaches for nested structures
    approach.  The Characteristic / CharacteristicSpecification pattern,
    has found wide adoption in TMF APIs and it is the basis for the
    remaining approaches.
+
+
+
+
+
+
+
+
+
+Lambrechts               Expires 20 August 2026                [Page 14]
+
+Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
+
 
 A.1.  Approach 1: Strongly Typed Pattern
 
@@ -835,17 +818,29 @@ A.1.  Approach 1: Strongly Typed Pattern
    mechanism for mapping defined in this document focuses on the
    Characteristic-based approaches described in the following sections.
 
+A.2.  Approach 2: Complex Characteristics
+
+   A complete data structure can be embedded into a single
+   Characteristic by using the TM Forum "Object" Value Type.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Lambrechts               Expires 20 August 2026                [Page 15]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
-
-A.2.  Approach 2: Complex Characteristics
-
-   A complete data structure can be embedded into a single
-   Characteristic by using the TM Forum "Object" Value Type.
 
    {
      "id": "123-456",
@@ -887,8 +882,13 @@ A.2.  Approach 2: Complex Characteristics
    Additionally, it can make the Characteristic value opaque and
    difficult to validate or manipulate without understanding the schema.
 
+A.3.  Approach 3: Decomposition into Services/Resources
 
-
+   Each data tree layer could be mapped to its own TM Forum Service or
+   Resource, linked through supportingService or corresponding Resource
+   relationships.  This approach enables explicit decomposition and
+   reuse.  However, each Service or Resource will appear in the Service
+   Catalog or Resource Catalog as a separately orderable item.
 
 
 
@@ -897,14 +897,6 @@ Lambrechts               Expires 20 August 2026                [Page 16]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
-
-A.3.  Approach 3: Decomposition into Services/Resources
-
-   Each data tree layer could be mapped to its own TM Forum Service or
-   Resource, linked through supportingService or corresponding Resource
-   relationships.  This approach enables explicit decomposition and
-   reuse.  However, each Service or Resource will appear in the Service
-   Catalog or Resource Catalog as a separately orderable item.
 
    If this approach was uniformly used for each YANG container or list,
    implementations would then need to expose and manage the appropriate
@@ -947,13 +939,6 @@ A.5.  Approach 5: Encode Schema in Characteristic Names
    for completeness as the approach was evaluated during the design of
    the mapping mechanism.
 
-
-
-Lambrechts               Expires 20 August 2026                [Page 17]
-
-Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
-
-
 Author's Address
 
    Kris Lambrechts
@@ -964,45 +949,4 @@ Author's Address
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Lambrechts               Expires 20 August 2026                [Page 18]
+Lambrechts               Expires 20 August 2026                [Page 17]

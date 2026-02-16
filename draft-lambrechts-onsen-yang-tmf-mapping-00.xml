@@ -535,7 +535,7 @@ module netinfra {
     </section>
 
     <section>
-      <name>YANG Instance Data in TMF Configuration and Ordering APIs</name>
+      <name>Implementation Guidelines</name>
       <t>
         In the TMF Ordering/Activation and Configuration APIs, ordering is
         expressed through <tt>ServiceOrder</tt> and <tt>ServiceOrderItem</tt> in
@@ -544,33 +544,6 @@ module netinfra {
         the <tt>ResourceOrder</tt> and <tt>ResourceOrderItem</tt> constructs
         have an equivalent role for resource ordering and activation.
       </t>
-      <t>
-        In these APIs, parameterization of a <tt>Service</tt> or <tt>Resource</tt> is conveyed primarily through
-        <tt>serviceCharacteristic</tt> or <tt>resourceCharacteristic</tt> entries, each with a
-        <tt>name</tt>, a <tt>value</tt>, and (where applicable) a <tt>valueType</tt>.
-      </t>
-    </section>
-
-    <section>
-      <name>Mapping YANG leafs and leaf-lists to TMF Characteristics</name>
-      <ul>
-        <li>
-          For leaf-lists, the Characteristic <tt>value</tt> SHOULD be represented as an array, and
-          the <tt>valueType</tt> SHOULD indicate the array nature (e.g., <tt>stringArray</tt>,
-          <tt>integerArray</tt>).
-        </li>
-        <li>
-          Use <tt>maxCardinality</tt> of 1 for leaves and the YANG <tt>max-elements</tt> value for
-          leaf-lists.
-        </li>
-        <li>
-          Express YANG defaults as Characteristic default value specifications for TMF633/634.
-        </li>
-      </ul>
-    </section>
-
-    <section>
-      <name>Implementation Guidelines</name>
       <t>
         TMF633 <xref target="TMF633"/> defines the Service Catalog model,
         where a <tt>ServiceSpecification</tt> captures the design-time
