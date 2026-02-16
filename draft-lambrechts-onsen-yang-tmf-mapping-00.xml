@@ -589,33 +589,25 @@ module netinfra {
     <section>
       <name>Implementation Guidelines</name>
       <t>
-        In the TMF Ordering/Activation and Configuration APIs, ordering is
-        expressed through <tt>ServiceOrder</tt> and <tt>ServiceOrderItem</tt> in
-        TMF640 <xref target="TMF640"/> and TMF641 <xref target="TMF641"/>.
-        In TMF652 <xref target="TMF652"/> and TMF702 <xref target="TMF702"/>
-        the <tt>ResourceOrder</tt> and <tt>ResourceOrderItem</tt> constructs
-        have an equivalent role for resource ordering and activation.
+        An implementation of the mapping mechanism defined in this document
+        SHOULD expose one or more of the following TMF Open APIs to allow TMF
+        API comsumers to query the Catalog Service/ResourceSpecifications:
       </t>
+      <ul>
+        <li>TMF633 Service Catalog Management API <xref target="TMF633"/></li>
+        <li>TMF634 Resource Catalog Management API <xref target="TMF634"/></li>
+      </ul>
       <t>
-        TMF633 <xref target="TMF633"/> defines the Service Catalog model,
-        where a <tt>ServiceSpecification</tt> captures the design-time
-        description of a Service and its allowed parameters. Parameter
-        definitions are expressed as <tt>serviceSpecCharacteristic</tt> entries,
-        each of which can include one or more <tt>serviceSpecCharacteristicValue</tt>
-        entries to constrain allowed values.
+        The implementation SHOULD also expose one or more of the following TMF
+        Open APIs to allow TMF API consumers to place orders and activate
+        services/resources based on the mapped YANG schema tree:
       </t>
-      <t>
-        TMF634 <xref target="TMF634"/> defines the Resource Catalog model in a
-        similar fashion. A <tt>ResourceSpecification</tt> carries
-        <tt>resourceSpecCharacteristic</tt> entries and their associated
-        <tt>resourceSpecCharacteristicValue</tt> constraints,
-        mirroring the service catalog structure.
-      </t>
-      <t>
-        This mapping ensures that catalog-level specifications align with the instance-level
-        Characteristics used in TMF640/TMF641 and TMF652/TMF702, enabling consistent validation of
-        service or resource orders against the intended YANG-defined model.
-      </t>
+      <ul>
+        <li>TMF640 Service Activation API <xref target="TMF640"/></li>
+        <li>TMF641 Service Order Management API <xref target="TMF641"/></li>
+        <li>TMF652 Resource Activation API <xref target="TMF652"/></li>
+        <li>TMF702 Resource Order Management API <xref target="TMF702"/></li>
+      </ul>
     </section>
     
     <section anchor="IANA">

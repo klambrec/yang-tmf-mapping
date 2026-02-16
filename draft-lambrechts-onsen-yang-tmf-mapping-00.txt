@@ -641,30 +641,30 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 5.  Implementation Guidelines
 
-   In the TMF Ordering/Activation and Configuration APIs, ordering is
-   expressed through ServiceOrder and ServiceOrderItem in TMF640
-   [TMF640] and TMF641 [TMF641].  In TMF652 [TMF652] and TMF702 [TMF702]
-   the ResourceOrder and ResourceOrderItem constructs have an equivalent
-   role for resource ordering and activation.
+   An implementation of the mapping mechanism defined in this document
+   SHOULD expose one or more of the following TMF Open APIs to allow TMF
+   API comsumers to query the Catalog Service/ResourceSpecifications:
 
-   TMF633 [TMF633] defines the Service Catalog model, where a
-   ServiceSpecification captures the design-time description of a
-   Service and its allowed parameters.  Parameter definitions are
-   expressed as serviceSpecCharacteristic entries, each of which can
-   include one or more serviceSpecCharacteristicValue entries to
-   constrain allowed values.
+   *  TMF633 Service Catalog Management API [TMF633]
 
-   TMF634 [TMF634] defines the Resource Catalog model in a similar
-   fashion.  A ResourceSpecification carries resourceSpecCharacteristic
-   entries and their associated resourceSpecCharacteristicValue
-   constraints, mirroring the service catalog structure.
+   *  TMF634 Resource Catalog Management API [TMF634]
 
-   This mapping ensures that catalog-level specifications align with the
-   instance-level Characteristics used in TMF640/TMF641 and TMF652/
-   TMF702, enabling consistent validation of service or resource orders
-   against the intended YANG-defined model.
+   The implementation SHOULD also expose one or more of the following
+   TMF Open APIs to allow TMF API consumers to place orders and activate
+   services/resources based on the mapped YANG schema tree:
+
+   *  TMF640 Service Activation API [TMF640]
+
+   *  TMF641 Service Order Management API [TMF641]
+
+   *  TMF652 Resource Activation API [TMF652]
+
+   *  TMF702 Resource Order Management API [TMF702]
 
 6.  IANA Considerations
+
+
+
 
 
 
