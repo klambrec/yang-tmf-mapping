@@ -237,8 +237,14 @@
           The mapping mechanism described in this document can be rooted at any
           YANG container or list. Implementations of the mapping mechanism
           SHOULD support any number of YANG schema subtrees to be mapped to TMF.
-          Implementations MAY use the following YANG extension to indicate the
-          mapping root for each subtree:
+          By default, the implementation MUST map the entire subtree starting
+          from the mapping root, but it MAY allow the operator to specify a
+          subtree of the YANG schema tree that is ignored by the mapping
+          mechanism.
+        </t>
+        <t>
+          Implementations MAY use the following YANG extension to
+          indicate themapping root for each subtree:
         </t>
         <sourcecode name="yang-tmf-map.yang"><![CDATA[
 module yang-tmf-map {
@@ -258,6 +264,11 @@ module yang-tmf-map {
     argument "name";
     description
       "The TMF Resource that this YANG subtree maps to.";
+  }
+  extension ignore {
+    description
+      "Indicates that the annotated YANG node and its subtree
+       are ignored by the mapping mechanism.";
   }
 }
       ]]></sourcecode>
@@ -453,7 +464,15 @@ module netinfra {
     
     <section anchor="IANA">
       <name>IANA Considerations</name>
-      <t>This memo includes no request to IANA.</t>
+      <section>
+        <name>YANG Module Registry</name>
+        <t>
+          The YANG module defined in this document, <tt>yang-tmf-map</tt>,
+          is intended to be registered in the IANA YANG Module registry.
+          The module defines extensions that can be used to annotate YANG
+          modules with TMF mapping information.
+        </t>
+      </section>
     </section>
     
     <section anchor="Security">

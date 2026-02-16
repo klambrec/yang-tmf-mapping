@@ -76,10 +76,11 @@ Table of Contents
    4.  Mapping YANG leafs and leaf-lists to TMF Characteristics  . .   9
    5.  Implementation Guidelines . . . . . . . . . . . . . . . . . .   9
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  10
+     6.1.  YANG Module Registry  . . . . . . . . . . . . . . . . . .  10
    7.  Security Considerations . . . . . . . . . . . . . . . . . . .  10
    8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  11
      8.1.  Normative References  . . . . . . . . . . . . . . . . . .  11
-     8.2.  Informative References  . . . . . . . . . . . . . . . . .  11
+     8.2.  Informative References  . . . . . . . . . . . . . . . . .  12
    Appendix A.  Evaluation of mapping approaches for nested
            structures  . . . . . . . . . . . . . . . . . . . . . . .  12
      A.1.  Approach 1: Strongly Typed Pattern  . . . . . . . . . . .  13
@@ -105,7 +106,6 @@ Table of Contents
    and YANG instance data on the one hand and TM Forum Data Models and
    APIs on the other hand.  The goal is to enable consistent
    representation of resources and services across management interfaces
-   and domains.  The mechanism for mapping is intended to remove
 
 
 
@@ -114,6 +114,7 @@ Lambrechts               Expires 20 August 2026                 [Page 2]
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
+   and domains.  The mechanism for mapping is intended to remove
    integration barriers between YANG-based automation and TMF Open APIs,
    and to enable operators to leverage YANG models directly in their
    TMF-based BSS/OSS implementations.
@@ -157,7 +158,6 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
    Service Orchestrator, while YANG-based models and automation drive
    the southbound interfaces to network controllers and devices.  The
    mechanism for mapping defined in this document may operate.
-
 
 
 
@@ -287,8 +287,13 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
    The mapping mechanism described in this document can be rooted at any
    YANG container or list.  Implementations of the mapping mechanism
    SHOULD support any number of YANG schema subtrees to be mapped to
-   TMF.  Implementations MAY use the following YANG extension to
-   indicate the mapping root for each subtree:
+   TMF.  By default, the implementation MUST map the entire subtree
+   starting from the mapping root, but it MAY allow the operator to
+   specify a subtree of the YANG schema tree that is ignored by the
+   mapping mechanism.
+
+   Implementations MAY use the following YANG extension to indicate
+   themapping root for each subtree:
 
    module yang-tmf-map {
      yang-version "1.1";
@@ -308,21 +313,16 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
        description
          "The TMF Resource that this YANG subtree maps to.";
      }
+     extension ignore {
+       description
+         "Indicates that the annotated YANG node and its subtree
+          are ignored by the mapping mechanism.";
+     }
    }
 
    An operator can use the extension directly in the target YANG module,
    or they can use YANG augmentation to add the mapping to the relevant
    node(s).  An example of the extension usage is as follows:
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -529,7 +529,12 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 6.  IANA Considerations
 
-   This memo includes no request to IANA.
+6.1.  YANG Module Registry
+
+   The YANG module defined in this document, yang-tmf-map, is intended
+   to be registered in the IANA YANG Module registry.  The module
+   defines extensions that can be used to annotate YANG modules with TMF
+   mapping information.
 
 7.  Security Considerations
 
@@ -547,11 +552,6 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
    Failing to do so can result in privilege escalation or unintended
    disclosure.
 
-   When mapping data across administrative or trust boundaries,
-   operators MUST ensure that transport security (e.g., TLS) and mutual
-   authentication are used as appropriate for the deployed APIs.  The
-   mapping process MUST NOT bypass auditing, logging, or rate-limiting
-   controls that are required for the underlying interfaces.
 
 
 
@@ -561,6 +561,12 @@ Lambrechts               Expires 20 August 2026                [Page 10]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
+
+   When mapping data across administrative or trust boundaries,
+   operators MUST ensure that transport security (e.g., TLS) and mutual
+   authentication are used as appropriate for the deployed APIs.  The
+   mapping process MUST NOT bypass auditing, logging, or rate-limiting
+   controls that are required for the underlying interfaces.
 
    Finally, any reference data used by the mapping (such as schema
    registries, profiles, or transformation rules) SHOULD be protected
@@ -604,12 +610,6 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
               VPNs", RFC 9291, DOI 10.17487/RFC9291, September 2022,
               <https://www.rfc-editor.org/info/rfc9291>.
 
-   [RFC8969]  Wu, Q., Ed., Boucadair, M., Ed., Lopez, D., Xie, C., and
-              L. Geng, "A Framework for Automating Service and Network
-              Management with YANG", RFC 8969, DOI 10.17487/RFC8969,
-              January 2021, <https://www.rfc-editor.org/info/rfc8969>.
-
-8.2.  Informative References
 
 
 
@@ -617,6 +617,13 @@ Lambrechts               Expires 20 August 2026                [Page 11]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
+
+   [RFC8969]  Wu, Q., Ed., Boucadair, M., Ed., Lopez, D., Xie, C., and
+              L. Geng, "A Framework for Automating Service and Network
+              Management with YANG", RFC 8969, DOI 10.17487/RFC8969,
+              January 2021, <https://www.rfc-editor.org/info/rfc8969>.
+
+8.2.  Informative References
 
    [TMF633]   TM Forum, "TMF633 Service Catalog Management API",
               TMF 633, 2019, <https://www.tmforum.org/oda/open-
@@ -659,13 +666,6 @@ Appendix A.  Evaluation of mapping approaches for nested structures
    operational clarity.  Five possible approaches are identified in this
    section with their respective advantages and disadvantages.
 
-   The TMF630 REST API Design Guidelines [TMF630] allow for two overall
-   patterns.  The "strongly typed" pattern is described in the first
-   approach.  The Characteristic / CharacteristicSpecification pattern,
-   has found wide adoption in TMF APIs and it is the basis for the
-   remaining approaches.
-
-
 
 
 
@@ -673,6 +673,12 @@ Lambrechts               Expires 20 August 2026                [Page 12]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
+
+   The TMF630 REST API Design Guidelines [TMF630] allow for two overall
+   patterns.  The "strongly typed" pattern is described in the first
+   approach.  The Characteristic / CharacteristicSpecification pattern,
+   has found wide adoption in TMF APIs and it is the basis for the
+   remaining approaches.
 
 A.1.  Approach 1: Strongly Typed Pattern
 
@@ -710,12 +716,6 @@ A.2.  Approach 2: Complex Characteristics
 
    A complete data structure can be embedded into a single
    Characteristic by using the TM Forum "Object" Value Type.
-
-
-
-
-
-
 
 
 
