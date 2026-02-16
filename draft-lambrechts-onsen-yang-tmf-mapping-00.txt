@@ -84,28 +84,28 @@ Table of Contents
        3.3.2.  The leaf-list's "default" Statement . . . . . . . . .  10
        3.3.3.  The leaf-list's "min-elements" Statement  . . . . . .  10
        3.3.4.  The leaf-list's "max-elements" Statement  . . . . . .  10
-   4.  Mapping YANG Built-In Types . . . . . . . . . . . . . . . . .  10
-     4.1.  The Integer Built-In Types  . . . . . . . . . . . . . . .  10
+     3.4.  The "list" Statement  . . . . . . . . . . . . . . . . . .  10
+       3.4.1.  The list's "key" Statement  . . . . . . . . . . . . .  11
+       3.4.2.  The list's "unique" Statement . . . . . . . . . . . .  11
+   4.  Mapping YANG Built-In Types . . . . . . . . . . . . . . . . .  11
+     4.1.  The Integer Built-In Types  . . . . . . . . . . . . . . .  11
        4.1.1.  The "range" Statement . . . . . . . . . . . . . . . .  11
      4.2.  The String Built-In Types . . . . . . . . . . . . . . . .  11
        4.2.1.  The "length" Statement  . . . . . . . . . . . . . . .  11
-       4.2.2.  The "pattern" Statement . . . . . . . . . . . . . . .  11
-     4.3.  The Boolean Built-In Type . . . . . . . . . . . . . . . .  11
-     4.4.  The Enumeration Built-In Type . . . . . . . . . . . . . .  11
-       4.4.1.  The "enum" Statement  . . . . . . . . . . . . . . . .  11
+       4.2.2.  The "pattern" Statement . . . . . . . . . . . . . . .  12
+     4.3.  The Boolean Built-In Type . . . . . . . . . . . . . . . .  12
+     4.4.  The Enumeration Built-In Type . . . . . . . . . . . . . .  12
+       4.4.1.  The "enum" Statement  . . . . . . . . . . . . . . . .  12
    5.  Implementation Guidelines . . . . . . . . . . . . . . . . . .  12
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  12
-     6.1.  YANG Module Registry  . . . . . . . . . . . . . . . . . .  12
-   7.  Security Considerations . . . . . . . . . . . . . . . . . . .  12
+     6.1.  YANG Module Registry  . . . . . . . . . . . . . . . . . .  13
+   7.  Security Considerations . . . . . . . . . . . . . . . . . . .  13
    8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  13
      8.1.  Normative References  . . . . . . . . . . . . . . . . . .  13
      8.2.  Informative References  . . . . . . . . . . . . . . . . .  14
    Appendix A.  Evaluation of mapping approaches for nested
            structures  . . . . . . . . . . . . . . . . . . . . . . .  15
      A.1.  Approach 1: Strongly Typed Pattern  . . . . . . . . . . .  15
-     A.2.  Approach 2: Complex Characteristics . . . . . . . . . . .  16
-     A.3.  Approach 3: Decomposition into Services/Resources . . . .  17
-     A.4.  Approach 4: Decomposition into Features . . . . . . . . .  17
 
 
 
@@ -114,7 +114,10 @@ Lambrechts               Expires 20 August 2026                 [Page 2]
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
-     A.5.  Approach 5: Encode Schema in Characteristic Names . . . .  17
+     A.2.  Approach 2: Complex Characteristics . . . . . . . . . . .  16
+     A.3.  Approach 3: Decomposition into Services/Resources . . . .  17
+     A.4.  Approach 4: Decomposition into Features . . . . . . . . .  18
+     A.5.  Approach 5: Encode Schema in Characteristic Names . . . .  18
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  18
 
 1.  Introduction
@@ -159,9 +162,6 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
    architecture.  Operational concerns such as service orchestration
    workflows and business processes are out of scope, except where they
    affect the interpretation of the mapped data.
-
-
-
 
 
 
@@ -543,17 +543,17 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
    the CharacteristicSpecification "maxCardinality" field with a value
    corresponding to the constraint specified in the YANG model.
 
-4.  Mapping YANG Built-In Types
+3.4.  The "list" Statement
 
-4.1.  The Integer Built-In Types
+   If the list is annotated with the tmf:cfs-service or tmf:rfs-service
+   extension, it MUST be mapped to a TMF CFS Service or RFS Resource,
+   respectively.  Otherwise, it MUST be mapped to a TMF Feature.
 
-   All YANG integer built-in types (i.e., int8, int16, int32, int64,
-   uint8, uint16, uint32, uint64) MUST be mapped to the integer JSON
-   Schema type.
-
-
-
-
+   Data nodes located directly under the mapping root MUST be mapped to
+   Service or Resource Characteristics.  Data nodes located in a first-
+   level container or list are mapped to Feature Characteristics, while
+   those located in deeper levels of the YANG schema tree are mapped to
+   subFeature Characteristics and so on.
 
 
 
@@ -561,6 +561,28 @@ Lambrechts               Expires 20 August 2026                [Page 10]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
+
+   The Feature name SHOULD be derived from the YANG node name.  The
+   child data nodes of the list are mapped to the corresponding schema
+   elements within the Feature.
+
+3.4.1.  The list's "key" Statement
+
+   The list key(s) MUST be considered mandatory and mapped accordingly
+   to the TMF CharacteristicSpecification "minCardinality" field.
+
+3.4.2.  The list's "unique" Statement
+
+   The YANG "unique" statement for a list MUST be mapped to the
+   CharacteristicSpecification "isUnique" field with a value of true.
+
+4.  Mapping YANG Built-In Types
+
+4.1.  The Integer Built-In Types
+
+   All YANG integer built-in types (i.e., int8, int16, int32, int64,
+   uint8, uint16, uint32, uint64) MUST be mapped to the integer JSON
+   Schema type.
 
 4.1.1.  The "range" Statement
 
@@ -589,6 +611,13 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
    "|"), each interval MUST be mapped to a separate
    CharacteristicValueSpecification entry with the corresponding regex.
 
+
+
+Lambrechts               Expires 20 August 2026                [Page 11]
+
+Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
+
+
 4.2.2.  The "pattern" Statement
 
    The YANG "pattern" statement MUST be mapped to the
@@ -609,14 +638,6 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
    Each enum value defined in the YANG model MUST be mapped to a
    CharacteristicValueSpecification entry with the "valueType" field set
    to "string" and the "value" field set to the enumeration value.
-
-
-
-
-Lambrechts               Expires 20 August 2026                [Page 11]
-
-Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
-
 
 5.  Implementation Guidelines
 
@@ -645,6 +666,14 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 6.  IANA Considerations
 
+
+
+
+Lambrechts               Expires 20 August 2026                [Page 12]
+
+Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
+
+
 6.1.  YANG Module Registry
 
    The YANG module defined in this document, yang-tmf-map, is intended
@@ -659,20 +688,6 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
    new protocol elements, but it can affect how existing security
    properties are preserved when translating data between
    representations.
-
-
-
-
-
-
-
-
-
-
-Lambrechts               Expires 20 August 2026                [Page 12]
-
-Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
-
 
    Implementations of this mapping MUST preserve the confidentiality,
    integrity, and authorization semantics of the source model.  In
@@ -706,6 +721,15 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
+
+
+
+
+Lambrechts               Expires 20 August 2026                [Page 13]
+
+Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
+
+
    [RFC8299]  Wu, Q., Ed., Litkowski, S., Tomotaki, L., and K. Ogaki,
               "YANG Data Model for L3VPN Service Delivery", RFC 8299,
               DOI 10.17487/RFC8299, January 2018,
@@ -719,16 +743,6 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
    [RFC7950]  Bjorklund, M., Ed., "The YANG 1.1 Data Modeling Language",
               RFC 7950, DOI 10.17487/RFC7950, August 2016,
               <https://www.rfc-editor.org/info/rfc7950>.
-
-
-
-
-
-
-Lambrechts               Expires 20 August 2026                [Page 13]
-
-Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
-
 
    [RFC9182]  Barguil, S., Gonzalez de Dios, O., Ed., Boucadair, M.,
               Ed., Munoz, L., and A. Aguado, "A YANG Network Data Model
@@ -764,6 +778,14 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
               <https://www.tmforum.org/oda/open-apis/directory/service-
               ordering-api-TMF641/>.
 
+
+
+
+Lambrechts               Expires 20 August 2026                [Page 14]
+
+Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
+
+
    [TMF652]   TM Forum, "TMF652 Resource Ordering Management API",
               TMF 652, 2019, <https://www.tmforum.org/oda/open-
               apis/directory/resource-ordering-management-api-TMF652/>.
@@ -776,15 +798,6 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
    [TMF630]   TM Forum, "TMF630 REST API Design Guidelines", TMF 630,
               2021, <https://www.tmforum.org/resources/specifications/
               tmf630-rest-api-design-guidelines-4-2-0/>.
-
-
-
-
-
-Lambrechts               Expires 20 August 2026                [Page 14]
-
-Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
-
 
 Appendix A.  Evaluation of mapping approaches for nested structures
 
@@ -809,6 +822,25 @@ A.1.  Approach 1: Strongly Typed Pattern
    Service or Resource has a corresponding YAML or JSON schema defined
    in the @schemaLocation property.  An example payload for a strongly
    typed Service may look like this:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lambrechts               Expires 20 August 2026                [Page 15]
+
+Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
+
 
    {
      "id" : "id1234567890",
@@ -835,17 +867,36 @@ A.1.  Approach 1: Strongly Typed Pattern
    mechanism for mapping defined in this document focuses on the
    Characteristic-based approaches described in the following sections.
 
-
-
-Lambrechts               Expires 20 August 2026                [Page 15]
-
-Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
-
-
 A.2.  Approach 2: Complex Characteristics
 
    A complete data structure can be embedded into a single
    Characteristic by using the TM Forum "Object" Value Type.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lambrechts               Expires 20 August 2026                [Page 16]
+
+Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
+
 
    {
      "id": "123-456",
@@ -887,17 +938,6 @@ A.2.  Approach 2: Complex Characteristics
    Additionally, it can make the Characteristic value opaque and
    difficult to validate or manipulate without understanding the schema.
 
-
-
-
-
-
-
-Lambrechts               Expires 20 August 2026                [Page 16]
-
-Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
-
-
 A.3.  Approach 3: Decomposition into Services/Resources
 
    Each data tree layer could be mapped to its own TM Forum Service or
@@ -905,6 +945,14 @@ A.3.  Approach 3: Decomposition into Services/Resources
    relationships.  This approach enables explicit decomposition and
    reuse.  However, each Service or Resource will appear in the Service
    Catalog or Resource Catalog as a separately orderable item.
+
+
+
+
+Lambrechts               Expires 20 August 2026                [Page 17]
+
+Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
+
 
    If this approach was uniformly used for each YANG container or list,
    implementations would then need to expose and manage the appropriate
@@ -947,60 +995,12 @@ A.5.  Approach 5: Encode Schema in Characteristic Names
    for completeness as the approach was evaluated during the design of
    the mapping mechanism.
 
-
-
-Lambrechts               Expires 20 August 2026                [Page 17]
-
-Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
-
-
 Author's Address
 
    Kris Lambrechts
    NetEdge
    Email: kris@netedge.plus
    URI:   https://www.netedge.plus
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

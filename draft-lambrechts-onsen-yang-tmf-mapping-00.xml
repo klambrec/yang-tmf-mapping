@@ -473,6 +473,41 @@ module netinfra {
           </t>
         </section>
       </section>
+      <section>
+        <name>The "list" Statement</name>
+        <t>
+          If the list is annotated with the <tt>tmf:cfs-service</tt> or
+          <tt>tmf:rfs-service</tt> extension, it MUST be mapped to a TMF CFS
+          Service or RFS Resource, respectively. Otherwise, it MUST be mapped
+          to a TMF Feature.
+        </t>
+        <t>
+          Data nodes located directly under the mapping root MUST be mapped to
+          Service or Resource Characteristics. Data nodes located in a
+          first-level container or list are mapped to Feature Characteristics,
+          while those located in deeper levels of the YANG schema tree are
+          mapped to subFeature Characteristics and so on.
+        </t>
+        <t>
+          The Feature <tt>name</tt> SHOULD be derived from the YANG node name.
+          The child data nodes of the list are mapped to the corresponding
+          schema elements within the Feature.
+        </t>
+        <section>
+          <name>The list's "key" Statement</name>
+          <t>
+             The list key(s) MUST be considered mandatory and mapped accordingly
+             to the TMF CharacteristicSpecification "minCardinality" field.
+          </t>
+        </section>
+         <section>
+           <name>The list's "unique" Statement</name>
+           <t>
+             The YANG "unique" statement for a list MUST be mapped to the
+             CharacteristicSpecification "isUnique" field with a value of true.
+           </t>
+         </section>
+      </section>
     </section>
 
     <section>
