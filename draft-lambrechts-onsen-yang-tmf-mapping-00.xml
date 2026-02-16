@@ -22,7 +22,7 @@
 
   <front>
     <title abbrev="YANG-TMF Model &amp; Data Mapping">
-      Mapping YANG Modules and Instance Data to TM Forum Data Models and APIs
+      Mapping YANG Schemas and Instance Data to TM Forum Data Models and APIs
     </title>
 
     <seriesInfo name="Internet-Draft" value="draft-lambrechts-onsen-yang-tmf-mapping-00"/>
@@ -54,14 +54,14 @@
 
     <abstract>
       <t>
-        This document describes a mechanism for mapping between YANG
-        modules/instance data and TM Forum Data Models and APIs.
+        This document describes a mechanism for mapping between YANG schemas
+        and instance data and TM Forum Data Models and APIs.
         The mapping mechanism enables orchestrators to produce and expose TMF
         compliant interfaces that provide TMF API consumers direct access to a
         YANG data store.
       </t>
       <t>
-        Both a mechanism for the mapping of YANG modules to TMF Catalog
+        Both a mechanism for the mapping of YANG schemas to TMF Catalog
         Specifications (i.e. TMF633/634) and a matching mechanism for the
         mapping of YANG instance data to TMF Order Management (i.e. TMF641/652)
         and Activation Management (i.e. TMF640/702) APIs are described.
@@ -76,7 +76,7 @@
       <name>Introduction</name>
       <t>
         Service providers commonly use Operational Support Systems (OSS) with
-        NETCONF/YANG interfaces (e.g., YANG modules <xref target="RFC7950"/>) to
+        NETCONF/YANG interfaces (e.g., YANG models <xref target="RFC7950"/>) to
         describe configuration and operational state for network devices and
         services.
         
@@ -88,20 +88,21 @@
         across platforms.
       </t>
       <t>
-        This document specifies a mechanism for mapping between YANG modules and
+        This document specifies a mechanism for mapping between YANG schemas and
         YANG instance data on the one hand and TM Forum Data Models and APIs on
         the other hand. The goal is to enable consistent representation of
         resources and services across management interfaces and domains.
-        The mechanism for mapping is intendend to remove intergation barriers
+        The mechanism for mapping is intended to remove integration barriers
         between YANG-based automation and TMF Open APIs, and to enable operators
         to leverage YANG models directly in their TMF-based BSS/OSS
         implementations.
       </t>
        <t>
         The mechanism for mapping is designed to preserve the semantics of the
-        original YANG modules such as hierarchy, identity, and constraints while
-        making them compatible with the TMF data structures and API patterns.
-        A concious effort is made to make minimal use of the support for
+        original YANG schema tree such as hierarchy, identity, and constraints
+        while making them compatible with the TMF data structures and API
+        patterns.
+        A conscious effort is made to make minimal use of the support for
         polymorphism in the TMF APIs, as this would shift the implementation
         burden to the TMF consumers, hindering adoption and interoperability.
         Instead, the mechanism for mapping leverages existing TMF constructs
@@ -115,7 +116,7 @@
       </t>
       <t>
         The scope of this document is limited to the mechanism for mapping
-        between YANG modules/instance data and TM Forum data models and APIs,
+        between YANG schemas/instance data and TM Forum data models and APIs,
         and the associated transformation rules.
         It does not define new protocols, nor does it mandate a specific
         implementation architecture.
@@ -251,7 +252,7 @@
     </section>
 
     <section>
-      <name>YANG Modules in TMF Catalog APIs</name>
+      <name>YANG Schema Trees in TMF Catalog APIs</name>
       <t>
         TMF633 <xref target="TMF633"/> defines the Service Catalog model, where a <tt>ServiceSpecification</tt> captures the
         design-time description of a service and its allowed parameters. Parameter definitions are
@@ -357,28 +358,31 @@
     <section anchor="Security">
       <name>Security Considerations</name>
       <t>
-        This document defines a mapping between YANG modules/instance data and TM Forum data
-        models and APIs. The mapping itself introduces no new protocol elements, but it can
-        affect how existing security properties are preserved when translating data between
-        representations.
+        This document defines a mapping between YANG schemas/instance data and
+        TM Forum data models and APIs. The mapping itself introduces no new
+        protocol elements, but it can affect how existing security properties
+        are preserved when translating data between representations.
       </t>
       <t>
-        Implementations of this mapping MUST preserve the confidentiality, integrity, and
-        authorization semantics of the source model. In particular, access control decisions
-        tied to YANG nodes (including read, write, and notification permissions) MUST be
-        enforced equivalently on the mapped TM Forum resources and operations. Failing to do
+        Implementations of this mapping MUST preserve the confidentiality,
+        integrity, and authorization semantics of the source model.
+        In particular, access control decisions tied to YANG nodes (including
+        read, write, and notification permissions) MUST be enforced equivalently
+        on the mapped TM Forum resources and operations. Failing to do
         so can result in privilege escalation or unintended disclosure.
       </t>
       <t>
-        When mapping data across administrative or trust boundaries, operators MUST ensure
-        that transport security (e.g., TLS) and mutual authentication are used as appropriate
-        for the deployed APIs. The mapping process MUST NOT bypass auditing, logging, or
-        rate-limiting controls that are required for the underlying interfaces.
+        When mapping data across administrative or trust boundaries, operators
+        MUST ensure that transport security (e.g., TLS) and mutual
+        authentication are used as appropriate for the deployed APIs.
+        The mapping process MUST NOT bypass auditing, logging, or rate-limiting
+        controls that are required for the underlying interfaces.
       </t>
       <t>
-        Finally, any reference data used by the mapping (such as schema registries, profiles,
-        or transformation rules) SHOULD be protected from unauthorized modification, as
-        tampering could lead to incorrect data interpretation or security policy violations.
+        Finally, any reference data used by the mapping (such as schema
+        registries, profiles, or transformation rules) SHOULD be protected from
+        unauthorized modification, as tampering could lead to incorrect data
+        interpretation or security policy violations.
       </t>
     </section>
     
@@ -478,9 +482,9 @@
     <section>
       <name>Evaluation of mapping approaches for nested structures</name>
       <t>
-        YANG modules commonly represent complex data structures by composing
-        containers, lists, leafs, and leaf-lists into YANG data trees that
-        capture hierarchy, optionality, and repeated elements.
+        YANG schema trees commonly represent complex data structures by
+        composing containers, lists, leafs, and leaf-lists into YANG data trees
+        that capture hierarchy, optionality, and repeated elements.
         Mapping those constructs into TM Forum Service and Resource Data Models
         can be approached in several ways, each with different trade-offs in
         expressiveness, TMF Service/Resource Catalog behavior, and operational
