@@ -320,65 +320,6 @@
         </li>
       </ul>
     </section>
-    
-    <section>
-      <name>Mapping Approaches for YANG containers and lists</name>
-      <t>
-        YANG modules commonly represent complex data structures by composing containers,
-        lists, leafs, and leaf-lists into YANG data trees that capture hierarchy, optionality,
-        and repeated elements. Mapping those constructs into TM Forum Service and Resource
-        Data Models can be approached in several ways, each with different trade-offs in
-        expressiveness, Catalog behavior, and operational clarity. This section enumerates
-        four approaches that may be applied.
-      </t>
-
-      <section>
-        <name>Approach 1: Complex Characteristics</name>
-        <t>
-          The structure can be embedded in a single Characteristic by using the TM Forum
-          "Any" value type. In this case, the concrete schema of the value MUST be provided
-          out-of-band, typically as a JSON Schema artifact. This preserves structure, but
-          it introduces an additional schema dependency and shifts validation responsibility
-          to implementers.
-        </t>
-      </section>
-
-      <section>
-        <name>Approach 2: Decomposition into Services/Resources</name>
-        <t>
-          Each data tree layer can be mapped to its own TM Forum Service or Resource, linked
-          through <tt>supportingService</tt> or corresponding Resource relationships. This
-          enables explicit decomposition and reuse; however, it causes each layer to appear
-          in the Service Catalog or Resource Catalog as a separately orderable item.
-          Implementations would then need to expose and manage the appropriate relationships
-          (e.g., parent-child, requires), and the resulting granularity can become too fine
-          to be operationally meaningful.
-        </t>
-      </section>
-
-      <section>
-        <name>Approach 3: Decomposition into Features</name>
-        <t>
-          Each data tree layer can be represented as a TM Forum Service Feature or Resource
-          Feature within an enclosing Service or Resource. This keeps Catalog entries
-          stable, but the current TM Forum model does not define feature nesting (i.e.,
-          there is no supportingFeature-like construct). Implementations could introduce a
-          controlled extension (e.g., via a schemaLocation extension) to represent feature
-          hierarchy, but such nesting SHOULD be standardized in a future TM Forum Open API
-          release for maximum interoperability.
-        </t>
-      </section>
-
-      <section>
-        <name>Approach 4: Encode Schema in Characteristic Names</name>
-        <t>
-          The structure can be flattened by encoding path-like information in Characteristic
-          names (e.g., a YANG path fragment). This is simple to implement but it cannot
-          represent cardinality accurately and tends to obscure the original YANG data tree,
-          making validation and processing ambiguous.
-        </t>
-      </section>
-    </section>
 
     <section>
       <name>Implementation Guidelines</name>
@@ -461,7 +402,6 @@
       </references>
       <references>
         <name>Informative References</name>
-
         <reference anchor="TMF633" target="https://www.tmforum.org/oda/open-apis/directory/service-catalog-management-api-TMF633/">
           <front>
             <title>TMF633 Service Catalog Management API</title>
@@ -472,7 +412,6 @@
           </front>
           <seriesInfo name="TMF" value="633"/>
         </reference>
-
         <reference anchor="TMF634" target="https://www.tmforum.org/oda/open-apis/directory/resource-catalog-management-api-TMF634/">
           <front>
             <title>TMF634 Resource Catalog Management API</title>
@@ -483,7 +422,6 @@
           </front>
           <seriesInfo name="TMF" value="634"/>
         </reference>
-
         <reference anchor="TMF640" target="https://www.tmforum.org/oda/open-apis/directory/service-activation-and-configuration-api-TMF640/">
           <front>
             <title>TMF640 Service Activation and Configuration API</title>
@@ -494,7 +432,6 @@
           </front>
           <seriesInfo name="TMF" value="640"/>
         </reference>
-
         <reference anchor="TMF641" target="https://www.tmforum.org/oda/open-apis/directory/service-ordering-api-TMF641/">
           <front>
             <title>TMF641 Service Ordering API</title>
@@ -505,7 +442,6 @@
           </front>
           <seriesInfo name="TMF" value="641"/>
         </reference>
-
         <reference anchor="TMF652" target="https://www.tmforum.org/oda/open-apis/directory/resource-ordering-management-api-TMF652/">
           <front>
             <title>TMF652 Resource Ordering Management API</title>
@@ -516,7 +452,6 @@
           </front>
           <seriesInfo name="TMF" value="652"/>
         </reference>
-
         <reference anchor="TMF702" target="https://www.tmforum.org/oda/open-apis/directory/resource-activation-and-configuration-api-TMF702/">
           <front>
             <title>TMF702 Resource Activation and Configuration API</title>
@@ -527,9 +462,185 @@
           </front>
           <seriesInfo name="TMF" value="702"/>
         </reference>
-
+        <reference anchor="TMF630" target="https://www.tmforum.org/resources/specifications/tmf630-rest-api-design-guidelines-4-2-0/">
+          <front>
+            <title>TMF630 REST API Design Guidelines</title>
+            <author>
+              <organization>TM Forum</organization>
+            </author>
+            <date year="2021"/>
+          </front>
+          <seriesInfo name="TMF" value="630"/>
+        </reference>
       </references>
     </references>
-    
+
+    <section>
+      <name>Evaluation of mapping approaches for nested structures</name>
+      <t>
+        YANG modules commonly represent complex data structures by composing
+        containers, lists, leafs, and leaf-lists into YANG data trees that
+        capture hierarchy, optionality, and repeated elements.
+        Mapping those constructs into TM Forum Service and Resource Data Models
+        can be approached in several ways, each with different trade-offs in
+        expressiveness, TMF Service/Resource Catalog behavior, and operational
+        clarity. Five possible approaches are identified in this section with
+        their respective advantages and disadvantages.
+      </t>
+      <t>
+        The TMF630 REST API Design Guidelines <xref target="TMF630"/> allow
+        for two overall patterns. The "strongly typed" pattern is described
+        in the first approach. The Characteristic / CharacteristicSpecification
+        pattern, has found wide adoption in TMF APIs and it is the basis for
+        the remaining approaches.
+      </t>
+      <section>
+        <name>Approach 1: Strongly Typed Pattern</name>
+        <t>
+          When using the "strongly typed" pattern, it is assumed that each
+          Service or Resource has a corresponding YAML or JSON schema defined in
+          the @schemaLocation property.
+
+          An example payload for a strongly typed Service may look like this:
+          </t>
+          <sourcecode><![CDATA[
+{
+  "id" : "id1234567890",
+  "href" : "http//..",
+  "state" : "active",
+  "@type" : "conferenceBridgeEquipment",
+  "@schemaLocation" : "http://../conferenceBridgeEquipment.json",
+  "serviceSpecification":{
+    "id":"conferenceBridgeEquipment",
+    "href":"http://serverlocation:port/catalogManagement/
+            serviceSpecification/conferenceBridgeEquipment"
+  },
+  "numberOfVc500Units": "1",
+  "numberOfVc100Units": "2",
+  "routerType": "CiscoASR1000",
+  "powerSupply": "UK"
+}
+      ]]></sourcecode>
+        <t>
+          The downside of this approach is that it relies on the TMF API
+          consumer to understand and process the schema referenced in the
+          @schemaLocation property. Since this places a burden on the consumer,
+          it can hinder adoption and interoperability, especially if the schema
+          is complex or not widely supported. Therefore, the mechanism for
+          mapping defined in this document focuses on the Characteristic-based
+          approaches described in the following sections.
+        </t>
+      </section>
+      <section>
+        <name>Approach 2: Complex Characteristics</name>
+        <t>
+          A complete data structure can be embedded into a single Characteristic
+          by using the TM Forum "Object" Value Type. 
+        </t>
+        <sourcecode><![CDATA[
+{
+  "id": "123-456",
+  "href": "http://serverlocation:port/
+           serviceActivationConfiguration/v4/service/123-456",
+  "category": "MobileService",
+  "description": "Mobile Line ",
+  "hasStarted": true,
+  "isBundle": false,
+  "isServiceEnabled": true,
+  "isStateful": true,
+  "serviceDate": "020-04-01T12:15:39.434Z",
+  "startDate": "2020-04-03T12:15:39.434Z",
+  "serviceCharacteristic": [
+    {
+      "id": "1",
+      "name": "VoiceCharacteristic",
+      "valueType": "object",
+      "value": [
+        {
+          "voiceStandard": "enable",
+          "voWifi": "disable",
+          "roaming": "enable",
+          "@schemaLocation": "../serviceSpecification/11//VC.json",
+          "@type": "VoiceFeatureCharacteristic"
+        }
+      ],
+      "@type": "ServiceCharacteristic"
+    }
+  ],
+  "@type": "Service"
+}
+      ]]></sourcecode>
+        <t>
+          This approach has the advantages of fitting in with the
+          Characteristic-based model which most TMF API implementations follow,
+          but otherwise suffers from the same issue as the strongly typed
+          pattern. This approach, too, relies on the consumer to understand and
+          process the schema referenced in the @schemaLocation property.
+          Additionally, it can make the Characteristic value opaque and
+          difficult to validate or manipulate without understanding the schema.
+        </t>
+      </section>
+      <section>
+        <name>Approach 3: Decomposition into Services/Resources</name>
+        <t>
+          Each data tree layer could be mapped to its own TM Forum Service or
+          Resource, linked through <tt>supportingService</tt> or corresponding
+          Resource relationships.
+          This approach enables explicit decomposition and reuse. However,
+          each Service or Resource will appear in the Service Catalog or
+          Resource Catalog as a separately orderable item.
+        </t>
+        <t>
+          If this approach was uniformly used for each YANG container or list,
+          implementations would then need to expose and manage the appropriate
+          relationships (e.g., parent-child, requires), and the resulting
+          granularity can become too fine to be operationally meaningful.
+          Especially for deeply nested YANG models such as the L3SM, this can
+          lead to a large number of Services/Resources in the Catalog,
+          making it difficult for operators to manage and for consumers to
+          understand the available offerings.
+        </t>
+        <t>
+          This document uses this approach at the mapping root only.
+        </t>
+      </section>
+      <section>
+        <name>Approach 4: Decomposition into Features</name>
+        <t>
+          Each data tree layer can be represented as a TM Forum Service
+          Feature or Resource Feature within a Service or Resource.
+          This approach keeps Catalog entries manageable while still allowing
+          for a structural and hierarchical representation inside the Service
+          or Resource.
+        </t>
+        <t>
+          The current TM Forum Data Model does not support Feature nesting, 
+          i.e., there is no supportingFeature-like construct. Such construct
+          COULD be added via a schemaLocation extension to represent feature
+          hierarchy. However, it is the author's opinion that for
+          maximum interoperability, such nesting SHOULD be standardized in a
+          future TM Forum Open API release.
+        </t>
+        <t>
+          This document uses this approach for each YANG container or list that
+          is mapped below the root.
+        </t>
+      </section>
+      <section>
+        <name>Approach 5: Encode Schema in Characteristic Names</name>
+        <t>
+          The structure can be flattened by encoding path-like information in
+          Characteristic names (e.g., a YANG path fragment). This approach
+          would be simple to implement. However, it cannot represent cardinality
+          accurately and tends to obscure the original YANG data tree,
+          making validation and processing ambiguous.
+        </t>
+        <t>
+          This document does not use this approach, but it is mentioned here for
+          completeness as the approach was evaluated during the design of the
+          mapping mechanism.
+        </t>
+      </section>
+    </section>
  </back>
 </rfc>
