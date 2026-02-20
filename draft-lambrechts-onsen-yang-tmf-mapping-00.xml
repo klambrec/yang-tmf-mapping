@@ -126,8 +126,8 @@
 
       <t>
         The mapping mechanism is only intended for translating YANG modules to 
-        OpenAPI compliant APIs. The reverse translation (from OpenAPI to 
-        YANG) is not in scope.
+        TMF standards compliant Open APIs and payloads. The reverse translation
+        (from OpenAPI to YANG) is not in scope.
       </t>
 
       <section>
@@ -256,12 +256,13 @@
         <name>Defining The Mapping Root</name>
         <t>
           The mapping mechanism described in this document can be rooted at any
-          YANG container or list. Implementations of the mapping mechanism
-          SHOULD support any number of YANG schema subtrees to be mapped to TMF.
-          By default, the implementation MUST map the entire subtree starting
-          from the mapping root, but it MAY allow the operator to specify a
-          subtree of the YANG schema tree that is ignored by the mapping
-          mechanism.
+          container or list in the YANG schema tree. By default, the entire
+          subtree starting from the mapping root SHOULD be mapped to TMF,
+          except when the operator explicitly indicates that certain nodes or
+          subtrees should be ignored by the mapping mechanism, e.g. by using the
+          <tt>ignore</tt> extension in the YANG module below.
+          Each schema node can be included in at most one mapping subtree, i.e.,
+          implementations MUST NOT allow overlapping mapping subtrees.
         </t>
         <t>
           Implementations MAY use the following YANG extension to
@@ -280,7 +281,7 @@ module yang-tmf-map {
   extension rfs-service {
     argument "name";
     description
-      "The TMF RFS Resource that this YANG subtree maps to."; 
+      "The TMF RFS Service that this YANG subtree maps to.";
   }
   extension resource {
     argument "name";

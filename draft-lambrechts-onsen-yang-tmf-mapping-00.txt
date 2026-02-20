@@ -4,8 +4,8 @@
 
 Internet Engineering Task Force                            K. Lambrechts
 Internet-Draft                                                   NetEdge
-Intended status: Standards Track                        16 February 2026
-Expires: 20 August 2026
+Intended status: Standards Track                        20 February 2026
+Expires: 24 August 2026
 
 
 Mapping YANG Schemas and Instance Data to TM Forum Data Models and APIs
@@ -40,7 +40,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 August 2026.
+   This Internet-Draft will expire on 24 August 2026.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Lambrechts               Expires 20 August 2026                 [Page 1]
+Lambrechts               Expires 24 August 2026                 [Page 1]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -68,81 +68,80 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
      1.1.  Where the TMF Mapping Fits  . . . . . . . . . . . . . . .   4
-     1.2.  Requirements Language . . . . . . . . . . . . . . . . . .   5
-   2.  YANG Schema Trees and the TMF Data Models . . . . . . . . . .   5
-     2.1.  Defining The Mapping Root . . . . . . . . . . . . . . . .   6
-     2.2.  Mapping containers and lists to (sub)Features . . . . . .   7
-     2.3.  Mapping leafs and leaf-lists to Characteristics . . . . .   8
-   3.  Mapping YANG Statements . . . . . . . . . . . . . . . . . . .   8
-     3.1.  The "container" Statement . . . . . . . . . . . . . . . .   8
-     3.2.  The "leaf" Statement  . . . . . . . . . . . . . . . . . .   8
-       3.2.1.  The leaf's "type" Statement . . . . . . . . . . . . .   8
-       3.2.2.  The leaf's "default" Statement  . . . . . . . . . . .   9
-       3.2.3.  The leaf's "mandatory" Statement  . . . . . . . . . .   9
-     3.3.  The "leaf-list" Statement . . . . . . . . . . . . . . . .   9
-       3.3.1.  The leaf-list's "type" Statement  . . . . . . . . . .   9
-       3.3.2.  The leaf-list's "default" Statement . . . . . . . . .  10
-       3.3.3.  The leaf-list's "min-elements" Statement  . . . . . .  10
-       3.3.4.  The leaf-list's "max-elements" Statement  . . . . . .  10
-     3.4.  The "list" Statement  . . . . . . . . . . . . . . . . . .  10
-       3.4.1.  The list's "key" Statement  . . . . . . . . . . . . .  11
-       3.4.2.  The list's "unique" Statement . . . . . . . . . . . .  11
-   4.  Mapping YANG Built-In Types . . . . . . . . . . . . . . . . .  11
-     4.1.  The Integer Built-In Types  . . . . . . . . . . . . . . .  11
-       4.1.1.  The "range" Statement . . . . . . . . . . . . . . . .  11
-     4.2.  The String Built-In Types . . . . . . . . . . . . . . . .  11
-       4.2.1.  The "length" Statement  . . . . . . . . . . . . . . .  11
-       4.2.2.  The "pattern" Statement . . . . . . . . . . . . . . .  12
-     4.3.  The Boolean Built-In Type . . . . . . . . . . . . . . . .  12
-     4.4.  The Enumeration Built-In Type . . . . . . . . . . . . . .  12
-       4.4.1.  The "enum" Statement  . . . . . . . . . . . . . . . .  12
-   5.  Implementation Guidelines . . . . . . . . . . . . . . . . . .  12
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  12
-     6.1.  YANG Module Registry  . . . . . . . . . . . . . . . . . .  13
-   7.  Security Considerations . . . . . . . . . . . . . . . . . . .  13
-   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  13
-     8.1.  Normative References  . . . . . . . . . . . . . . . . . .  13
-     8.2.  Informative References  . . . . . . . . . . . . . . . . .  14
+     1.2.  Requirements Language . . . . . . . . . . . . . . . . . .   6
+   2.  YANG Schema Trees and the TMF Data Models . . . . . . . . . .   6
+     2.1.  Defining The Mapping Root . . . . . . . . . . . . . . . .   7
+     2.2.  Mapping containers and lists to (sub)Features . . . . . .   8
+     2.3.  Mapping leafs and leaf-lists to Characteristics . . . . .   9
+   3.  Mapping YANG Statements . . . . . . . . . . . . . . . . . . .   9
+     3.1.  The "container" Statement . . . . . . . . . . . . . . . .   9
+     3.2.  The "leaf" Statement  . . . . . . . . . . . . . . . . . .   9
+       3.2.1.  The leaf's "type" Statement . . . . . . . . . . . . .   9
+       3.2.2.  The leaf's "default" Statement  . . . . . . . . . . .  10
+       3.2.3.  The leaf's "mandatory" Statement  . . . . . . . . . .  10
+     3.3.  The "leaf-list" Statement . . . . . . . . . . . . . . . .  10
+       3.3.1.  The leaf-list's "type" Statement  . . . . . . . . . .  10
+       3.3.2.  The leaf-list's "default" Statement . . . . . . . . .  11
+       3.3.3.  The leaf-list's "min-elements" Statement  . . . . . .  11
+       3.3.4.  The leaf-list's "max-elements" Statement  . . . . . .  11
+     3.4.  The "list" Statement  . . . . . . . . . . . . . . . . . .  11
+       3.4.1.  The list's "key" Statement  . . . . . . . . . . . . .  12
+       3.4.2.  The list's "unique" Statement . . . . . . . . . . . .  12
+   4.  Mapping YANG Built-In Types . . . . . . . . . . . . . . . . .  12
+     4.1.  The Integer Built-In Types  . . . . . . . . . . . . . . .  12
+       4.1.1.  The "range" Statement . . . . . . . . . . . . . . . .  12
+     4.2.  The String Built-In Types . . . . . . . . . . . . . . . .  12
+       4.2.1.  The "length" Statement  . . . . . . . . . . . . . . .  12
+       4.2.2.  The "pattern" Statement . . . . . . . . . . . . . . .  13
+     4.3.  The Boolean Built-In Type . . . . . . . . . . . . . . . .  13
+     4.4.  The Enumeration Built-In Type . . . . . . . . . . . . . .  13
+       4.4.1.  The "enum" Statement  . . . . . . . . . . . . . . . .  13
+   5.  Implementation Guidelines . . . . . . . . . . . . . . . . . .  13
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  13
+     6.1.  YANG Module Registry  . . . . . . . . . . . . . . . . . .  14
+   7.  Security Considerations . . . . . . . . . . . . . . . . . . .  14
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  14
+     8.1.  Normative References  . . . . . . . . . . . . . . . . . .  14
+     8.2.  Informative References  . . . . . . . . . . . . . . . . .  15
    Appendix A.  Evaluation of mapping approaches for nested
-           structures  . . . . . . . . . . . . . . . . . . . . . . .  15
-     A.1.  Approach 1: Strongly Typed Pattern  . . . . . . . . . . .  15
+           structures  . . . . . . . . . . . . . . . . . . . . . . .  16
+     A.1.  Approach 1: Strongly Typed Pattern  . . . . . . . . . . .  16
 
 
 
-Lambrechts               Expires 20 August 2026                 [Page 2]
+Lambrechts               Expires 24 August 2026                 [Page 2]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
-     A.2.  Approach 2: Complex Characteristics . . . . . . . . . . .  16
-     A.3.  Approach 3: Decomposition into Services/Resources . . . .  17
-     A.4.  Approach 4: Decomposition into Features . . . . . . . . .  18
-     A.5.  Approach 5: Encode Schema in Characteristic Names . . . .  18
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  18
+     A.2.  Approach 2: Complex Characteristics . . . . . . . . . . .  17
+     A.3.  Approach 3: Decomposition into Services/Resources . . . .  18
+     A.4.  Approach 4: Decomposition into Features . . . . . . . . .  19
+     A.5.  Approach 5: Encode Schema in Characteristic Names . . . .  19
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  19
 
 1.  Introduction
 
    Service providers commonly use Operational Support Systems (OSS) with
    NETCONF/YANG interfaces (e.g., YANG models [RFC7950]) to describe
    configuration and operational state for network devices and services.
-   Meanwhile, the TM Forum Open APIs are finding increased adoption in
-   Business Support Systems (BSS) for both ordering and lifecycle
-   management of services and resources.  These two ecosystems define
-   different data models and interaction styles for overlapping
-   concepts, which can lead to duplicated modeling effort and
-   inconsistent behavior across platforms.
+   Likewise, the TM Forum Open APIs are finding increased adoption in
+   Business Support Systems (BSS) for a number of functions, include
+   ordering and lifecycle management of services and resources.
 
-   This document specifies a mechanism for mapping between YANG schemas
-   and YANG instance data on the one hand and TM Forum Data Models and
-   APIs on the other hand.  The goal is to enable consistent
-   representation of resources and services across management interfaces
-   and domains.  The mechanism for mapping is intended to remove
-   integration barriers between YANG-based automation and TMF Open APIs,
-   and to enable operators to leverage YANG models directly in their
+   These two ecosystems define different data models and interaction
+   styles for overlapping concepts, which can lead to duplicated
+   modeling effort and inconsistent behavior across platforms.
+
+   This document addresses this overlap by specifying a mechanism for
+   mapping between YANG schemas and TM Forum Data Models and APIs.  The
+   goal is to enable consistent representation of resources and services
+   across management interfaces and between domains, removing
+   integration barriers and enables the use of YANG models directly in
    TMF-based BSS/OSS implementations.
 
-   The mechanism for mapping is designed to preserve the semantics of
-   the original YANG schema tree such as hierarchy, identity, and
+   The mapping mechanism is designed to preserve the semantics of the
+   original YANG schema tree such as hierarchy, identity, and
    constraints while making them compatible with the TMF data structures
    and API patterns.  A conscious effort is made to make minimal use of
    the support for polymorphism in the TMF APIs, as this would shift the
@@ -165,22 +164,33 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 20 August 2026                 [Page 3]
+
+Lambrechts               Expires 24 August 2026                 [Page 3]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
+   The mapping mechanism is only intended for translating YANG modules
+   to TMF standards compliant Open APIs and payloads.  The reverse
+   translation (from OpenAPI to YANG) is not in scope.
+
 1.1.  Where the TMF Mapping Fits
 
    The TM Forum Open APIs can be divided into several categories.  Three
-   of those categories are particularly relevant: Product, Service, and
-   Resource.  The IETF Framework for Automating Service and Network
-   Management with YANG framework in [RFC8969] separates service,
-   network, and device models.  All possible permutations on how these
-   two architectures can be reconciled are out of scope for this
-   document, but the mapping mechanism defined here is intended to be
-   flexible enough to operate at either the TMF Service or Resource
-   layer.
+   of those categories are particularly relevant:
+
+   *  Product
+
+   *  Service
+
+   *  Resource
+
+   The IETF Framework for Automating Service and Network Management with
+   YANG framework in [RFC8969] separates service, network, and device
+   models.  All possible permutations on how these two architectures can
+   be reconciled are out of scope for this document, but the mapping
+   mechanism defined here is intended to be flexible enough to operate
+   at either the TMF Service or Resource layer.
 
    The following diagram illustrates a common architecture where TMF
    Open APIs are exposed at the northbound interface of an OSS or
@@ -188,24 +198,52 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
    the southbound interfaces to network controllers and devices.  The
    mechanism for mapping defined in this document may operate.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lambrechts               Expires 24 August 2026                 [Page 4]
+
+Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
+
+
             +----------------------------+
             |   BSS / Customers          |
             | (Consumes TMF APIs)        |
             +-------------+--------------+
-                          |
-                          v  TMF Open APIs (Service/Resource)
+                          | TMF Open APIs
+                          v (Service/Resource)
             +----------------------------+
             | OSS / Service Orchestrator |
-            | (YANG Service Model)       |
-            +--------------+-------------+
-                           |
-                           v NETCONF/YANG
+            |    (YANG Service Model)    |
+            +-------------+--------------+
+                          |
+                          v NETCONF/YANG
             +----------------------------+
-            |  Network Controllers       |
-            |  (YANG Network Model)      |
-            +--------------+-------------+
-                           |
-                           v NETCONF/YANG
+            |     Network Controllers    |
+            |    (YANG Network Model)    |
+            +-------------+--------------+
+                          |
+                          v NETCONF/YANG
             +----------------------------+
             |           Devices          |
             |        (YANG Device)       |
@@ -221,7 +259,25 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 20 August 2026                 [Page 4]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lambrechts               Expires 24 August 2026                 [Page 5]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -230,20 +286,20 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
             |   BSS / Customers          |
             | (Consumes TMF APIs)        |
             +-------------+--------------+
+                          | TMF Open APIs
+                          v (Product/Service/Resource)
+            +----------------------------+
+            | OSS / Service Orchestrator |
+            |    (YANG Service Model)    |
+            +-------------+--------------+
+                          | TMF Open APIs
+                          v (Service/Resource)
+            +----------------------------+
+            |     Network Controllers    |
+            |    (YANG Network Model)    |
+            +-------------+--------------+
                           |
-                          v TMF Open APIs (Product/Service/Resource)
-            +----------------------------+
-            |            OSS             |
-            |    (TMF Data Models)       |
-            +--------------+-------------+
-                           |
-                           v TMF Open APIs (Service/Resource)
-            +----------------------------+
-            |  Network Controllers       |
-            |  (YANG Network Model)      |
-            +--------------+-------------+
-                           |
-                           v NETCONF/YANG
+                          v NETCONF/YANG
             +----------------------------+
             |           Devices          |
             |        (YANG Device)       |
@@ -252,9 +308,9 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
            Figure 2: TMF mapping northbound of Network Controller
 
    These boundaries are illustrative and can be adapted to operator
-   architecture; the key principle is that the mapping mechanism defined
-   in this document can be applied at any point where YANG-based models
-   and TMF Open APIs intersect.
+   architecture as needed.  The key principle is that the mapping
+   mechanism defined in this document can be applied at any point where
+   YANG-based models and TMF Open APIs intersect.
 
 1.2.  Requirements Language
 
@@ -266,31 +322,41 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 2.  YANG Schema Trees and the TMF Data Models
 
-   YANG schema trees can contain data nodes.  One of container, leaf,
-   leaf-list, list, anydata and anyxml.  In the next sections, we
-   describe how each of those constructs can be mapped to the TMF Data
-   Models and APIs.
+   YANG schema trees contain data nodes of the following types:
+
+   *  container
+
+   *  leaf
+
+   *  leaf-list
 
 
 
 
-
-
-
-Lambrechts               Expires 20 August 2026                 [Page 5]
+Lambrechts               Expires 24 August 2026                 [Page 6]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
+   *  list
+
+   *  anydata
+
+   *  anyxml
+
+   The following sections describe how each of those constructs are
+   mapped to the TMF Data Models and APIs.
+
 2.1.  Defining The Mapping Root
 
    The mapping mechanism described in this document can be rooted at any
-   YANG container or list.  Implementations of the mapping mechanism
-   SHOULD support any number of YANG schema subtrees to be mapped to
-   TMF.  By default, the implementation MUST map the entire subtree
-   starting from the mapping root, but it MAY allow the operator to
-   specify a subtree of the YANG schema tree that is ignored by the
-   mapping mechanism.
+   container or list in the YANG schema tree.  By default, the entire
+   subtree starting from the mapping root SHOULD be mapped to TMF,
+   except when the operator explicitly indicates that certain nodes or
+   subtrees should be ignored by the mapping mechanism, e.g. by using
+   the ignore extension in the YANG module below.  Each schema node can
+   be included in at most one mapping subtree, i.e., implementations
+   MUST NOT allow overlapping mapping subtrees.
 
    Implementations MAY use the following YANG extension to annotate the
    mapping root and the mapping method for a particular YANG subtree:
@@ -306,7 +372,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
      extension rfs-service {
        argument "name";
        description
-         "The TMF RFS Resource that this YANG subtree maps to.";
+         "The TMF RFS Service that this YANG subtree maps to.";
      }
      extension resource {
        argument "name";
@@ -320,23 +386,17 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
      }
    }
 
-   An operator can use the extension directly in the target YANG module,
-   or they can use YANG augmentation to add the mapping to the relevant
-   node(s).  An example of the extension usage is as follows:
 
 
 
-
-
-
-
-
-
-
-Lambrechts               Expires 20 August 2026                 [Page 6]
+Lambrechts               Expires 24 August 2026                 [Page 7]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
+
+   An operator can use the extension directly in the target YANG module,
+   or they can use YANG augmentation to add the mapping to the relevant
+   node(s).  An example of the extension usage is as follows:
 
    module netinfra {
      yang-version "1.1";
@@ -380,19 +440,22 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
    tree can be represented as a TM Forum Service Feature or Resource
    Feature within the Service or Resource that it belongs to.
 
+
+
+
+
+
+Lambrechts               Expires 24 August 2026                 [Page 8]
+
+Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
+
+
    The current TM Forum Data Model does not support Feature nesting,
    i.e., there is no subFeature-like construct.  This document proposes
    a IETF Liaison to the TM Forum to standardize a nesting mechanism for
    Features in a future TMF Open API release.  The API design guidelines
    would be analogous to the current supportingService approach in the
    TMF Data Model.
-
-
-
-Lambrechts               Expires 20 August 2026                 [Page 7]
-
-Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
-
 
 2.3.  Mapping leafs and leaf-lists to Characteristics
 
@@ -438,14 +501,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-
-
-
-
-
-
-
-Lambrechts               Expires 20 August 2026                 [Page 8]
+Lambrechts               Expires 24 August 2026                 [Page 9]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -501,7 +557,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 20 August 2026                 [Page 9]
+Lambrechts               Expires 24 August 2026                [Page 10]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -557,7 +613,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 20 August 2026                [Page 10]
+Lambrechts               Expires 24 August 2026                [Page 11]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -613,7 +669,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 20 August 2026                [Page 11]
+Lambrechts               Expires 24 August 2026                [Page 12]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -669,7 +725,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 20 August 2026                [Page 12]
+Lambrechts               Expires 24 August 2026                [Page 13]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -725,7 +781,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 20 August 2026                [Page 13]
+Lambrechts               Expires 24 August 2026                [Page 14]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -781,7 +837,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 20 August 2026                [Page 14]
+Lambrechts               Expires 24 August 2026                [Page 15]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -837,7 +893,7 @@ A.1.  Approach 1: Strongly Typed Pattern
 
 
 
-Lambrechts               Expires 20 August 2026                [Page 15]
+Lambrechts               Expires 24 August 2026                [Page 16]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -893,7 +949,7 @@ A.2.  Approach 2: Complex Characteristics
 
 
 
-Lambrechts               Expires 20 August 2026                [Page 16]
+Lambrechts               Expires 24 August 2026                [Page 17]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -949,7 +1005,7 @@ A.3.  Approach 3: Decomposition into Services/Resources
 
 
 
-Lambrechts               Expires 20 August 2026                [Page 17]
+Lambrechts               Expires 24 August 2026                [Page 18]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -1005,4 +1061,4 @@ Author's Address
 
 
 
-Lambrechts               Expires 20 August 2026                [Page 18]
+Lambrechts               Expires 24 August 2026                [Page 19]
