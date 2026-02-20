@@ -78,27 +78,26 @@
         Service providers commonly use Operational Support Systems (OSS) with
         NETCONF/YANG interfaces (e.g., YANG models <xref target="RFC7950"/>) to
         describe configuration and operational state for network devices and
-        services.
-        
-        Meanwhile, the TM Forum Open APIs are finding increased adoption in
-        Business Support Systems (BSS) for both ordering and lifecycle
-        management of services and resources. These two ecosystems define
-        different data models and interaction styles for overlapping concepts,
-        which can lead to duplicated modeling effort and inconsistent behavior
-        across platforms.
+        services.  Likewise, the TM Forum Open APIs are finding increased adoption in
+        Business Support Systems (BSS) for a number of functions, include ordering 
+        and lifecycle management of services and resources. 
+      </t>
+
+      <t>
+        These two ecosystems define different data models and interaction styles 
+        for overlapping concepts, which can lead to duplicated modeling effort 
+        and inconsistent behavior across platforms.
       </t>
       <t>
-        This document specifies a mechanism for mapping between YANG schemas and
-        YANG instance data on the one hand and TM Forum Data Models and APIs on
-        the other hand. The goal is to enable consistent representation of
-        resources and services across management interfaces and domains.
-        The mechanism for mapping is intended to remove integration barriers
-        between YANG-based automation and TMF Open APIs, and to enable operators
-        to leverage YANG models directly in their TMF-based BSS/OSS
+        This document addresses this overlap by specifying a mechanism for 
+        mapping between YANG schemas and TM Forum Data Models and APIs.
+        The goal is to enable consistent representation of resources and services 
+        across management interfaces and between domains, removing integration
+        barriers and enables the use of YANG models directly in TMF-based BSS/OSS
         implementations.
       </t>
        <t>
-        The mechanism for mapping is designed to preserve the semantics of the
+        The mapping mechanism is designed to preserve the semantics of the
         original YANG schema tree such as hierarchy, identity, and constraints
         while making them compatible with the TMF data structures and API
         patterns.
@@ -125,12 +124,24 @@
         interpretation of the mapped data.
       </t>
 
+      <t>
+        The mapping mechanism is only intended for translating YANG modules to 
+        OpenAPI compliant APIs. The reverse translation (from OpenAPI to 
+        YANG) is not in scope.
+      </t>
+
       <section>
         <name>Where the TMF Mapping Fits</name>
         <t>
           The TM Forum Open APIs can be divided into several categories. Three
-          of those categories are particularly relevant: Product, Service, and
-          Resource. The IETF Framework for Automating Service and Network
+          of those categories are particularly relevant:
+        </t>
+        <ul>
+          <li>Product</li>
+          <li>Service</li>
+          <li>Resource</li>
+        </ul>
+        <t>The IETF Framework for Automating Service and Network
           Management with YANG framework in <xref target="RFC8969"/> separates
           service, network, and device models. All possible permutations on how
           these two architectures can be reconciled are out of scope for this
@@ -151,20 +162,20 @@
          |   BSS / Customers          |
          | (Consumes TMF APIs)        |
          +-------------+--------------+
-                       |
-                       v  TMF Open APIs (Service/Resource)
+                       | TMF Open APIs
+                       v (Service/Resource)
          +----------------------------+
          | OSS / Service Orchestrator |
-         | (YANG Service Model)       |
-         +--------------+-------------+
-                        |
-                        v NETCONF/YANG
+         |    (YANG Service Model)    |
+         +-------------+--------------+
+                       |
+                       v NETCONF/YANG
          +----------------------------+
-         |  Network Controllers       |
-         |  (YANG Network Model)      |
-         +--------------+-------------+
-                        |
-                        v NETCONF/YANG
+         |     Network Controllers    |
+         |    (YANG Network Model)    |
+         +-------------+--------------+
+                       |
+                       v NETCONF/YANG
          +----------------------------+
          |           Devices          |
          |        (YANG Device)       |
@@ -183,20 +194,20 @@
          |   BSS / Customers          |
          | (Consumes TMF APIs)        |
          +-------------+--------------+
+                       | TMF Open APIs
+                       v (Product/Service/Resource)
+         +----------------------------+
+         | OSS / Service Orchestrator |
+         |    (YANG Service Model)    |
+         +-------------+--------------+
+                       | TMF Open APIs
+                       v (Service/Resource)
+         +----------------------------+
+         |     Network Controllers    |
+         |    (YANG Network Model)    |
+         +-------------+--------------+
                        |
-                       v TMF Open APIs (Product/Service/Resource)
-         +----------------------------+
-         |            OSS             |
-         |    (TMF Data Models)       |
-         +--------------+-------------+
-                        |
-                        v TMF Open APIs (Service/Resource)
-         +----------------------------+
-         |  Network Controllers       |
-         |  (YANG Network Model)      |
-         +--------------+-------------+
-                        |
-                        v NETCONF/YANG
+                       v NETCONF/YANG
          +----------------------------+
          |           Devices          |
          |        (YANG Device)       |
@@ -205,9 +216,9 @@
         </figure>
         <t>
           These boundaries are illustrative and can be adapted to operator
-          architecture; the key principle is that the mapping mechanism defined
-          in this document can be applied at any point where YANG-based models 
-          and TMF Open APIs intersect.
+          architecture as needed. The key principle is that the mapping 
+          mechanism defined in this document can be applied at any 
+          point where YANG-based models and TMF Open APIs intersect.
         </t>
       </section>
       
@@ -226,10 +237,19 @@
     <section>
       <name>YANG Schema Trees and the TMF Data Models</name>
       <t>
-        YANG schema trees can contain data nodes. One of container, leaf, 
-        leaf-list, list, anydata and anyxml. In the next sections, we
-        describe how each of those constructs can be mapped to the TMF
-        Data Models and APIs.
+        YANG schema trees contain data nodes of the following types:
+      </t>
+      <ul>
+        <li>container</li>
+        <li>leaf</li>
+        <li>leaf-list</li>
+        <li>list</li>
+        <li>anydata</li>
+        <li>anyxml</li>
+      </ul>
+      <t>
+        The following sections describe how each of those constructs
+        are mapped to the TMF Data Models and APIs.
         <!-- TODO: Add mapping rules for anydata and anyxml.-->
       </t>
       <section>
