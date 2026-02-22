@@ -4,8 +4,8 @@
 
 Internet Engineering Task Force                            K. Lambrechts
 Internet-Draft                                                   NetEdge
-Intended status: Standards Track                        22 February 2026
-Expires: 26 August 2026
+Intended status: Standards Track                        23 February 2026
+Expires: 27 August 2026
 
 
 Mapping YANG Schemas and Instance Data to TM Forum Data Models and APIs
@@ -40,7 +40,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 August 2026.
+   This Internet-Draft will expire on 27 August 2026.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Lambrechts               Expires 26 August 2026                 [Page 1]
+Lambrechts               Expires 27 August 2026                 [Page 1]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Lambrechts               Expires 26 August 2026                 [Page 2]
+Lambrechts               Expires 27 August 2026                 [Page 2]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -165,7 +165,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 26 August 2026                 [Page 3]
+Lambrechts               Expires 27 August 2026                 [Page 3]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -221,7 +221,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 26 August 2026                 [Page 4]
+Lambrechts               Expires 27 August 2026                 [Page 4]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -277,7 +277,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 26 August 2026                 [Page 5]
+Lambrechts               Expires 27 August 2026                 [Page 5]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -333,7 +333,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 26 August 2026                 [Page 6]
+Lambrechts               Expires 27 August 2026                 [Page 6]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -361,63 +361,72 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
    Implementations MAY use the following YANG extension to annotate the
    mapping root and the mapping method for a particular YANG subtree:
 
+   <CODE BEGINS> file "yang-tmf-map.yang"
+
+   module ietf-yang-tmf-map {
+     yang-version 1.1;
+     namespace "urn:ietf:params:xml:ns:yang:ietf-yang-tmf-map";
+     prefix tmf;
+
+     organization
+       "IETF ONSEN Working Group.";
+     contact
+       "Kris Lambrechts
+        Email: kris@netedge.plus";
+     description
+       "This YANG module defines a set of YANG extensions to annotate
+        YANG schema nodes with mapping information to TMF Data Models.
+
+        Copyright (c) 2026 IETF Trust and the persons identified as
+        authors of the code.  All rights reserved.
+
+        Redistribution and use in source and binary forms, with or
+        without modification, is permitted pursuant to, and subject to
+        the license terms contained in, the Revised BSD License set
+        forth in Section 4.c of the IETF Trust's Legal Provisions
+        Relating to IETF Documents
+        (https://trustee.ietf.org/license-info).
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Lambrechts               Expires 26 August 2026                 [Page 7]
+Lambrechts               Expires 27 August 2026                 [Page 7]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
-   <CODE BEGINS> file "yang-tmf-map.yang"
+        This version of this YANG module is part of RFC XXXX
+        (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
+        for full legal notices.";
 
-   module yang-tmf-map {
-     yang-version "1.1";
-     ...
+     revision 2026-02-23 {
+       description
+         "Initial revision.";
+       reference
+         "RFC XXXX";
+     }
+
      extension cfs-service {
-       argument "name";
+       argument name;
        description
          "The TMF CFS Service that this YANG subtree maps to.";
      }
+
      extension rfs-service {
-       argument "name";
+       argument name;
        description
          "The TMF RFS Service that this YANG subtree maps to.";
      }
+
      extension resource {
-       argument "name";
+       argument name;
        description
          "The TMF Resource that this YANG subtree maps to.";
      }
+
      extension ignore {
        description
          "Indicates that the annotated YANG data node and its
-         subtree are ignored by the mapping mechanism.";
+          subtree are ignored by the mapping mechanism.";
      }
    }
 
@@ -436,16 +445,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-
-
-
-
-
-
-
-
-
-Lambrechts               Expires 26 August 2026                 [Page 8]
+Lambrechts               Expires 27 August 2026                 [Page 8]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -501,7 +501,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 26 August 2026                 [Page 9]
+Lambrechts               Expires 27 August 2026                 [Page 9]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -557,7 +557,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 26 August 2026                [Page 10]
+Lambrechts               Expires 27 August 2026                [Page 10]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -613,7 +613,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 26 August 2026                [Page 11]
+Lambrechts               Expires 27 August 2026                [Page 11]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -669,7 +669,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 26 August 2026                [Page 12]
+Lambrechts               Expires 27 August 2026                [Page 12]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -725,7 +725,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 26 August 2026                [Page 13]
+Lambrechts               Expires 27 August 2026                [Page 13]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -781,7 +781,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 26 August 2026                [Page 14]
+Lambrechts               Expires 27 August 2026                [Page 14]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -837,7 +837,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 26 August 2026                [Page 15]
+Lambrechts               Expires 27 August 2026                [Page 15]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -893,7 +893,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 26 August 2026                [Page 16]
+Lambrechts               Expires 27 August 2026                [Page 16]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -949,7 +949,7 @@ A.1.  Approach 1: Strongly Typed Pattern
 
 
 
-Lambrechts               Expires 26 August 2026                [Page 17]
+Lambrechts               Expires 27 August 2026                [Page 17]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -1005,7 +1005,7 @@ A.2.  Approach 2: Complex Characteristics
 
 
 
-Lambrechts               Expires 26 August 2026                [Page 18]
+Lambrechts               Expires 27 August 2026                [Page 18]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -1061,7 +1061,7 @@ A.3.  Approach 3: Decomposition into Services/Resources
 
 
 
-Lambrechts               Expires 26 August 2026                [Page 19]
+Lambrechts               Expires 27 August 2026                [Page 19]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -1117,4 +1117,4 @@ Author's Address
 
 
 
-Lambrechts               Expires 26 August 2026                [Page 20]
+Lambrechts               Expires 27 August 2026                [Page 20]
