@@ -185,18 +185,18 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
    *  Resource
 
-   The IETF Framework for Automating Service and Network Management with
-   YANG framework in [RFC8969] separates service, network, and device
-   models.  All possible permutations on how these two architectures can
-   be reconciled are out of scope for this document, but the mapping
-   mechanism defined here is intended to be flexible enough to operate
-   at either the TMF Service or Resource layer.
+   The IETF separates service, network, and device models.  All possible
+   permutations on how these two architectures can be reconciled are out
+   of scope for this document, but the mapping mechanism defined here is
+   intended to be flexible enough to operate at either the TMF Service
+   or Resource layer.
 
    The following diagram illustrates a common architecture where TMF
    Open APIs are exposed at the northbound interface of an OSS or
    Service Orchestrator, while YANG-based models and automation drive
    the southbound interfaces to network controllers and devices.  The
    mechanism for mapping defined in this document may operate.
+
 
 
 
@@ -866,11 +866,6 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
               VPNs", RFC 9291, DOI 10.17487/RFC9291, September 2022,
               <https://www.rfc-editor.org/info/rfc9291>.
 
-   [RFC8969]  Wu, Q., Ed., Boucadair, M., Ed., Lopez, D., Xie, C., and
-              L. Geng, "A Framework for Automating Service and Network
-              Management with YANG", RFC 8969, DOI 10.17487/RFC8969,
-              January 2021, <https://www.rfc-editor.org/info/rfc8969>.
-
 8.2.  Informative References
 
    [TMF633]   TM Forum, "TMF633 Service Catalog Management API",
@@ -890,6 +885,11 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
               <https://www.tmforum.org/oda/open-apis/directory/service-
               ordering-api-TMF641/>.
 
+   [TMF652]   TM Forum, "TMF652 Resource Ordering Management API",
+              TMF 652, 2019, <https://www.tmforum.org/oda/open-
+              apis/directory/resource-ordering-management-api-TMF652/>.
+
+
 
 
 
@@ -897,10 +897,6 @@ Lambrechts               Expires 26 August 2026                [Page 16]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
-
-   [TMF652]   TM Forum, "TMF652 Resource Ordering Management API",
-              TMF 652, 2019, <https://www.tmforum.org/oda/open-
-              apis/directory/resource-ordering-management-api-TMF652/>.
 
    [TMF702]   TM Forum, "TMF702 Resource Activation and Configuration
               API", TMF 702, 2019, <https://www.tmforum.org/oda/open-
@@ -934,6 +930,10 @@ A.1.  Approach 1: Strongly Typed Pattern
    Service or Resource has a corresponding YAML or JSON schema defined
    in the @schemaLocation property.  An example payload for a strongly
    typed Service may look like this:
+
+
+
+
 
 
 

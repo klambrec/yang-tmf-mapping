@@ -141,12 +141,12 @@
           <li>Service</li>
           <li>Resource</li>
         </ul>
-        <t>The IETF Framework for Automating Service and Network
-          Management with YANG framework in <xref target="RFC8969"/> separates
-          service, network, and device models. All possible permutations on how
-          these two architectures can be reconciled are out of scope for this
-          document, but the mapping mechanism defined here is intended to be
-          flexible enough to operate at either the TMF Service or Resource layer.
+        <t>
+          The IETF separates service, network, and device models.
+          All possible permutations on how these two architectures can be
+          reconciled are out of scope for this document, but the mapping
+          mechanism defined here is intended to be flexible enough to operate at
+          either the TMF Service or Resource layer.
         </t>
         <t>
           The following diagram illustrates a common architecture where TMF Open
@@ -693,7 +693,6 @@ module example-toasters {
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7950.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9182.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9291.xml"/>
-        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8969.xml"/>
         
       </references>
       <references>
