@@ -296,6 +296,8 @@ module yang-tmf-map {
       subtree are ignored by the mapping mechanism.";
   }
 }
+
+<CODE ENDS>
       ]]></sourcecode>
         <t>
           An operator can use the extension directly in the target YANG
@@ -304,40 +306,31 @@ module yang-tmf-map {
           An example of the extension usage is as follows:
         </t>
 
-        <sourcecode name="netinfra.yang"><![CDATA[
-module netinfra {
+        <sourcecode name="example-toasters.yang"><![CDATA[
+module example-toasters {
   yang-version "1.1";
   ...
   import yang-tmf-map {
     prefix tmf;
   }
 
-  container netinfra {
-    description "Network infrastructure";
-    list router {
-      description "Network Infrastructure Router";
+  container toasters {
+    list toaster {
       key name;
-
-      orchestron:transform sorespo.cfs.Router;
-      tmf:cfs-service "Router";
+      tmf:cfs-service "Toaster";
 
       leaf name {
         type string;
-        description "Router name";
-      }
-      leaf id {
-        type uint32;
-        description "Router ID";
-        mandatory true;
+        description "Toaster name";
       }
     }
   }
 }
       ]]></sourcecode>
       <t>
-        In this example, the <tt>router</tt> list is annotated with the
+        In this example, the <tt>toaster</tt> list is annotated with the
         <tt>tmf:cfs-service</tt> extension to indicate that it is mapped to a
-        TMF CFS Service named "Router". The mapping mechanism will then map
+        TMF CFS Service named "Toaster". The mapping mechanism will then map
         the child data nodes to the corresponding TMF schema elements based on
         the mapping rules defined in the next sections.
       </t>
@@ -354,15 +347,16 @@ module netinfra {
         <t>
           The current TM Forum Data Model does not support Feature nesting, 
           i.e., there is no subFeature-like construct. This can be resolved,
-          but requires a change to the TMF OpenAPI specification. The proposed
-          solution is described below.
+          but requires a change to the TMF Data Model specification and the
+          associated OpenAPI specifications. The proposed solution is described
+          below.
         </t>
 
         <t>
           DISCUSSION:         
         </t>
         <t>
-          Should this document contain a proposed change to the TMF OpenAPI
+          Should this document contain a proposed change to the TMF Data Model
           specification, or is there another preferred process for recommending
           such a change?
         </t>
@@ -371,13 +365,13 @@ module netinfra {
         <name>Mapping leafs and leaf-lists to Characteristics</name>
          <t>
           YANG leafs and leaf-lists represent the fundamental data elements in a
-          YANG data tree. Each leaf and leaf-list is be mapped to a corresponding 
+          YANG data tree. Each leaf and leaf-list is to be mapped to a corresponding 
           TMF Characteristic.
         </t>
       </section>
     </section>
     <section>
-      <name>Rules for Mapping YANG Statements to TMF OpenAPI</name>
+      <name>Rules for Mapping YANG Statements to the TMF Data Model</name>
       <section>
         <name>The "container" Statement</name>
         <t>

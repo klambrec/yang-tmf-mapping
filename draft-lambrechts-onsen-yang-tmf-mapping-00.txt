@@ -4,8 +4,8 @@
 
 Internet Engineering Task Force                            K. Lambrechts
 Internet-Draft                                                   NetEdge
-Intended status: Standards Track                        20 February 2026
-Expires: 24 August 2026
+Intended status: Standards Track                        22 February 2026
+Expires: 26 August 2026
 
 
 Mapping YANG Schemas and Instance Data to TM Forum Data Models and APIs
@@ -40,7 +40,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 August 2026.
+   This Internet-Draft will expire on 26 August 2026.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Lambrechts               Expires 24 August 2026                 [Page 1]
+Lambrechts               Expires 26 August 2026                 [Page 1]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -71,54 +71,54 @@ Table of Contents
      1.2.  Requirements Language . . . . . . . . . . . . . . . . . .   6
    2.  YANG Schema Trees and the TMF Data Models . . . . . . . . . .   6
      2.1.  Defining The Mapping Root . . . . . . . . . . . . . . . .   7
-     2.2.  Mapping containers and lists to (sub)Features . . . . . .   8
-     2.3.  Mapping leafs and leaf-lists to Characteristics . . . . .   9
-   3.  Mapping YANG Statements . . . . . . . . . . . . . . . . . . .   9
-     3.1.  The "container" Statement . . . . . . . . . . . . . . . .   9
-     3.2.  The "leaf" Statement  . . . . . . . . . . . . . . . . . .   9
-       3.2.1.  The leaf's "type" Statement . . . . . . . . . . . . .   9
-       3.2.2.  The leaf's "default" Statement  . . . . . . . . . . .  10
-       3.2.3.  The leaf's "mandatory" Statement  . . . . . . . . . .  10
-     3.3.  The "leaf-list" Statement . . . . . . . . . . . . . . . .  10
-       3.3.1.  The leaf-list's "type" Statement  . . . . . . . . . .  10
-       3.3.2.  The leaf-list's "default" Statement . . . . . . . . .  11
-       3.3.3.  The leaf-list's "min-elements" Statement  . . . . . .  11
-       3.3.4.  The leaf-list's "max-elements" Statement  . . . . . .  11
-     3.4.  The "list" Statement  . . . . . . . . . . . . . . . . . .  11
-       3.4.1.  The list's "key" Statement  . . . . . . . . . . . . .  12
-       3.4.2.  The list's "unique" Statement . . . . . . . . . . . .  12
-   4.  Mapping YANG Built-In Types . . . . . . . . . . . . . . . . .  12
-     4.1.  The Integer Built-In Types  . . . . . . . . . . . . . . .  12
-       4.1.1.  The "range" Statement . . . . . . . . . . . . . . . .  12
-     4.2.  The String Built-In Types . . . . . . . . . . . . . . . .  12
-       4.2.1.  The "length" Statement  . . . . . . . . . . . . . . .  12
-       4.2.2.  The "pattern" Statement . . . . . . . . . . . . . . .  13
-     4.3.  The Boolean Built-In Type . . . . . . . . . . . . . . . .  13
-     4.4.  The Enumeration Built-In Type . . . . . . . . . . . . . .  13
-       4.4.1.  The "enum" Statement  . . . . . . . . . . . . . . . .  13
-   5.  Implementation Guidelines . . . . . . . . . . . . . . . . . .  13
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  13
-     6.1.  YANG Module Registry  . . . . . . . . . . . . . . . . . .  14
-   7.  Security Considerations . . . . . . . . . . . . . . . . . . .  14
-   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  14
-     8.1.  Normative References  . . . . . . . . . . . . . . . . . .  14
-     8.2.  Informative References  . . . . . . . . . . . . . . . . .  15
+     2.2.  Mapping containers and lists to (sub)Features . . . . . .   9
+     2.3.  Mapping leafs and leaf-lists to Characteristics . . . . .  10
+   3.  Rules for Mapping YANG Statements to the TMF Data Model . . .  10
+     3.1.  The "container" Statement . . . . . . . . . . . . . . . .  10
+     3.2.  The "leaf" Statement  . . . . . . . . . . . . . . . . . .  10
+       3.2.1.  The leaf's "type" Statement . . . . . . . . . . . . .  10
+       3.2.2.  The leaf's "default" Statement  . . . . . . . . . . .  11
+       3.2.3.  The leaf's "mandatory" Statement  . . . . . . . . . .  11
+     3.3.  The "leaf-list" Statement . . . . . . . . . . . . . . . .  11
+       3.3.1.  The leaf-list's "type" Statement  . . . . . . . . . .  11
+       3.3.2.  The leaf-list's "default" Statement . . . . . . . . .  12
+       3.3.3.  The leaf-list's "min-elements" Statement  . . . . . .  12
+       3.3.4.  The leaf-list's "max-elements" Statement  . . . . . .  12
+     3.4.  The "list" Statement  . . . . . . . . . . . . . . . . . .  12
+       3.4.1.  The list's "key" Statement  . . . . . . . . . . . . .  13
+       3.4.2.  The list's "unique" Statement . . . . . . . . . . . .  13
+   4.  Mapping YANG Built-In Types . . . . . . . . . . . . . . . . .  13
+     4.1.  The Integer Built-In Types  . . . . . . . . . . . . . . .  13
+       4.1.1.  The "range" Statement . . . . . . . . . . . . . . . .  13
+     4.2.  The String Built-In Types . . . . . . . . . . . . . . . .  13
+       4.2.1.  The "length" Statement  . . . . . . . . . . . . . . .  13
+       4.2.2.  The "pattern" Statement . . . . . . . . . . . . . . .  14
+     4.3.  The Boolean Built-In Type . . . . . . . . . . . . . . . .  14
+     4.4.  The Enumeration Built-In Type . . . . . . . . . . . . . .  14
+       4.4.1.  The "enum" Statement  . . . . . . . . . . . . . . . .  14
+   5.  Implementation Guidelines . . . . . . . . . . . . . . . . . .  14
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  14
+     6.1.  YANG Module Registry  . . . . . . . . . . . . . . . . . .  15
+   7.  Security Considerations . . . . . . . . . . . . . . . . . . .  15
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  15
+     8.1.  Normative References  . . . . . . . . . . . . . . . . . .  15
+     8.2.  Informative References  . . . . . . . . . . . . . . . . .  16
    Appendix A.  Evaluation of mapping approaches for nested
-           structures  . . . . . . . . . . . . . . . . . . . . . . .  16
-     A.1.  Approach 1: Strongly Typed Pattern  . . . . . . . . . . .  16
+           structures  . . . . . . . . . . . . . . . . . . . . . . .  17
+     A.1.  Approach 1: Strongly Typed Pattern  . . . . . . . . . . .  17
 
 
 
-Lambrechts               Expires 24 August 2026                 [Page 2]
+Lambrechts               Expires 26 August 2026                 [Page 2]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
-     A.2.  Approach 2: Complex Characteristics . . . . . . . . . . .  17
-     A.3.  Approach 3: Decomposition into Services/Resources . . . .  18
-     A.4.  Approach 4: Decomposition into Features . . . . . . . . .  19
-     A.5.  Approach 5: Encode Schema in Characteristic Names . . . .  19
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  19
+     A.2.  Approach 2: Complex Characteristics . . . . . . . . . . .  18
+     A.3.  Approach 3: Decomposition into Services/Resources . . . .  19
+     A.4.  Approach 4: Decomposition into Features . . . . . . . . .  20
+     A.5.  Approach 5: Encode Schema in Characteristic Names . . . .  20
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  20
 
 1.  Introduction
 
@@ -165,7 +165,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 24 August 2026                 [Page 3]
+Lambrechts               Expires 26 August 2026                 [Page 3]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -221,7 +221,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 24 August 2026                 [Page 4]
+Lambrechts               Expires 26 August 2026                 [Page 4]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -277,7 +277,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 24 August 2026                 [Page 5]
+Lambrechts               Expires 26 August 2026                 [Page 5]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -333,7 +333,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 24 August 2026                 [Page 6]
+Lambrechts               Expires 26 August 2026                 [Page 6]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -361,6 +361,41 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
    Implementations MAY use the following YANG extension to annotate the
    mapping root and the mapping method for a particular YANG subtree:
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lambrechts               Expires 26 August 2026                 [Page 7]
+
+Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
+
+
+   <CODE BEGINS> file "yang-tmf-map.yang"
+
    module yang-tmf-map {
      yang-version "1.1";
      ...
@@ -386,50 +421,58 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
      }
    }
 
-
-
-
-Lambrechts               Expires 24 August 2026                 [Page 7]
-
-Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
-
+   <CODE ENDS>
 
    An operator can use the extension directly in the target YANG module,
    or they can use YANG augmentation to add the mapping to the relevant
    node(s).  An example of the extension usage is as follows:
 
-   module netinfra {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lambrechts               Expires 26 August 2026                 [Page 8]
+
+Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
+
+
+   module example-toasters {
      yang-version "1.1";
      ...
      import yang-tmf-map {
        prefix tmf;
      }
 
-     container netinfra {
-       description "Network infrastructure";
-       list router {
-         description "Network Infrastructure Router";
+     container toasters {
+       list toaster {
          key name;
-
-         orchestron:transform sorespo.cfs.Router;
-         tmf:cfs-service "Router";
+         tmf:cfs-service "Toaster";
 
          leaf name {
            type string;
-           description "Router name";
-         }
-         leaf id {
-           type uint32;
-           description "Router ID";
-           mandatory true;
+           description "Toaster name";
          }
        }
      }
    }
 
-   In this example, the router list is annotated with the tmf:cfs-
+   In this example, the toaster list is annotated with the tmf:cfs-
    service extension to indicate that it is mapped to a TMF CFS Service
-   named "Router".  The mapping mechanism will then map the child data
+   named "Toaster".  The mapping mechanism will then map the child data
    nodes to the corresponding TMF schema elements based on the mapping
    rules defined in the next sections.
 
@@ -440,30 +483,36 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
    tree can be represented as a TM Forum Service Feature or Resource
    Feature within the Service or Resource that it belongs to.
 
+   The current TM Forum Data Model does not support Feature nesting,
+   i.e., there is no subFeature-like construct.  This can be resolved,
+   but requires a change to the TMF Data Model specification and the
+   associated OpenAPI specifications.  The proposed solution is
+   described below.
+
+   DISCUSSION:
+
+   Should this document contain a proposed change to the TMF Data Model
+   specification, or is there another preferred process for recommending
+   such a change?
 
 
 
 
 
-Lambrechts               Expires 24 August 2026                 [Page 8]
+
+
+Lambrechts               Expires 26 August 2026                 [Page 9]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
-   The current TM Forum Data Model does not support Feature nesting,
-   i.e., there is no subFeature-like construct.  This document proposes
-   a IETF Liaison to the TM Forum to standardize a nesting mechanism for
-   Features in a future TMF Open API release.  The API design guidelines
-   would be analogous to the current supportingService approach in the
-   TMF Data Model.
-
 2.3.  Mapping leafs and leaf-lists to Characteristics
 
    YANG leafs and leaf-lists represent the fundamental data elements in
-   a YANG data tree.  Each leaf and leaf-list MUST be mapped to a TMF
-   Characteristic.
+   a YANG data tree.  Each leaf and leaf-list is to be mapped to a
+   corresponding TMF Characteristic.
 
-3.  Mapping YANG Statements
+3.  Rules for Mapping YANG Statements to the TMF Data Model
 
 3.1.  The "container" Statement
 
@@ -501,7 +550,14 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 24 August 2026                 [Page 9]
+
+
+
+
+
+
+
+Lambrechts               Expires 26 August 2026                [Page 10]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -557,7 +613,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 24 August 2026                [Page 10]
+Lambrechts               Expires 26 August 2026                [Page 11]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -613,7 +669,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 24 August 2026                [Page 11]
+Lambrechts               Expires 26 August 2026                [Page 12]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -669,7 +725,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 24 August 2026                [Page 12]
+Lambrechts               Expires 26 August 2026                [Page 13]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -725,7 +781,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 24 August 2026                [Page 13]
+Lambrechts               Expires 26 August 2026                [Page 14]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -781,7 +837,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 24 August 2026                [Page 14]
+Lambrechts               Expires 26 August 2026                [Page 15]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -837,7 +893,7 @@ Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
 
 
-Lambrechts               Expires 24 August 2026                [Page 15]
+Lambrechts               Expires 26 August 2026                [Page 16]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -893,7 +949,7 @@ A.1.  Approach 1: Strongly Typed Pattern
 
 
 
-Lambrechts               Expires 24 August 2026                [Page 16]
+Lambrechts               Expires 26 August 2026                [Page 17]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -949,7 +1005,7 @@ A.2.  Approach 2: Complex Characteristics
 
 
 
-Lambrechts               Expires 24 August 2026                [Page 17]
+Lambrechts               Expires 26 August 2026                [Page 18]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -1005,7 +1061,7 @@ A.3.  Approach 3: Decomposition into Services/Resources
 
 
 
-Lambrechts               Expires 24 August 2026                [Page 18]
+Lambrechts               Expires 26 August 2026                [Page 19]
 
 Internet-Draft        YANG-TMF Model & Data Mapping        February 2026
 
@@ -1061,4 +1117,4 @@ Author's Address
 
 
 
-Lambrechts               Expires 24 August 2026                [Page 19]
+Lambrechts               Expires 26 August 2026                [Page 20]
