@@ -270,6 +270,8 @@
           YANG subtree:
         </t>
         <sourcecode name="yang-tmf-map.yang"><![CDATA[
+<CODE BEGINS> file "yang-tmf-map.yang"
+
 module yang-tmf-map {
   yang-version "1.1";
   ...
@@ -301,6 +303,7 @@ module yang-tmf-map {
           relevant node(s).
           An example of the extension usage is as follows:
         </t>
+
         <sourcecode name="netinfra.yang"><![CDATA[
 module netinfra {
   yang-version "1.1";
@@ -350,24 +353,31 @@ module netinfra {
         </t>
         <t>
           The current TM Forum Data Model does not support Feature nesting, 
-          i.e., there is no subFeature-like construct. This document proposes
-          a IETF Liaison to the TM Forum to standardize a nesting mechanism for
-          Features in a future TMF Open API release. The API design guidelines
-          would be analogous to the current supportingService approach in the
-          TMF Data Model.
+          i.e., there is no subFeature-like construct. This can be resolved,
+          but requires a change to the TMF OpenAPI specification. The proposed
+          solution is described below.
+        </t>
+
+        <t>
+          DISCUSSION:         
+        </t>
+        <t>
+          Should this document contain a proposed change to the TMF OpenAPI
+          specification, or is there another preferred process for recommending
+          such a change?
         </t>
       </section>
       <section>
         <name>Mapping leafs and leaf-lists to Characteristics</name>
          <t>
           YANG leafs and leaf-lists represent the fundamental data elements in a
-          YANG data tree. Each leaf and leaf-list MUST be mapped to a TMF
-          Characteristic.
+          YANG data tree. Each leaf and leaf-list is be mapped to a corresponding 
+          TMF Characteristic.
         </t>
       </section>
     </section>
     <section>
-      <name>Mapping YANG Statements</name>
+      <name>Rules for Mapping YANG Statements to TMF OpenAPI</name>
       <section>
         <name>The "container" Statement</name>
         <t>
@@ -378,11 +388,10 @@ module netinfra {
         </t>
         <t>
           Data nodes located directly under the mapping root MUST be mapped to
-          Service or Resource Characteristics.
-          Data nodes located in a first-level container or list are
-          mapped to Feature Characteristics, while those located in deeper
-          levels of the YANG schema tree are mapped to subFeature
-          Characteristics and so on.
+          Service or Resource Characteristics.  Data nodes located in a 
+          first-level container or list are mapped to Feature Characteristics, 
+          while those located in deeper levels of the YANG schema tree are 
+          mapped to subFeature Characteristics and so on.
         </t>
         <t>
           The Feature <tt>name</tt> SHOULD be derived from the YANG node name.
