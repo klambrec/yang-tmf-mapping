@@ -835,16 +835,11 @@ module example-toasters {
           </t>
           <sourcecode><![CDATA[
 {
-  "id" : "id1234567890",
-  "href" : "http//..",
-  "state" : "active",
+  "id" : "1234567890",
+  "href" : "/serviceActivationConfiguration/v4/service/1234567890",
   "@type" : "conferenceBridgeEquipment",
-  "@schemaLocation" : "http://../conferenceBridgeEquipment.json",
-  "serviceSpecification":{
-    "id":"conferenceBridgeEquipment",
-    "href":"http://serverlocation:port/catalogManagement/
-            serviceSpecification/conferenceBridgeEquipment"
-  },
+  "@schemaLocation" : "/schema/conferenceBridgeEquipment.json",
+  "description": "Conference Bridge Equipment",
   "numberOfVc500Units": "1",
   "numberOfVc100Units": "2",
   "routerType": "CiscoASR1000",
@@ -869,35 +864,28 @@ module example-toasters {
         </t>
         <sourcecode><![CDATA[
 {
-  "id": "123-456",
-  "href": "http://serverlocation:port/
-           serviceActivationConfiguration/v4/service/123-456",
-  "category": "MobileService",
-  "description": "Mobile Line ",
-  "hasStarted": true,
-  "isBundle": false,
-  "isServiceEnabled": true,
-  "isStateful": true,
-  "serviceDate": "020-04-01T12:15:39.434Z",
-  "startDate": "2020-04-03T12:15:39.434Z",
+  "id": "9876543216",
+  "href": "/serviceActivationConfiguration/v4/service/987654321",
+  "@type": "Service",
+  "serviceSpecification":{
+    "id":"conferenceBridgeEquipment",
+    "href":"/serviceCatalogManagement/v4/serviceSpecification/conferenceBridgeEquipment"
+  },
   "serviceCharacteristic": [
     {
       "id": "1",
+      "@type": "ServiceCharacteristic",
       "name": "VoiceCharacteristic",
       "valueType": "object",
-      "value": [
-        {
+      "value": {
+          "@type": "VoiceFeatureCharacteristic",
+          "@schemaLocation": "/schema/VC.json",
           "voiceStandard": "enable",
           "voWifi": "disable",
-          "roaming": "enable",
-          "@schemaLocation": "../serviceSpecification/11//VC.json",
-          "@type": "VoiceFeatureCharacteristic"
-        }
-      ],
-      "@type": "ServiceCharacteristic"
+          "roaming": "enable"
+      }
     }
-  ],
-  "@type": "Service"
+  ]
 }
       ]]></sourcecode>
         <t>
