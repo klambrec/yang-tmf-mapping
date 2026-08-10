@@ -64,7 +64,7 @@
         Both a mechanism for the mapping of YANG schemas to TMF Catalog
         Specifications (i.e. TMF633/634) and a matching mechanism for the
         mapping of YANG instance data to TMF Order Management (i.e. TMF641/652)
-        and Activation Management (i.e. TMF640/702) APIs are described.
+        and Activation Management (i.e. TMF640/664/702) APIs are described.
       </t>
     </abstract>
  
@@ -665,6 +665,7 @@ module example-toasters {
         <li>TMF640 Service Activation API <xref target="TMF640"/></li>
         <li>TMF641 Service Order Management API <xref target="TMF641"/></li>
         <li>TMF652 Resource Activation API <xref target="TMF652"/></li>
+        <li>TMF664 Resource Function Activation API <xref target="TMF664"/></li>
         <li>TMF702 Resource Order Management API <xref target="TMF702"/></li>
       </ul>
     </section>
@@ -781,6 +782,16 @@ module example-toasters {
             <date year="2019"/>
           </front>
           <seriesInfo name="TMF" value="652"/>
+        </reference>
+        <reference anchor="TMF664" target="https://www.tmforum.org/open-digital-architecture/open-apis/resource-function-activation-management-api-TMF664">
+          <front>
+            <title>TMF664 Resource Function Activation Management API</title>
+            <author>
+              <organization>TM Forum</organization>
+            </author>
+            <date year="2026"/>
+          </front>
+          <seriesInfo name="TMF" value="664"/>
         </reference>
         <reference anchor="TMF702" target="https://www.tmforum.org/oda/open-apis/directory/resource-activation-and-configuration-api-TMF702/">
           <front>
