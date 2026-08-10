@@ -897,6 +897,15 @@ module example-toasters {
           Additionally, it can make the Characteristic value opaque and
           difficult to validate or manipulate without understanding the schema.
         </t>
+        <t>
+          While it is not strictly forbidden for values within an object
+          to be objects or arrays, it is safe to assume that most
+          implementations would not support arbitrarily deep nesting. In
+          fact many implementations may not support Characteristics with
+          <tt>valueType</tt> of object if they are not built on a flexible
+          document store. An SQL based implementation may only support
+          discreet `valueType`.
+        </t>
       </section>
       <section>
         <name>Approach 3: Decomposition into Services/Resources</name>
