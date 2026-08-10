@@ -403,7 +403,7 @@ module example-toasters {
         <t>
           If the container is annotated with the <tt>tmf:cfs-service</tt> or
           <tt>tmf:rfs-service</tt> extension, it MUST be mapped to a TMF CFS
-          Service or RFS Resource, respectively. Otherwise, it MUST be mapped to
+          Service or RFS Service, respectively. Otherwise, it MUST be mapped to
           a TMF Feature.
         </t>
         <t>
@@ -526,7 +526,7 @@ module example-toasters {
         <t>
           If the list is annotated with the <tt>tmf:cfs-service</tt> or
           <tt>tmf:rfs-service</tt> extension, it MUST be mapped to a TMF CFS
-          Service or RFS Resource, respectively. Otherwise, it MUST be mapped
+          Service or RFS Service, respectively. Otherwise, it MUST be mapped
           to a TMF Feature.
         </t>
         <t>
