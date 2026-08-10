@@ -910,12 +910,11 @@ module example-toasters {
       <section>
         <name>Approach 3: Decomposition into Services/Resources</name>
         <t>
-          Each data tree layer could be mapped to its own TM Forum Service or
-          Resource, linked through <tt>supportingService</tt> or corresponding
-          Resource relationships.
-          This approach enables explicit decomposition and reuse. However,
-          each Service or Resource will appear in the Service Catalog or
-          Resource Catalog as a separately orderable item.
+          Each data tree layer could be mapped to its own TM Forum Service
+          or Resource, linked through <tt>serviceRelationship</tt> or
+          <tt>resourceRelationship</tt>. This approach enables explicit
+          decomposition and reuse, however each Service or Resource will
+          appear in the Catalog and Inventory as a separate item.
         </t>
         <t>
           If this approach was uniformly used for each YANG container or list,
