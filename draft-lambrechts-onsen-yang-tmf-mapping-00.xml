@@ -371,20 +371,29 @@ module example-toasters {
       </t>
       </section>
       <section>
-        <name>Mapping containers and lists to Features</name>
+        <name>Mapping containers and lists to (sub)Features</name>
         <t>
           Implementations MUST support mapping YANG schema trees of arbitrary
           depth below the mapping root. Each container or list in the
-          schema tree can be represented with TM Forum Features within the
-          Service or Resource that it belongs to.
+          schema tree can be represented as a TM Forum Service
+          Feature or Resource Feature within the Service or Resource that it
+          belongs to.
         </t>
         <t>
-          A TM Forum Service or Resource exposes its capabilities to
-          consumers via Features and Feature Groups <xref target="TR255"/>.
-          Features may include Characteristics which provide declarative
-          paramaterization for instantiation, while overall Characteristics
-          applied to the entire Service or Resource provide imperative
-          configuration.
+          The current TM Forum Data Model does not support Feature nesting, 
+          i.e., there is no subFeature-like construct. This can be resolved,
+          but requires a change to the TMF Data Model specification and the
+          associated OpenAPI specifications. The proposed solution is described
+          below.
+        </t>
+
+        <t>
+          DISCUSSION:         
+        </t>
+        <t>
+          Should this document contain a proposed change to the TMF Data Model
+          specification, or is there another preferred process for recommending
+          such a change?
         </t>
       </section>
       <section>
@@ -409,7 +418,9 @@ module example-toasters {
         <t>
           Data nodes located directly under the mapping root MUST be mapped to
           Service or Resource Characteristics.  Data nodes located in a 
-          first-level container or list are mapped to Feature Characteristics.
+          first-level container or list are mapped to Feature Characteristics, 
+          while those located in deeper levels of the YANG schema tree are 
+          mapped to subFeature Characteristics and so on.
         </t>
         <t>
           The Feature <tt>name</tt> SHOULD be derived from the YANG node name.
@@ -532,7 +543,9 @@ module example-toasters {
         <t>
           Data nodes located directly under the mapping root MUST be mapped to
           Service or Resource Characteristics. Data nodes located in a
-          first-level container or list are mapped to Feature Characteristics.
+          first-level container or list are mapped to Feature Characteristics,
+          while those located in deeper levels of the YANG schema tree are
+          mapped to subFeature Characteristics and so on.
         </t>
         <t>
           The Feature <tt>name</tt> SHOULD be derived from the YANG node name.
@@ -800,16 +813,6 @@ module example-toasters {
           </front>
           <seriesInfo name="TMF" value="630"/>
         </reference>
-        <reference anchor="TR255" target="https://www.tmforum.org/resources/technical-report/tr255-resource-function-activation-and-configuration-v5-0/">
-          <front>
-            <title>TR255 Resource Function – Activation and Configuration</title>
-            <author>
-              <organization>TM Forum</organization>
-            </author>
-            <date year="2020"/>
-          </front>
-          <seriesInfo name="TR" value="255"/>
-        </reference>
       </references>
     </references>
 
@@ -945,10 +948,19 @@ module example-toasters {
       <section>
         <name>Approach 4: Decomposition into Features</name>
         <t>
-          Each data tree layer can be represented as a TM Forum Feature
-          within a Service or Resource.  This approach keeps Catalog
-          entries manageable while still allowing for a structural and
-          hierarchical representation inside the Service or Resource.
+          Each data tree layer can be represented as a TM Forum Service
+          Feature or Resource Feature within a Service or Resource.
+          This approach keeps Catalog entries manageable while still allowing
+          for a structural and hierarchical representation inside the Service
+          or Resource.
+        </t>
+        <t>
+          The current TM Forum Data Model does not support Feature nesting, 
+          i.e., there is no supportingFeature-like construct. Such construct
+          COULD be added via a schemaLocation extension to represent feature
+          hierarchy. However, it is the author's opinion that for
+          maximum interoperability, such nesting SHOULD be standardized in a
+          future TM Forum Open API release.
         </t>
         <t>
           This document uses this approach for each YANG container or list that
