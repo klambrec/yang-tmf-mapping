@@ -28,10 +28,17 @@
     <seriesInfo name="Internet-Draft" value="draft-lambrechts-onsen-yang-tmf-mapping-00"/>
    
     <author fullname="Kris Lambrechts" initials="K." surname="Lambrechts">
-      <organization>NetEdge</organization>
+      <organization>Intwine</organization>
       <address>
-        <email>kris@netedge.plus</email>  
-        <uri>https://www.netedge.plus</uri>
+        <email>kris@intwine.net</email>
+        <uri>https://www.intwine.net</uri>
+      </address>
+    </author>
+
+    <author fullname="Kristian Larsson" initials="K." surname="Larsson">
+      <organization>Centor</organization>
+      <address>
+        <email>k@centor.se</email>
       </address>
     </author>
    
@@ -863,13 +870,16 @@ module example-toasters {
           by using the TM Forum "Object" Value Type. 
         </t>
         <sourcecode><![CDATA[
+NOTE: '\' line wrapping per RFC 8792
+
 {
   "id": "9876543216",
   "href": "/serviceActivationConfiguration/v4/service/987654321",
   "@type": "Service",
   "serviceSpecification":{
     "id":"conferenceBridgeEquipment",
-    "href":"/serviceCatalogManagement/v4/serviceSpecification/conferenceBridgeEquipment"
+    "href":"/serviceCatalogManagement/v4/serviceSpecification/\
+      conferenceBridgeEquipment"
   },
   "serviceCharacteristic": [
     {
@@ -967,6 +977,12 @@ module example-toasters {
           mapping mechanism.
         </t>
       </section>
+    </section>
+    <section anchor="Acknowledgements" numbered="false">
+      <name>Acknowledgements</name>
+      <t>The authors would like to thank Vance Shipley and Brad Peters for their
+        valuable feedback and suggestions on the mapping mechanism and the
+        overall structure of this document.</t>
     </section>
  </back>
 </rfc>
