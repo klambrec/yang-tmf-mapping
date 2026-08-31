@@ -390,25 +390,31 @@ module example-toasters {
         <t>
           Implementations MUST support mapping YANG schema trees of arbitrary
           depth below the mapping root. Each container or list in the
-          schema tree can be represented as a TM Forum Service
-          Feature or Resource Feature within the Service or Resource that it
-          belongs to.
+          schema tree below the mapping root MUST be represented as a TM Forum
+          Service Feature or Resource Feature within the Service or Resource
+          that it belongs to.
         </t>
         <t>
-          The current TM Forum Data Model does not support Feature nesting, 
-          i.e., there is no subFeature-like construct. This can be resolved,
-          but requires a change to the TMF Data Model specification and the
-          associated OpenAPI specifications. The proposed solution is described
-          below.
+          Feature hierarchy MUST be represented as a flat collection of
+          Features linked by relationships. Each Feature below the first level
+          MUST contain one relationship to its immediate parent, with
+          <tt>relationshipType</tt> set to <tt>parent</tt>. In Catalog
+          Specifications, this relationship MUST use
+          <tt>featureSpecRelationship</tt> and identify the parent in its
+          <tt>featureId</tt> field. In instance data, it MUST use
+          <tt>featureRelationship</tt> and identify the parent in its
+          <tt>id</tt> field.
         </t>
-
         <t>
-          DISCUSSION:         
-        </t>
-        <t>
-          Should this document contain a proposed change to the TMF Data Model
-          specification, or is there another preferred process for recommending
-          such a change?
+          A Feature <tt>id</tt> MUST be the path from the mapping root to the
+          corresponding YANG node, excluding the mapping root itself, with node
+          identifiers separated by <tt>/</tt>. For instance data, each list
+          segment MUST include one predicate of the form
+          <tt>[key='value']</tt> for every list key, in key statement order.
+          Backslashes and single quotes in key values MUST be escaped with a
+          preceding backslash.
+          This makes Feature identifiers unique while preserving the YANG
+          hierarchy and list identity.
         </t>
       </section>
       <section>
@@ -435,7 +441,7 @@ module example-toasters {
           Service or Resource Characteristics.  Data nodes located in a 
           first-level container or list are mapped to Feature Characteristics, 
           while those located in deeper levels of the YANG schema tree are 
-          mapped to subFeature Characteristics and so on.
+          mapped to the Characteristics of the corresponding nested Feature.
         </t>
         <t>
           The Feature <tt>name</tt> SHOULD be derived from the YANG node name.
@@ -560,7 +566,7 @@ module example-toasters {
           Service or Resource Characteristics. Data nodes located in a
           first-level container or list are mapped to Feature Characteristics,
           while those located in deeper levels of the YANG schema tree are
-          mapped to subFeature Characteristics and so on.
+          mapped to the Characteristics of the corresponding nested Feature.
         </t>
         <t>
           The Feature <tt>name</tt> SHOULD be derived from the YANG node name.
@@ -958,12 +964,8 @@ NOTE: '\' line wrapping per RFC 8792
           or Resource.
         </t>
         <t>
-          The current TM Forum Data Model does not support Feature nesting, 
-          i.e., there is no supportingFeature-like construct. Such construct
-          COULD be added via a schemaLocation extension to represent feature
-          hierarchy. However, it is the author's opinion that for
-          maximum interoperability, such nesting SHOULD be standardized in a
-          future TM Forum Open API release.
+          Feature hierarchy is represented as a flat collection of Features
+          linked by relationships.
         </t>
         <t>
           This document uses this approach for each YANG container or list that
