@@ -41,7 +41,15 @@
         <email>k@centor.se</email>
       </address>
     </author>
-   
+
+    <author fullname="Vance Shipley" initials="V." surname="Shipley">
+      <organization>SigScale</organization>
+      <address>
+        <email>vances@sigscale.com</email>
+        <uri>http://www.sigscale.com</uri>
+      </address>
+    </author>
+
     <date year="2026"/>
 
     <area>General</area>
