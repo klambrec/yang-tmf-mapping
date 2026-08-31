@@ -1,0 +1,2841 @@
+curl -k -sS -H "Accept: application/json" http://localhost:32788/tmf-api/ServiceActivationAndConfiguration/v4/service | jq '.'
+[
+  {
+    "id": "/netinfra/router[name='AMS-CORE-1']",
+    "href": "/tmf-api/ServiceActivationAndConfiguration/v4/service/%2Fnetinfra%2Frouter%5Bname%3D%27AMS-CORE-1%27%5D",
+    "category": "netinfra",
+    "description": "router",
+    "endDate": null,
+    "hasStarted": true,
+    "isBundle": false,
+    "isServiceEnabled": true,
+    "isStateful": false,
+    "name": "AMS-CORE-1",
+    "serviceDate": "2026-08-25T20:08:11.344616143Z",
+    "serviceType": null,
+    "startDate": "2026-08-25T20:08:11.344621269Z",
+    "startMode": "1",
+    "feature": [],
+    "note": [],
+    "place": [],
+    "relatedEntity": [],
+    "relatedParty": [],
+    "serviceCharacteristic": [
+      {
+        "id": "name",
+        "name": "name",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "AMS-CORE-1",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "id",
+        "name": "id",
+        "valueType": "integer",
+        "characteristicRelationship": [],
+        "value": 1,
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "type",
+        "name": "type",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "CiscoIosXr_25_3_1",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "role",
+        "name": "role",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "edge",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "asn",
+        "name": "asn",
+        "valueType": "integer",
+        "characteristicRelationship": [],
+        "value": 65001,
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      }
+    ],
+    "serviceOrderItem": [],
+    "serviceRelationship": [],
+    "serviceSpecification": {
+      "id": "/netinfra/router",
+      "href": "/tmf-api/ServiceActivationAndConfiguration/v4/serviceSpecification/%2Fnetinfra%2Frouter",
+      "name": "/netinfra/router",
+      "version": "2025-11-01",
+      "@baseType": "ServiceSpecificationRef",
+      "@schemaLocation": "/tmf-api/schema/Service/ServiceSpecificationRef.schema.json",
+      "@type": "serviceSpecificationRef",
+      "@referredType": "serviceSpecification"
+    },
+    "state": "active",
+    "supportingResource": [],
+    "supportingService": [],
+    "@baseType": "Service",
+    "@schemaLocation": "/tmf-api/schema/Service/Service.schema.json",
+    "@type": "Service"
+  },
+  {
+    "id": "/netinfra/router[name='FRA-CORE-1']",
+    "href": "/tmf-api/ServiceActivationAndConfiguration/v4/service/%2Fnetinfra%2Frouter%5Bname%3D%27FRA-CORE-1%27%5D",
+    "category": "netinfra",
+    "description": "router",
+    "endDate": null,
+    "hasStarted": true,
+    "isBundle": false,
+    "isServiceEnabled": true,
+    "isStateful": false,
+    "name": "FRA-CORE-1",
+    "serviceDate": "2026-08-25T20:08:11.365659894Z",
+    "serviceType": null,
+    "startDate": "2026-08-25T20:08:11.365663978Z",
+    "startMode": "1",
+    "feature": [],
+    "note": [],
+    "place": [],
+    "relatedEntity": [],
+    "relatedParty": [],
+    "serviceCharacteristic": [
+      {
+        "id": "name",
+        "name": "name",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "FRA-CORE-1",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "id",
+        "name": "id",
+        "valueType": "integer",
+        "characteristicRelationship": [],
+        "value": 2,
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "type",
+        "name": "type",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "CiscoIosXr_25_3_1",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "role",
+        "name": "role",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "edge",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "asn",
+        "name": "asn",
+        "valueType": "integer",
+        "characteristicRelationship": [],
+        "value": 65001,
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      }
+    ],
+    "serviceOrderItem": [],
+    "serviceRelationship": [],
+    "serviceSpecification": {
+      "id": "/netinfra/router",
+      "href": "/tmf-api/ServiceActivationAndConfiguration/v4/serviceSpecification/%2Fnetinfra%2Frouter",
+      "name": "/netinfra/router",
+      "version": "2025-11-01",
+      "@baseType": "ServiceSpecificationRef",
+      "@schemaLocation": "/tmf-api/schema/Service/ServiceSpecificationRef.schema.json",
+      "@type": "serviceSpecificationRef",
+      "@referredType": "serviceSpecification"
+    },
+    "state": "active",
+    "supportingResource": [],
+    "supportingService": [],
+    "@baseType": "Service",
+    "@schemaLocation": "/tmf-api/schema/Service/Service.schema.json",
+    "@type": "Service"
+  },
+  {
+    "id": "/netinfra/router[name='STO-CORE-1']",
+    "href": "/tmf-api/ServiceActivationAndConfiguration/v4/service/%2Fnetinfra%2Frouter%5Bname%3D%27STO-CORE-1%27%5D",
+    "category": "netinfra",
+    "description": "router",
+    "endDate": null,
+    "hasStarted": true,
+    "isBundle": false,
+    "isServiceEnabled": true,
+    "isStateful": false,
+    "name": "STO-CORE-1",
+    "serviceDate": "2026-08-25T20:08:11.387815704Z",
+    "serviceType": null,
+    "startDate": "2026-08-25T20:08:11.387820080Z",
+    "startMode": "1",
+    "feature": [],
+    "note": [],
+    "place": [],
+    "relatedEntity": [],
+    "relatedParty": [],
+    "serviceCharacteristic": [
+      {
+        "id": "name",
+        "name": "name",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "STO-CORE-1",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "id",
+        "name": "id",
+        "valueType": "integer",
+        "characteristicRelationship": [],
+        "value": 3,
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "type",
+        "name": "type",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "JuniperCRPD_24_4R1_9",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "role",
+        "name": "role",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "edge",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "asn",
+        "name": "asn",
+        "valueType": "integer",
+        "characteristicRelationship": [],
+        "value": 65001,
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      }
+    ],
+    "serviceOrderItem": [],
+    "serviceRelationship": [],
+    "serviceSpecification": {
+      "id": "/netinfra/router",
+      "href": "/tmf-api/ServiceActivationAndConfiguration/v4/serviceSpecification/%2Fnetinfra%2Frouter",
+      "name": "/netinfra/router",
+      "version": "2025-11-01",
+      "@baseType": "ServiceSpecificationRef",
+      "@schemaLocation": "/tmf-api/schema/Service/ServiceSpecificationRef.schema.json",
+      "@type": "serviceSpecificationRef",
+      "@referredType": "serviceSpecification"
+    },
+    "state": "active",
+    "supportingResource": [],
+    "supportingService": [],
+    "@baseType": "Service",
+    "@schemaLocation": "/tmf-api/schema/Service/Service.schema.json",
+    "@type": "Service"
+  },
+  {
+    "id": "/netinfra/router[name='LJU-CORE-1']",
+    "href": "/tmf-api/ServiceActivationAndConfiguration/v4/service/%2Fnetinfra%2Frouter%5Bname%3D%27LJU-CORE-1%27%5D",
+    "category": "netinfra",
+    "description": "router",
+    "endDate": null,
+    "hasStarted": true,
+    "isBundle": false,
+    "isServiceEnabled": true,
+    "isStateful": false,
+    "name": "LJU-CORE-1",
+    "serviceDate": "2026-08-25T20:08:11.407303654Z",
+    "serviceType": null,
+    "startDate": "2026-08-25T20:08:11.407306571Z",
+    "startMode": "1",
+    "feature": [],
+    "note": [],
+    "place": [],
+    "relatedEntity": [],
+    "relatedParty": [],
+    "serviceCharacteristic": [
+      {
+        "id": "name",
+        "name": "name",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "LJU-CORE-1",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "id",
+        "name": "id",
+        "valueType": "integer",
+        "characteristicRelationship": [],
+        "value": 4,
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "type",
+        "name": "type",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "JuniperCRPD_24_4R1_9",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "role",
+        "name": "role",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "edge",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "asn",
+        "name": "asn",
+        "valueType": "integer",
+        "characteristicRelationship": [],
+        "value": 65001,
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      }
+    ],
+    "serviceOrderItem": [],
+    "serviceRelationship": [],
+    "serviceSpecification": {
+      "id": "/netinfra/router",
+      "href": "/tmf-api/ServiceActivationAndConfiguration/v4/serviceSpecification/%2Fnetinfra%2Frouter",
+      "name": "/netinfra/router",
+      "version": "2025-11-01",
+      "@baseType": "ServiceSpecificationRef",
+      "@schemaLocation": "/tmf-api/schema/Service/ServiceSpecificationRef.schema.json",
+      "@type": "serviceSpecificationRef",
+      "@referredType": "serviceSpecification"
+    },
+    "state": "active",
+    "supportingResource": [],
+    "supportingService": [],
+    "@baseType": "Service",
+    "@schemaLocation": "/tmf-api/schema/Service/Service.schema.json",
+    "@type": "Service"
+  },
+  {
+    "id": "/netinfra/backbone-link[left-router='AMS-CORE-1'][left-interface='GigabitEthernet0/0/0/0'][right-router='FRA-CORE-1'][right-interface='GigabitEthernet0/0/0/0']",
+    "href": "/tmf-api/ServiceActivationAndConfiguration/v4/service/%2Fnetinfra%2Fbackbone-link%5Bleft-router%3D%27AMS-CORE-1%27%5D%5Bleft-interface%3D%27GigabitEthernet0%2F0%2F0%2F0%27%5D%5Bright-router%3D%27FRA-CORE-1%27%5D%5Bright-interface%3D%27GigabitEthernet0%2F0%2F0%2F0%27%5D",
+    "category": "netinfra",
+    "description": "backbone-link",
+    "endDate": null,
+    "hasStarted": true,
+    "isBundle": false,
+    "isServiceEnabled": true,
+    "isStateful": false,
+    "name": "AMS-CORE-1",
+    "serviceDate": "2026-08-25T20:08:11.427365158Z",
+    "serviceType": null,
+    "startDate": "2026-08-25T20:08:11.427368617Z",
+    "startMode": "1",
+    "feature": [],
+    "note": [],
+    "place": [],
+    "relatedEntity": [],
+    "relatedParty": [],
+    "serviceCharacteristic": [
+      {
+        "id": "left-router",
+        "name": "left-router",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "AMS-CORE-1",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "left-interface",
+        "name": "left-interface",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "GigabitEthernet0/0/0/0",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "right-router",
+        "name": "right-router",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "FRA-CORE-1",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "right-interface",
+        "name": "right-interface",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "GigabitEthernet0/0/0/0",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      }
+    ],
+    "serviceOrderItem": [],
+    "serviceRelationship": [],
+    "serviceSpecification": {
+      "id": "/netinfra/backbone-link",
+      "href": "/tmf-api/ServiceActivationAndConfiguration/v4/serviceSpecification/%2Fnetinfra%2Fbackbone-link",
+      "name": "/netinfra/backbone-link",
+      "version": "2025-11-01",
+      "@baseType": "ServiceSpecificationRef",
+      "@schemaLocation": "/tmf-api/schema/Service/ServiceSpecificationRef.schema.json",
+      "@type": "serviceSpecificationRef",
+      "@referredType": "serviceSpecification"
+    },
+    "state": "active",
+    "supportingResource": [],
+    "supportingService": [],
+    "@baseType": "Service",
+    "@schemaLocation": "/tmf-api/schema/Service/Service.schema.json",
+    "@type": "Service"
+  },
+  {
+    "id": "/netinfra/backbone-link[left-router='AMS-CORE-1'][left-interface='GigabitEthernet0/0/0/1'][right-router='STO-CORE-1'][right-interface='eth1']",
+    "href": "/tmf-api/ServiceActivationAndConfiguration/v4/service/%2Fnetinfra%2Fbackbone-link%5Bleft-router%3D%27AMS-CORE-1%27%5D%5Bleft-interface%3D%27GigabitEthernet0%2F0%2F0%2F1%27%5D%5Bright-router%3D%27STO-CORE-1%27%5D%5Bright-interface%3D%27eth1%27%5D",
+    "category": "netinfra",
+    "description": "backbone-link",
+    "endDate": null,
+    "hasStarted": true,
+    "isBundle": false,
+    "isServiceEnabled": true,
+    "isStateful": false,
+    "name": "AMS-CORE-1",
+    "serviceDate": "2026-08-25T20:08:11.447210292Z",
+    "serviceType": null,
+    "startDate": "2026-08-25T20:08:11.447212334Z",
+    "startMode": "1",
+    "feature": [],
+    "note": [],
+    "place": [],
+    "relatedEntity": [],
+    "relatedParty": [],
+    "serviceCharacteristic": [
+      {
+        "id": "left-router",
+        "name": "left-router",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "AMS-CORE-1",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "left-interface",
+        "name": "left-interface",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "GigabitEthernet0/0/0/1",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "right-router",
+        "name": "right-router",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "STO-CORE-1",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "right-interface",
+        "name": "right-interface",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "eth1",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      }
+    ],
+    "serviceOrderItem": [],
+    "serviceRelationship": [],
+    "serviceSpecification": {
+      "id": "/netinfra/backbone-link",
+      "href": "/tmf-api/ServiceActivationAndConfiguration/v4/serviceSpecification/%2Fnetinfra%2Fbackbone-link",
+      "name": "/netinfra/backbone-link",
+      "version": "2025-11-01",
+      "@baseType": "ServiceSpecificationRef",
+      "@schemaLocation": "/tmf-api/schema/Service/ServiceSpecificationRef.schema.json",
+      "@type": "serviceSpecificationRef",
+      "@referredType": "serviceSpecification"
+    },
+    "state": "active",
+    "supportingResource": [],
+    "supportingService": [],
+    "@baseType": "Service",
+    "@schemaLocation": "/tmf-api/schema/Service/Service.schema.json",
+    "@type": "Service"
+  },
+  {
+    "id": "/netinfra/backbone-link[left-router='FRA-CORE-1'][left-interface='GigabitEthernet0/0/0/1'][right-router='STO-CORE-1'][right-interface='eth2']",
+    "href": "/tmf-api/ServiceActivationAndConfiguration/v4/service/%2Fnetinfra%2Fbackbone-link%5Bleft-router%3D%27FRA-CORE-1%27%5D%5Bleft-interface%3D%27GigabitEthernet0%2F0%2F0%2F1%27%5D%5Bright-router%3D%27STO-CORE-1%27%5D%5Bright-interface%3D%27eth2%27%5D",
+    "category": "netinfra",
+    "description": "backbone-link",
+    "endDate": null,
+    "hasStarted": true,
+    "isBundle": false,
+    "isServiceEnabled": true,
+    "isStateful": false,
+    "name": "FRA-CORE-1",
+    "serviceDate": "2026-08-25T20:08:11.468681155Z",
+    "serviceType": null,
+    "startDate": "2026-08-25T20:08:11.468686406Z",
+    "startMode": "1",
+    "feature": [],
+    "note": [],
+    "place": [],
+    "relatedEntity": [],
+    "relatedParty": [],
+    "serviceCharacteristic": [
+      {
+        "id": "left-router",
+        "name": "left-router",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "FRA-CORE-1",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "left-interface",
+        "name": "left-interface",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "GigabitEthernet0/0/0/1",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "right-router",
+        "name": "right-router",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "STO-CORE-1",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "right-interface",
+        "name": "right-interface",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "eth2",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      }
+    ],
+    "serviceOrderItem": [],
+    "serviceRelationship": [],
+    "serviceSpecification": {
+      "id": "/netinfra/backbone-link",
+      "href": "/tmf-api/ServiceActivationAndConfiguration/v4/serviceSpecification/%2Fnetinfra%2Fbackbone-link",
+      "name": "/netinfra/backbone-link",
+      "version": "2025-11-01",
+      "@baseType": "ServiceSpecificationRef",
+      "@schemaLocation": "/tmf-api/schema/Service/ServiceSpecificationRef.schema.json",
+      "@type": "serviceSpecificationRef",
+      "@referredType": "serviceSpecification"
+    },
+    "state": "active",
+    "supportingResource": [],
+    "supportingService": [],
+    "@baseType": "Service",
+    "@schemaLocation": "/tmf-api/schema/Service/Service.schema.json",
+    "@type": "Service"
+  },
+  {
+    "id": "/netinfra/backbone-link[left-router='FRA-CORE-1'][left-interface='GigabitEthernet0/0/0/2'][right-router='LJU-CORE-1'][right-interface='eth1']",
+    "href": "/tmf-api/ServiceActivationAndConfiguration/v4/service/%2Fnetinfra%2Fbackbone-link%5Bleft-router%3D%27FRA-CORE-1%27%5D%5Bleft-interface%3D%27GigabitEthernet0%2F0%2F0%2F2%27%5D%5Bright-router%3D%27LJU-CORE-1%27%5D%5Bright-interface%3D%27eth1%27%5D",
+    "category": "netinfra",
+    "description": "backbone-link",
+    "endDate": null,
+    "hasStarted": true,
+    "isBundle": false,
+    "isServiceEnabled": true,
+    "isStateful": false,
+    "name": "FRA-CORE-1",
+    "serviceDate": "2026-08-25T20:08:11.501381095Z",
+    "serviceType": null,
+    "startDate": "2026-08-25T20:08:11.501383220Z",
+    "startMode": "1",
+    "feature": [],
+    "note": [],
+    "place": [],
+    "relatedEntity": [],
+    "relatedParty": [],
+    "serviceCharacteristic": [
+      {
+        "id": "left-router",
+        "name": "left-router",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "FRA-CORE-1",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "left-interface",
+        "name": "left-interface",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "GigabitEthernet0/0/0/2",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "right-router",
+        "name": "right-router",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "LJU-CORE-1",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "right-interface",
+        "name": "right-interface",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "eth1",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      }
+    ],
+    "serviceOrderItem": [],
+    "serviceRelationship": [],
+    "serviceSpecification": {
+      "id": "/netinfra/backbone-link",
+      "href": "/tmf-api/ServiceActivationAndConfiguration/v4/serviceSpecification/%2Fnetinfra%2Fbackbone-link",
+      "name": "/netinfra/backbone-link",
+      "version": "2025-11-01",
+      "@baseType": "ServiceSpecificationRef",
+      "@schemaLocation": "/tmf-api/schema/Service/ServiceSpecificationRef.schema.json",
+      "@type": "serviceSpecificationRef",
+      "@referredType": "serviceSpecification"
+    },
+    "state": "active",
+    "supportingResource": [],
+    "supportingService": [],
+    "@baseType": "Service",
+    "@schemaLocation": "/tmf-api/schema/Service/Service.schema.json",
+    "@type": "Service"
+  },
+  {
+    "id": "/netinfra/backbone-link[left-router='STO-CORE-1'][left-interface='eth3'][right-router='LJU-CORE-1'][right-interface='eth2']",
+    "href": "/tmf-api/ServiceActivationAndConfiguration/v4/service/%2Fnetinfra%2Fbackbone-link%5Bleft-router%3D%27STO-CORE-1%27%5D%5Bleft-interface%3D%27eth3%27%5D%5Bright-router%3D%27LJU-CORE-1%27%5D%5Bright-interface%3D%27eth2%27%5D",
+    "category": "netinfra",
+    "description": "backbone-link",
+    "endDate": null,
+    "hasStarted": true,
+    "isBundle": false,
+    "isServiceEnabled": true,
+    "isStateful": false,
+    "name": "STO-CORE-1",
+    "serviceDate": "2026-08-25T20:08:11.523856458Z",
+    "serviceType": null,
+    "startDate": "2026-08-25T20:08:11.523858292Z",
+    "startMode": "1",
+    "feature": [],
+    "note": [],
+    "place": [],
+    "relatedEntity": [],
+    "relatedParty": [],
+    "serviceCharacteristic": [
+      {
+        "id": "left-router",
+        "name": "left-router",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "STO-CORE-1",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "left-interface",
+        "name": "left-interface",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "eth3",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "right-router",
+        "name": "right-router",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "LJU-CORE-1",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "right-interface",
+        "name": "right-interface",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "eth2",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      }
+    ],
+    "serviceOrderItem": [],
+    "serviceRelationship": [],
+    "serviceSpecification": {
+      "id": "/netinfra/backbone-link",
+      "href": "/tmf-api/ServiceActivationAndConfiguration/v4/serviceSpecification/%2Fnetinfra%2Fbackbone-link",
+      "name": "/netinfra/backbone-link",
+      "version": "2025-11-01",
+      "@baseType": "ServiceSpecificationRef",
+      "@schemaLocation": "/tmf-api/schema/Service/ServiceSpecificationRef.schema.json",
+      "@type": "serviceSpecificationRef",
+      "@referredType": "serviceSpecification"
+    },
+    "state": "active",
+    "supportingResource": [],
+    "supportingService": [],
+    "@baseType": "Service",
+    "@schemaLocation": "/tmf-api/schema/Service/Service.schema.json",
+    "@type": "Service"
+  },
+  {
+    "id": "/l3vpn-svc/vpn-services/vpn-service[vpn-id='acme-65501']",
+    "href": "/tmf-api/ServiceActivationAndConfiguration/v4/service/%2Fl3vpn-svc%2Fvpn-services%2Fvpn-service%5Bvpn-id%3D%27acme-65501%27%5D",
+    "category": "l3vpn-svc",
+    "description": "vpn-service",
+    "endDate": null,
+    "hasStarted": true,
+    "isBundle": false,
+    "isServiceEnabled": true,
+    "isStateful": false,
+    "name": "acme-65501",
+    "serviceDate": "2026-08-25T20:08:11.590523714Z",
+    "serviceType": null,
+    "startDate": "2026-08-25T20:08:11.590526173Z",
+    "startMode": "1",
+    "feature": [],
+    "note": [],
+    "place": [],
+    "relatedEntity": [],
+    "relatedParty": [],
+    "serviceCharacteristic": [
+      {
+        "id": "vpn-id",
+        "name": "vpn-id",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "acme-65501",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      },
+      {
+        "id": "customer-name",
+        "name": "customer-name",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "CUSTOMER-1",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      }
+    ],
+    "serviceOrderItem": [],
+    "serviceRelationship": [],
+    "serviceSpecification": {
+      "id": "/l3vpn-svc/vpn-services/vpn-service",
+      "href": "/tmf-api/ServiceActivationAndConfiguration/v4/serviceSpecification/%2Fl3vpn-svc%2Fvpn-services%2Fvpn-service",
+      "name": "/l3vpn-svc/vpn-services/vpn-service",
+      "version": "2025-11-01",
+      "@baseType": "ServiceSpecificationRef",
+      "@schemaLocation": "/tmf-api/schema/Service/ServiceSpecificationRef.schema.json",
+      "@type": "serviceSpecificationRef",
+      "@referredType": "serviceSpecification"
+    },
+    "state": "active",
+    "supportingResource": [],
+    "supportingService": [],
+    "@baseType": "Service",
+    "@schemaLocation": "/tmf-api/schema/Service/Service.schema.json",
+    "@type": "Service"
+  },
+  {
+    "id": "/l3vpn-svc/sites/site[site-id='SITE-1']",
+    "href": "/tmf-api/ServiceActivationAndConfiguration/v4/service/%2Fl3vpn-svc%2Fsites%2Fsite%5Bsite-id%3D%27SITE-1%27%5D",
+    "category": "l3vpn-svc",
+    "description": "site",
+    "endDate": null,
+    "hasStarted": true,
+    "isBundle": false,
+    "isServiceEnabled": true,
+    "isStateful": false,
+    "name": "SITE-1",
+    "serviceDate": "2026-08-25T20:08:11.654889004Z",
+    "serviceType": null,
+    "startDate": "2026-08-25T20:08:11.654892255Z",
+    "startMode": "1",
+    "feature": [
+      {
+        "id": "management",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "management",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "type",
+            "name": "type",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "ietf-l3vpn-svc:customer-managed",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "locations",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "locations",
+        "constraint": [],
+        "featureCharacteristic": [],
+        "featureRelationship": [],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "locations/location[location-id='MAIN']",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "location",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "location-id",
+            "name": "location-id",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "MAIN",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "locations",
+            "name": "locations",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "site-network-accesses",
+        "constraint": [],
+        "featureCharacteristic": [],
+        "featureRelationship": [],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "site-network-access",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "site-network-access-id",
+            "name": "site-network-access-id",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "SNA-1-1",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          },
+          {
+            "id": "location-reference",
+            "name": "location-reference",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "MAIN",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses",
+            "name": "site-network-accesses",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']/service",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "service",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "svc-input-bandwidth",
+            "name": "svc-input-bandwidth",
+            "valueType": "integer",
+            "characteristicRelationship": [],
+            "value": 1000000000,
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          },
+          {
+            "id": "svc-output-bandwidth",
+            "name": "svc-output-bandwidth",
+            "valueType": "integer",
+            "characteristicRelationship": [],
+            "value": 1000000000,
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          },
+          {
+            "id": "svc-mtu",
+            "name": "svc-mtu",
+            "valueType": "integer",
+            "characteristicRelationship": [],
+            "value": 9000,
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']/vpn-attachment",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "vpn-attachment",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "vpn-id",
+            "name": "vpn-id",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "acme-65501",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']/bearer",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "bearer",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "bearer-reference",
+            "name": "bearer-reference",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "AMS-CORE-1,GigabitEthernet0/0/0/2.100",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']/ip-connection",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "ip-connection",
+        "constraint": [],
+        "featureCharacteristic": [],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']/ip-connection/ipv4",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "ipv4",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "address-allocation-type",
+            "name": "address-allocation-type",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "ietf-l3vpn-svc:static-address",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']/ip-connection",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']/ip-connection",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']/ip-connection/ipv4/addresses",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "addresses",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "provider-address",
+            "name": "provider-address",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "10.201.1.1",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          },
+          {
+            "id": "customer-address",
+            "name": "customer-address",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "10.201.1.2",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          },
+          {
+            "id": "prefix-length",
+            "name": "prefix-length",
+            "valueType": "integer",
+            "characteristicRelationship": [],
+            "value": 30,
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']/ip-connection/ipv4",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']/ip-connection/ipv4",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']/routing-protocols",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "routing-protocols",
+        "constraint": [],
+        "featureCharacteristic": [],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']/routing-protocols/routing-protocol[type='bgp']",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "routing-protocol",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "type",
+            "name": "type",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "ietf-l3vpn-svc:bgp",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']/routing-protocols",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']/routing-protocols",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']/routing-protocols/routing-protocol[type='bgp']/bgp",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "bgp",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "autonomous-system",
+            "name": "autonomous-system",
+            "valueType": "integer",
+            "characteristicRelationship": [],
+            "value": 65501,
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          },
+          {
+            "id": "address-family",
+            "name": "address-family",
+            "valueType": "stringArray",
+            "characteristicRelationship": [],
+            "value": [
+              "ipv4"
+            ],
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']/routing-protocols/routing-protocol[type='bgp']",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-1-1']/routing-protocols/routing-protocol[type='bgp']",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      }
+    ],
+    "note": [],
+    "place": [],
+    "relatedEntity": [],
+    "relatedParty": [],
+    "serviceCharacteristic": [
+      {
+        "id": "site-id",
+        "name": "site-id",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "SITE-1",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      }
+    ],
+    "serviceOrderItem": [],
+    "serviceRelationship": [],
+    "serviceSpecification": {
+      "id": "/l3vpn-svc/sites/site",
+      "href": "/tmf-api/ServiceActivationAndConfiguration/v4/serviceSpecification/%2Fl3vpn-svc%2Fsites%2Fsite",
+      "name": "/l3vpn-svc/sites/site",
+      "version": "2025-11-01",
+      "@baseType": "ServiceSpecificationRef",
+      "@schemaLocation": "/tmf-api/schema/Service/ServiceSpecificationRef.schema.json",
+      "@type": "serviceSpecificationRef",
+      "@referredType": "serviceSpecification"
+    },
+    "state": "active",
+    "supportingResource": [],
+    "supportingService": [],
+    "@baseType": "Service",
+    "@schemaLocation": "/tmf-api/schema/Service/Service.schema.json",
+    "@type": "Service"
+  },
+  {
+    "id": "/l3vpn-svc/sites/site[site-id='SITE-2']",
+    "href": "/tmf-api/ServiceActivationAndConfiguration/v4/service/%2Fl3vpn-svc%2Fsites%2Fsite%5Bsite-id%3D%27SITE-2%27%5D",
+    "category": "l3vpn-svc",
+    "description": "site",
+    "endDate": null,
+    "hasStarted": true,
+    "isBundle": false,
+    "isServiceEnabled": true,
+    "isStateful": false,
+    "name": "SITE-2",
+    "serviceDate": "2026-08-25T20:08:11.694063645Z",
+    "serviceType": null,
+    "startDate": "2026-08-25T20:08:11.694065937Z",
+    "startMode": "1",
+    "feature": [
+      {
+        "id": "management",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "management",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "type",
+            "name": "type",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "ietf-l3vpn-svc:customer-managed",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "locations",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "locations",
+        "constraint": [],
+        "featureCharacteristic": [],
+        "featureRelationship": [],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "locations/location[location-id='MAIN']",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "location",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "location-id",
+            "name": "location-id",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "MAIN",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "locations",
+            "name": "locations",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "site-network-accesses",
+        "constraint": [],
+        "featureCharacteristic": [],
+        "featureRelationship": [],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "site-network-access",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "site-network-access-id",
+            "name": "site-network-access-id",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "SNA-2-1",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          },
+          {
+            "id": "location-reference",
+            "name": "location-reference",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "MAIN",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses",
+            "name": "site-network-accesses",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']/service",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "service",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "svc-input-bandwidth",
+            "name": "svc-input-bandwidth",
+            "valueType": "integer",
+            "characteristicRelationship": [],
+            "value": 1000000000,
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          },
+          {
+            "id": "svc-output-bandwidth",
+            "name": "svc-output-bandwidth",
+            "valueType": "integer",
+            "characteristicRelationship": [],
+            "value": 1000000000,
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          },
+          {
+            "id": "svc-mtu",
+            "name": "svc-mtu",
+            "valueType": "integer",
+            "characteristicRelationship": [],
+            "value": 9000,
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']/vpn-attachment",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "vpn-attachment",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "vpn-id",
+            "name": "vpn-id",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "acme-65501",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']/bearer",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "bearer",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "bearer-reference",
+            "name": "bearer-reference",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "FRA-CORE-1,GigabitEthernet0/0/0/3.100",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']/ip-connection",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "ip-connection",
+        "constraint": [],
+        "featureCharacteristic": [],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']/ip-connection/ipv4",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "ipv4",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "address-allocation-type",
+            "name": "address-allocation-type",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "ietf-l3vpn-svc:static-address",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']/ip-connection",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']/ip-connection",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']/ip-connection/ipv4/addresses",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "addresses",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "provider-address",
+            "name": "provider-address",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "10.202.1.1",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          },
+          {
+            "id": "customer-address",
+            "name": "customer-address",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "10.202.1.2",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          },
+          {
+            "id": "prefix-length",
+            "name": "prefix-length",
+            "valueType": "integer",
+            "characteristicRelationship": [],
+            "value": 30,
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']/ip-connection/ipv4",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']/ip-connection/ipv4",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']/routing-protocols",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "routing-protocols",
+        "constraint": [],
+        "featureCharacteristic": [],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']/routing-protocols/routing-protocol[type='bgp']",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "routing-protocol",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "type",
+            "name": "type",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "ietf-l3vpn-svc:bgp",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']/routing-protocols",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']/routing-protocols",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']/routing-protocols/routing-protocol[type='bgp']/bgp",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "bgp",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "autonomous-system",
+            "name": "autonomous-system",
+            "valueType": "integer",
+            "characteristicRelationship": [],
+            "value": 65501,
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          },
+          {
+            "id": "address-family",
+            "name": "address-family",
+            "valueType": "stringArray",
+            "characteristicRelationship": [],
+            "value": [
+              "ipv4"
+            ],
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']/routing-protocols/routing-protocol[type='bgp']",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-2-1']/routing-protocols/routing-protocol[type='bgp']",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      }
+    ],
+    "note": [],
+    "place": [],
+    "relatedEntity": [],
+    "relatedParty": [],
+    "serviceCharacteristic": [
+      {
+        "id": "site-id",
+        "name": "site-id",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "SITE-2",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      }
+    ],
+    "serviceOrderItem": [],
+    "serviceRelationship": [],
+    "serviceSpecification": {
+      "id": "/l3vpn-svc/sites/site",
+      "href": "/tmf-api/ServiceActivationAndConfiguration/v4/serviceSpecification/%2Fl3vpn-svc%2Fsites%2Fsite",
+      "name": "/l3vpn-svc/sites/site",
+      "version": "2025-11-01",
+      "@baseType": "ServiceSpecificationRef",
+      "@schemaLocation": "/tmf-api/schema/Service/ServiceSpecificationRef.schema.json",
+      "@type": "serviceSpecificationRef",
+      "@referredType": "serviceSpecification"
+    },
+    "state": "active",
+    "supportingResource": [],
+    "supportingService": [],
+    "@baseType": "Service",
+    "@schemaLocation": "/tmf-api/schema/Service/Service.schema.json",
+    "@type": "Service"
+  },
+  {
+    "id": "/l3vpn-svc/sites/site[site-id='SITE-3']",
+    "href": "/tmf-api/ServiceActivationAndConfiguration/v4/service/%2Fl3vpn-svc%2Fsites%2Fsite%5Bsite-id%3D%27SITE-3%27%5D",
+    "category": "l3vpn-svc",
+    "description": "site",
+    "endDate": null,
+    "hasStarted": true,
+    "isBundle": false,
+    "isServiceEnabled": true,
+    "isStateful": false,
+    "name": "SITE-3",
+    "serviceDate": "2026-08-25T20:08:11.721802301Z",
+    "serviceType": null,
+    "startDate": "2026-08-25T20:08:11.721804635Z",
+    "startMode": "1",
+    "feature": [
+      {
+        "id": "management",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "management",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "type",
+            "name": "type",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "ietf-l3vpn-svc:customer-managed",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "locations",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "locations",
+        "constraint": [],
+        "featureCharacteristic": [],
+        "featureRelationship": [],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "locations/location[location-id='MAIN']",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "location",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "location-id",
+            "name": "location-id",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "MAIN",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "locations",
+            "name": "locations",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "site-network-accesses",
+        "constraint": [],
+        "featureCharacteristic": [],
+        "featureRelationship": [],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "site-network-access",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "site-network-access-id",
+            "name": "site-network-access-id",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "SNA-3-1",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          },
+          {
+            "id": "location-reference",
+            "name": "location-reference",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "MAIN",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses",
+            "name": "site-network-accesses",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']/service",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "service",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "svc-input-bandwidth",
+            "name": "svc-input-bandwidth",
+            "valueType": "integer",
+            "characteristicRelationship": [],
+            "value": 1000000000,
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          },
+          {
+            "id": "svc-output-bandwidth",
+            "name": "svc-output-bandwidth",
+            "valueType": "integer",
+            "characteristicRelationship": [],
+            "value": 1000000000,
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          },
+          {
+            "id": "svc-mtu",
+            "name": "svc-mtu",
+            "valueType": "integer",
+            "characteristicRelationship": [],
+            "value": 9000,
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']/vpn-attachment",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "vpn-attachment",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "vpn-id",
+            "name": "vpn-id",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "acme-65501",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']/bearer",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "bearer",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "bearer-reference",
+            "name": "bearer-reference",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "STO-CORE-1,eth4.100",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']/ip-connection",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "ip-connection",
+        "constraint": [],
+        "featureCharacteristic": [],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']/ip-connection/ipv4",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "ipv4",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "address-allocation-type",
+            "name": "address-allocation-type",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "ietf-l3vpn-svc:static-address",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']/ip-connection",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']/ip-connection",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']/ip-connection/ipv4/addresses",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "addresses",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "provider-address",
+            "name": "provider-address",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "10.203.1.1",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          },
+          {
+            "id": "customer-address",
+            "name": "customer-address",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "10.203.1.2",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          },
+          {
+            "id": "prefix-length",
+            "name": "prefix-length",
+            "valueType": "integer",
+            "characteristicRelationship": [],
+            "value": 30,
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']/ip-connection/ipv4",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']/ip-connection/ipv4",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']/routing-protocols",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "routing-protocols",
+        "constraint": [],
+        "featureCharacteristic": [],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']/routing-protocols/routing-protocol[type='bgp']",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "routing-protocol",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "type",
+            "name": "type",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "ietf-l3vpn-svc:bgp",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']/routing-protocols",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']/routing-protocols",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']/routing-protocols/routing-protocol[type='bgp']/bgp",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "bgp",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "autonomous-system",
+            "name": "autonomous-system",
+            "valueType": "integer",
+            "characteristicRelationship": [],
+            "value": 65501,
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          },
+          {
+            "id": "address-family",
+            "name": "address-family",
+            "valueType": "stringArray",
+            "characteristicRelationship": [],
+            "value": [
+              "ipv4"
+            ],
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']/routing-protocols/routing-protocol[type='bgp']",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-3-1']/routing-protocols/routing-protocol[type='bgp']",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      }
+    ],
+    "note": [],
+    "place": [],
+    "relatedEntity": [],
+    "relatedParty": [],
+    "serviceCharacteristic": [
+      {
+        "id": "site-id",
+        "name": "site-id",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "SITE-3",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      }
+    ],
+    "serviceOrderItem": [],
+    "serviceRelationship": [],
+    "serviceSpecification": {
+      "id": "/l3vpn-svc/sites/site",
+      "href": "/tmf-api/ServiceActivationAndConfiguration/v4/serviceSpecification/%2Fl3vpn-svc%2Fsites%2Fsite",
+      "name": "/l3vpn-svc/sites/site",
+      "version": "2025-11-01",
+      "@baseType": "ServiceSpecificationRef",
+      "@schemaLocation": "/tmf-api/schema/Service/ServiceSpecificationRef.schema.json",
+      "@type": "serviceSpecificationRef",
+      "@referredType": "serviceSpecification"
+    },
+    "state": "active",
+    "supportingResource": [],
+    "supportingService": [],
+    "@baseType": "Service",
+    "@schemaLocation": "/tmf-api/schema/Service/Service.schema.json",
+    "@type": "Service"
+  },
+  {
+    "id": "/l3vpn-svc/sites/site[site-id='SITE-4']",
+    "href": "/tmf-api/ServiceActivationAndConfiguration/v4/service/%2Fl3vpn-svc%2Fsites%2Fsite%5Bsite-id%3D%27SITE-4%27%5D",
+    "category": "l3vpn-svc",
+    "description": "site",
+    "endDate": null,
+    "hasStarted": true,
+    "isBundle": false,
+    "isServiceEnabled": true,
+    "isStateful": false,
+    "name": "SITE-4",
+    "serviceDate": "2026-08-25T20:08:11.754405058Z",
+    "serviceType": null,
+    "startDate": "2026-08-25T20:08:11.754407975Z",
+    "startMode": "1",
+    "feature": [
+      {
+        "id": "management",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "management",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "type",
+            "name": "type",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "ietf-l3vpn-svc:customer-managed",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "locations",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "locations",
+        "constraint": [],
+        "featureCharacteristic": [],
+        "featureRelationship": [],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "locations/location[location-id='MAIN']",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "location",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "location-id",
+            "name": "location-id",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "MAIN",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "locations",
+            "name": "locations",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "site-network-accesses",
+        "constraint": [],
+        "featureCharacteristic": [],
+        "featureRelationship": [],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "site-network-access",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "site-network-access-id",
+            "name": "site-network-access-id",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "SNA-4-1",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          },
+          {
+            "id": "location-reference",
+            "name": "location-reference",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "MAIN",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses",
+            "name": "site-network-accesses",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']/service",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "service",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "svc-input-bandwidth",
+            "name": "svc-input-bandwidth",
+            "valueType": "integer",
+            "characteristicRelationship": [],
+            "value": 1000000000,
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          },
+          {
+            "id": "svc-output-bandwidth",
+            "name": "svc-output-bandwidth",
+            "valueType": "integer",
+            "characteristicRelationship": [],
+            "value": 1000000000,
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          },
+          {
+            "id": "svc-mtu",
+            "name": "svc-mtu",
+            "valueType": "integer",
+            "characteristicRelationship": [],
+            "value": 9000,
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']/vpn-attachment",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "vpn-attachment",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "vpn-id",
+            "name": "vpn-id",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "acme-65501",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']/bearer",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "bearer",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "bearer-reference",
+            "name": "bearer-reference",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "LJU-CORE-1,eth3.100",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']/ip-connection",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "ip-connection",
+        "constraint": [],
+        "featureCharacteristic": [],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']/ip-connection/ipv4",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "ipv4",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "address-allocation-type",
+            "name": "address-allocation-type",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "ietf-l3vpn-svc:static-address",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']/ip-connection",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']/ip-connection",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']/ip-connection/ipv4/addresses",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "addresses",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "provider-address",
+            "name": "provider-address",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "10.204.1.1",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          },
+          {
+            "id": "customer-address",
+            "name": "customer-address",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "10.204.1.2",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          },
+          {
+            "id": "prefix-length",
+            "name": "prefix-length",
+            "valueType": "integer",
+            "characteristicRelationship": [],
+            "value": 30,
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']/ip-connection/ipv4",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']/ip-connection/ipv4",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']/routing-protocols",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "routing-protocols",
+        "constraint": [],
+        "featureCharacteristic": [],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']/routing-protocols/routing-protocol[type='bgp']",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "routing-protocol",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "type",
+            "name": "type",
+            "valueType": "string",
+            "characteristicRelationship": [],
+            "value": "ietf-l3vpn-svc:bgp",
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']/routing-protocols",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']/routing-protocols",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      },
+      {
+        "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']/routing-protocols/routing-protocol[type='bgp']/bgp",
+        "isBundle": true,
+        "isEnabled": true,
+        "name": "bgp",
+        "constraint": [],
+        "featureCharacteristic": [
+          {
+            "id": "autonomous-system",
+            "name": "autonomous-system",
+            "valueType": "integer",
+            "characteristicRelationship": [],
+            "value": 65501,
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          },
+          {
+            "id": "address-family",
+            "name": "address-family",
+            "valueType": "stringArray",
+            "characteristicRelationship": [],
+            "value": [
+              "ipv4"
+            ],
+            "@baseType": "Characteristic",
+            "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+            "@type": "Characteristic"
+          }
+        ],
+        "featureRelationship": [
+          {
+            "id": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']/routing-protocols/routing-protocol[type='bgp']",
+            "name": "site-network-accesses/site-network-access[site-network-access-id='SNA-4-1']/routing-protocols/routing-protocol[type='bgp']",
+            "relationshipType": "parent",
+            "validFor": null,
+            "@baseType": "FeatureRelationship",
+            "@schemaLocation": "/tmf-api/schema/Service/FeatureRelationship.schema.json",
+            "@type": "FeatureRelationship"
+          }
+        ],
+        "@baseType": "Feature",
+        "@schemaLocation": "/tmf-api/schema/Service/Feature.schema.json",
+        "@type": "Feature"
+      }
+    ],
+    "note": [],
+    "place": [],
+    "relatedEntity": [],
+    "relatedParty": [],
+    "serviceCharacteristic": [
+      {
+        "id": "site-id",
+        "name": "site-id",
+        "valueType": "string",
+        "characteristicRelationship": [],
+        "value": "SITE-4",
+        "@baseType": "Characteristic",
+        "@schemaLocation": "/tmf-api/schema/Service/Characteristic.schema.json",
+        "@type": "Characteristic"
+      }
+    ],
+    "serviceOrderItem": [],
+    "serviceRelationship": [],
+    "serviceSpecification": {
+      "id": "/l3vpn-svc/sites/site",
+      "href": "/tmf-api/ServiceActivationAndConfiguration/v4/serviceSpecification/%2Fl3vpn-svc%2Fsites%2Fsite",
+      "name": "/l3vpn-svc/sites/site",
+      "version": "2025-11-01",
+      "@baseType": "ServiceSpecificationRef",
+      "@schemaLocation": "/tmf-api/schema/Service/ServiceSpecificationRef.schema.json",
+      "@type": "serviceSpecificationRef",
+      "@referredType": "serviceSpecification"
+    },
+    "state": "active",
+    "supportingResource": [],
+    "supportingService": [],
+    "@baseType": "Service",
+    "@schemaLocation": "/tmf-api/schema/Service/Service.schema.json",
+    "@type": "Service"
+  }
+]

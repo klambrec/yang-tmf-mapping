@@ -1,0 +1,31 @@
+[
+  {
+    "id": "default",
+    "href": "/tmf-api/serviceCatalogManagement/v4/serviceCatalog/default",
+    "description": "Default Service Catalog",
+    "lastUpdate": "2025-11-01T00:00:00",
+    "lifecycleStatus": "active",
+    "name": "Default Service Catalog",
+    "version": "2025-11-01",
+    "category": [
+      {
+        "id": "default",
+        "href": "/tmf-api/serviceCatalogManagement/v4/serviceCategory/default",
+        "name": "Default Service Category",
+        "version": "2025-11-01",
+        "@baseType": "ServiceCategoryRef",
+        "@schemaLocation": "/tmf-api/schema/Service/ServiceCategoryRef.schema.json",
+        "@type": "ServiceCategoryRef",
+        "@referredType": "ServiceCategory"
+      }
+    ],
+    "relatedParty": [],
+    "validFor": {
+      "endDateTime": null,
+      "startDateTime": "1970-01-01T00:00:00"
+    },
+    "@baseType": "ServiceCatalog",
+    "@schemaLocation": "/tmf-api/schema/Service/ServiceCatalog.schema.json",
+    "@type": "ServiceCatalog"
+  }
+]

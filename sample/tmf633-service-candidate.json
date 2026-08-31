@@ -1,0 +1,154 @@
+[
+  {
+    "id": "/l3vpn-svc/vpn-services/vpn-service",
+    "href": "/tmf-api/serviceCatalogManagement/v4/serviceCandidate/%2Fl3vpn-svc%2Fvpn-services%2Fvpn-service",
+    "description": "List of VPN services. Service Candidate",
+    "lastUpdate": "2025-11-01T00:00:00",
+    "lifecycleStatus": "active",
+    "name": "L3VPN VPN Service Service Candidate",
+    "version": "2025-11-01",
+    "category": [
+      {
+        "id": "default",
+        "href": "/tmf-api/serviceCatalogManagement/v4/serviceCategory/default",
+        "name": "Default Service Category",
+        "version": "2025-11-01",
+        "@baseType": "ServiceCategoryRef",
+        "@schemaLocation": "/tmf-api/schema/Service/ServiceCategoryRef.schema.json",
+        "@type": "ServiceCategoryRef",
+        "@referredType": "ServiceCategory"
+      }
+    ],
+    "serviceSpecification": {
+      "id": "/l3vpn-svc/vpn-services/vpn-service",
+      "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/%2Fl3vpn-svc%2Fvpn-services%2Fvpn-service",
+      "name": "L3VPN VPN Service Service Specification",
+      "version": "2025-11-01",
+      "@baseType": "ServiceSpecificationRef",
+      "@schemaLocation": "/tmf-api/schema/Service/ServiceSpecificationRef.schema.json",
+      "@type": "ServiceSpecificationRef",
+      "@referredType": "CustomerFacingServiceSpecification"
+    },
+    "validFor": {
+      "endDateTime": null,
+      "startDateTime": "1970-01-01T00:00:00"
+    },
+    "@baseType": "ServiceCandidate",
+    "@schemaLocation": "/tmf-api/schema/Service/ServiceCandidate.schema.json",
+    "@type": "ServiceCandidate"
+  },
+  {
+    "id": "/l3vpn-svc/sites/site",
+    "href": "/tmf-api/serviceCatalogManagement/v4/serviceCandidate/%2Fl3vpn-svc%2Fsites%2Fsite",
+    "description": "List of sites. Service Candidate",
+    "lastUpdate": "2025-11-01T00:00:00",
+    "lifecycleStatus": "active",
+    "name": "L3VPN Site Service Candidate",
+    "version": "2025-11-01",
+    "category": [
+      {
+        "id": "default",
+        "href": "/tmf-api/serviceCatalogManagement/v4/serviceCategory/default",
+        "name": "Default Service Category",
+        "version": "2025-11-01",
+        "@baseType": "ServiceCategoryRef",
+        "@schemaLocation": "/tmf-api/schema/Service/ServiceCategoryRef.schema.json",
+        "@type": "ServiceCategoryRef",
+        "@referredType": "ServiceCategory"
+      }
+    ],
+    "serviceSpecification": {
+      "id": "/l3vpn-svc/sites/site",
+      "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/%2Fl3vpn-svc%2Fsites%2Fsite",
+      "name": "L3VPN Site Service Specification",
+      "version": "2025-11-01",
+      "@baseType": "ServiceSpecificationRef",
+      "@schemaLocation": "/tmf-api/schema/Service/ServiceSpecificationRef.schema.json",
+      "@type": "ServiceSpecificationRef",
+      "@referredType": "CustomerFacingServiceSpecification"
+    },
+    "validFor": {
+      "endDateTime": null,
+      "startDateTime": "1970-01-01T00:00:00"
+    },
+    "@baseType": "ServiceCandidate",
+    "@schemaLocation": "/tmf-api/schema/Service/ServiceCandidate.schema.json",
+    "@type": "ServiceCandidate"
+  },
+  {
+    "id": "/netinfra/router",
+    "href": "/tmf-api/serviceCatalogManagement/v4/serviceCandidate/%2Fnetinfra%2Frouter",
+    "description": "Network Infrastructure Router Service Candidate",
+    "lastUpdate": "2025-11-01T00:00:00",
+    "lifecycleStatus": "active",
+    "name": "Router Service Candidate",
+    "version": "2025-11-01",
+    "category": [
+      {
+        "id": "default",
+        "href": "/tmf-api/serviceCatalogManagement/v4/serviceCategory/default",
+        "name": "Default Service Category",
+        "version": "2025-11-01",
+        "@baseType": "ServiceCategoryRef",
+        "@schemaLocation": "/tmf-api/schema/Service/ServiceCategoryRef.schema.json",
+        "@type": "ServiceCategoryRef",
+        "@referredType": "ServiceCategory"
+      }
+    ],
+    "serviceSpecification": {
+      "id": "/netinfra/router",
+      "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/%2Fnetinfra%2Frouter",
+      "name": "Router Service Specification",
+      "version": "2025-11-01",
+      "@baseType": "ServiceSpecificationRef",
+      "@schemaLocation": "/tmf-api/schema/Service/ServiceSpecificationRef.schema.json",
+      "@type": "ServiceSpecificationRef",
+      "@referredType": "CustomerFacingServiceSpecification"
+    },
+    "validFor": {
+      "endDateTime": null,
+      "startDateTime": "1970-01-01T00:00:00"
+    },
+    "@baseType": "ServiceCandidate",
+    "@schemaLocation": "/tmf-api/schema/Service/ServiceCandidate.schema.json",
+    "@type": "ServiceCandidate"
+  },
+  {
+    "id": "/netinfra/backbone-link",
+    "href": "/tmf-api/serviceCatalogManagement/v4/serviceCandidate/%2Fnetinfra%2Fbackbone-link",
+    "description": " Service Candidate",
+    "lastUpdate": "2025-11-01T00:00:00",
+    "lifecycleStatus": "active",
+    "name": "Backbone Link Service Candidate",
+    "version": "2025-11-01",
+    "category": [
+      {
+        "id": "default",
+        "href": "/tmf-api/serviceCatalogManagement/v4/serviceCategory/default",
+        "name": "Default Service Category",
+        "version": "2025-11-01",
+        "@baseType": "ServiceCategoryRef",
+        "@schemaLocation": "/tmf-api/schema/Service/ServiceCategoryRef.schema.json",
+        "@type": "ServiceCategoryRef",
+        "@referredType": "ServiceCategory"
+      }
+    ],
+    "serviceSpecification": {
+      "id": "/netinfra/backbone-link",
+      "href": "/tmf-api/serviceCatalogManagement/v4/serviceSpecification/%2Fnetinfra%2Fbackbone-link",
+      "name": "Backbone Link Service Specification",
+      "version": "2025-11-01",
+      "@baseType": "ServiceSpecificationRef",
+      "@schemaLocation": "/tmf-api/schema/Service/ServiceSpecificationRef.schema.json",
+      "@type": "ServiceSpecificationRef",
+      "@referredType": "CustomerFacingServiceSpecification"
+    },
+    "validFor": {
+      "endDateTime": null,
+      "startDateTime": "1970-01-01T00:00:00"
+    },
+    "@baseType": "ServiceCandidate",
+    "@schemaLocation": "/tmf-api/schema/Service/ServiceCandidate.schema.json",
+    "@type": "ServiceCandidate"
+  }
+]

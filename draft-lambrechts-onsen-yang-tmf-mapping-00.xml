@@ -28,10 +28,17 @@
     <seriesInfo name="Internet-Draft" value="draft-lambrechts-onsen-yang-tmf-mapping-00"/>
    
     <author fullname="Kris Lambrechts" initials="K." surname="Lambrechts">
-      <organization>NetEdge</organization>
+      <organization>Intwine</organization>
       <address>
-        <email>kris@netedge.plus</email>  
-        <uri>https://www.netedge.plus</uri>
+        <email>kris@intwine.net</email>
+        <uri>https://www.intwine.net</uri>
+      </address>
+    </author>
+
+    <author fullname="Kristian Larsson" initials="K." surname="Larsson">
+      <organization>Centor</organization>
+      <address>
+        <email>k@centor.se</email>
       </address>
     </author>
    
@@ -846,16 +853,11 @@ module example-toasters {
           </t>
           <sourcecode><![CDATA[
 {
-  "id" : "id1234567890",
-  "href" : "http//..",
-  "state" : "active",
+  "id" : "1234567890",
+  "href" : "/serviceActivationConfiguration/v4/service/1234567890",
   "@type" : "conferenceBridgeEquipment",
-  "@schemaLocation" : "http://../conferenceBridgeEquipment.json",
-  "serviceSpecification":{
-    "id":"conferenceBridgeEquipment",
-    "href":"http://serverlocation:port/catalogManagement/
-            serviceSpecification/conferenceBridgeEquipment"
-  },
+  "@schemaLocation" : "/schema/conferenceBridgeEquipment.json",
+  "description": "Conference Bridge Equipment",
   "numberOfVc500Units": "1",
   "numberOfVc100Units": "2",
   "routerType": "CiscoASR1000",
@@ -879,36 +881,32 @@ module example-toasters {
           by using the TM Forum "Object" Value Type. 
         </t>
         <sourcecode><![CDATA[
+NOTE: '\' line wrapping per RFC 8792
+
 {
-  "id": "123-456",
-  "href": "http://serverlocation:port/
-           serviceActivationConfiguration/v4/service/123-456",
-  "category": "MobileService",
-  "description": "Mobile Line ",
-  "hasStarted": true,
-  "isBundle": false,
-  "isServiceEnabled": true,
-  "isStateful": true,
-  "serviceDate": "020-04-01T12:15:39.434Z",
-  "startDate": "2020-04-03T12:15:39.434Z",
+  "id": "9876543216",
+  "href": "/serviceActivationConfiguration/v4/service/987654321",
+  "@type": "Service",
+  "serviceSpecification":{
+    "id":"conferenceBridgeEquipment",
+    "href":"/serviceCatalogManagement/v4/serviceSpecification/\
+      conferenceBridgeEquipment"
+  },
   "serviceCharacteristic": [
     {
       "id": "1",
+      "@type": "ServiceCharacteristic",
       "name": "VoiceCharacteristic",
       "valueType": "object",
-      "value": [
-        {
+      "value": {
+          "@type": "VoiceFeatureCharacteristic",
+          "@schemaLocation": "/schema/VC.json",
           "voiceStandard": "enable",
           "voWifi": "disable",
-          "roaming": "enable",
-          "@schemaLocation": "../serviceSpecification/11//VC.json",
-          "@type": "VoiceFeatureCharacteristic"
-        }
-      ],
-      "@type": "ServiceCharacteristic"
+          "roaming": "enable"
+      }
     }
-  ],
-  "@type": "Service"
+  ]
 }
       ]]></sourcecode>
         <t>
@@ -920,16 +918,24 @@ module example-toasters {
           Additionally, it can make the Characteristic value opaque and
           difficult to validate or manipulate without understanding the schema.
         </t>
+        <t>
+          While it is not strictly forbidden for values within an object
+          to be objects or arrays, it is safe to assume that most
+          implementations would not support arbitrarily deep nesting. In
+          fact many implementations may not support Characteristics with
+          <tt>valueType</tt> of object if they are not built on a flexible
+          document store. An SQL based implementation may only support
+          discreet `valueType`.
+        </t>
       </section>
       <section>
         <name>Approach 3: Decomposition into Services/Resources</name>
         <t>
-          Each data tree layer could be mapped to its own TM Forum Service or
-          Resource, linked through <tt>supportingService</tt> or corresponding
-          Resource relationships.
-          This approach enables explicit decomposition and reuse. However,
-          each Service or Resource will appear in the Service Catalog or
-          Resource Catalog as a separately orderable item.
+          Each data tree layer could be mapped to its own TM Forum Service
+          or Resource, linked through <tt>serviceRelationship</tt> or
+          <tt>resourceRelationship</tt>. This approach enables explicit
+          decomposition and reuse, however each Service or Resource will
+          appear in the Catalog and Inventory as a separate item.
         </t>
         <t>
           If this approach was uniformly used for each YANG container or list,
@@ -982,6 +988,12 @@ module example-toasters {
           mapping mechanism.
         </t>
       </section>
+    </section>
+    <section anchor="Acknowledgements" numbered="false">
+      <name>Acknowledgements</name>
+      <t>The authors would like to thank Vance Shipley and Brad Peters for their
+        valuable feedback and suggestions on the mapping mechanism and the
+        overall structure of this document.</t>
     </section>
  </back>
 </rfc>
