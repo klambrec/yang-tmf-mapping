@@ -79,7 +79,7 @@
         Both a mechanism for the mapping of YANG schemas to TMF Catalog
         Specifications (i.e. TMF633/634) and a matching mechanism for the
         mapping of YANG instance data to TMF Order Management (i.e. TMF641/652)
-        and Activation Management (i.e. TMF640/702) APIs are described.
+        and Activation Management (i.e. TMF640/664/702) APIs are described.
       </t>
     </abstract>
  
@@ -386,29 +386,20 @@ module example-toasters {
       </t>
       </section>
       <section>
-        <name>Mapping containers and lists to (sub)Features</name>
+        <name>Mapping containers and lists to Features</name>
         <t>
           Implementations MUST support mapping YANG schema trees of arbitrary
           depth below the mapping root. Each container or list in the
-          schema tree can be represented as a TM Forum Service
-          Feature or Resource Feature within the Service or Resource that it
-          belongs to.
+          schema tree can be represented with TM Forum Features within the
+          Service or Resource that it belongs to.
         </t>
         <t>
-          The current TM Forum Data Model does not support Feature nesting, 
-          i.e., there is no subFeature-like construct. This can be resolved,
-          but requires a change to the TMF Data Model specification and the
-          associated OpenAPI specifications. The proposed solution is described
-          below.
-        </t>
-
-        <t>
-          DISCUSSION:         
-        </t>
-        <t>
-          Should this document contain a proposed change to the TMF Data Model
-          specification, or is there another preferred process for recommending
-          such a change?
+          A TM Forum Service or Resource exposes its capabilities to
+          consumers via Features and Feature Groups <xref target="TR255"/>.
+          Features may include Characteristics which provide declarative
+          paramaterization for instantiation, while overall Characteristics
+          applied to the entire Service or Resource provide imperative
+          configuration.
         </t>
       </section>
       <section>
@@ -427,15 +418,13 @@ module example-toasters {
         <t>
           If the container is annotated with the <tt>tmf:cfs-service</tt> or
           <tt>tmf:rfs-service</tt> extension, it MUST be mapped to a TMF CFS
-          Service or RFS Resource, respectively. Otherwise, it MUST be mapped to
+          Service or RFS Service, respectively. Otherwise, it MUST be mapped to
           a TMF Feature.
         </t>
         <t>
           Data nodes located directly under the mapping root MUST be mapped to
           Service or Resource Characteristics.  Data nodes located in a 
-          first-level container or list are mapped to Feature Characteristics, 
-          while those located in deeper levels of the YANG schema tree are 
-          mapped to subFeature Characteristics and so on.
+          first-level container or list are mapped to Feature Characteristics.
         </t>
         <t>
           The Feature <tt>name</tt> SHOULD be derived from the YANG node name.
@@ -552,15 +541,13 @@ module example-toasters {
         <t>
           If the list is annotated with the <tt>tmf:cfs-service</tt> or
           <tt>tmf:rfs-service</tt> extension, it MUST be mapped to a TMF CFS
-          Service or RFS Resource, respectively. Otherwise, it MUST be mapped
+          Service or RFS Service, respectively. Otherwise, it MUST be mapped
           to a TMF Feature.
         </t>
         <t>
           Data nodes located directly under the mapping root MUST be mapped to
           Service or Resource Characteristics. Data nodes located in a
-          first-level container or list are mapped to Feature Characteristics,
-          while those located in deeper levels of the YANG schema tree are
-          mapped to subFeature Characteristics and so on.
+          first-level container or list are mapped to Feature Characteristics.
         </t>
         <t>
           The Feature <tt>name</tt> SHOULD be derived from the YANG node name.
@@ -680,6 +667,7 @@ module example-toasters {
         <li>TMF640 Service Activation API <xref target="TMF640"/></li>
         <li>TMF641 Service Order Management API <xref target="TMF641"/></li>
         <li>TMF652 Resource Activation API <xref target="TMF652"/></li>
+        <li>TMF664 Resource Function Activation API <xref target="TMF664"/></li>
         <li>TMF702 Resource Order Management API <xref target="TMF702"/></li>
       </ul>
     </section>
@@ -797,6 +785,16 @@ module example-toasters {
           </front>
           <seriesInfo name="TMF" value="652"/>
         </reference>
+        <reference anchor="TMF664" target="https://www.tmforum.org/open-digital-architecture/open-apis/resource-function-activation-management-api-TMF664">
+          <front>
+            <title>TMF664 Resource Function Activation Management API</title>
+            <author>
+              <organization>TM Forum</organization>
+            </author>
+            <date year="2026"/>
+          </front>
+          <seriesInfo name="TMF" value="664"/>
+        </reference>
         <reference anchor="TMF702" target="https://www.tmforum.org/oda/open-apis/directory/resource-activation-and-configuration-api-TMF702/">
           <front>
             <title>TMF702 Resource Activation and Configuration API</title>
@@ -816,6 +814,16 @@ module example-toasters {
             <date year="2021"/>
           </front>
           <seriesInfo name="TMF" value="630"/>
+        </reference>
+        <reference anchor="TR255" target="https://www.tmforum.org/resources/technical-report/tr255-resource-function-activation-and-configuration-v5-0/">
+          <front>
+            <title>TR255 Resource Function – Activation and Configuration</title>
+            <author>
+              <organization>TM Forum</organization>
+            </author>
+            <date year="2020"/>
+          </front>
+          <seriesInfo name="TR" value="255"/>
         </reference>
       </references>
     </references>
@@ -951,19 +959,10 @@ NOTE: '\' line wrapping per RFC 8792
       <section>
         <name>Approach 4: Decomposition into Features</name>
         <t>
-          Each data tree layer can be represented as a TM Forum Service
-          Feature or Resource Feature within a Service or Resource.
-          This approach keeps Catalog entries manageable while still allowing
-          for a structural and hierarchical representation inside the Service
-          or Resource.
-        </t>
-        <t>
-          The current TM Forum Data Model does not support Feature nesting, 
-          i.e., there is no supportingFeature-like construct. Such construct
-          COULD be added via a schemaLocation extension to represent feature
-          hierarchy. However, it is the author's opinion that for
-          maximum interoperability, such nesting SHOULD be standardized in a
-          future TM Forum Open API release.
+          Each data tree layer can be represented as a TM Forum Feature
+          within a Service or Resource.  This approach keeps Catalog
+          entries manageable while still allowing for a structural and
+          hierarchical representation inside the Service or Resource.
         </t>
         <t>
           This document uses this approach for each YANG container or list that
