@@ -66,7 +66,7 @@ Table of Contents
      1.2.  Requirements Language
    2.  YANG Schema Trees and the TMF Data Models
      2.1.  Defining The Mapping Root
-     2.2.  Mapping containers and lists to (sub)Features
+     2.2.  Mapping containers and lists to Features
      2.3.  Mapping leafs and leaf-lists to Characteristics
    3.  Rules for Mapping YANG Statements to the TMF Data Model
      3.1.  The "container" Statement
@@ -113,7 +113,7 @@ Table of Contents
    NETCONF/YANG interfaces (e.g., YANG models [RFC7950]) to describe
    configuration and operational state for network devices and services.
    Likewise, the TM Forum Open APIs are finding increased adoption in
-   Business Support Systems (BSS) for a number of functions, include
+   Business Support Systems (BSS) for a number of functions, including
    ordering and lifecycle management of services and resources.
 
    These two ecosystems define different data models and interaction
@@ -124,7 +124,7 @@ Table of Contents
    mapping between YANG schemas and TM Forum Data Models and APIs.  The
    goal is to enable consistent representation of resources and services
    across management interfaces and between domains, removing
-   integration barriers and enables the use of YANG models directly in
+   integration barriers and enabling the use of YANG models directly in
    TMF-based BSS/OSS implementations.
 
    The mapping mechanism is designed to preserve the semantics of the
@@ -149,9 +149,11 @@ Table of Contents
    workflows and business processes are out of scope, except where they
    affect the interpretation of the mapped data.
 
-   The mapping mechanism is only intended for translating YANG modules
-   to TMF standards compliant Open APIs and payloads.  The reverse
-   translation (from OpenAPI to YANG) is not in scope.
+   The schema mapping mechanism is only intended to operate in the
+   direction from YANG to TMF standards compliant payloads.  Service and
+   Resource instance data is mapped in both directions.  TMF Activation
+   and Order Management APIs can retrieve data from the YANG data store
+   and make modifications to the YANG data store.
 
 1.1.  Where the TMF Mapping Fits
 
@@ -174,7 +176,7 @@ Table of Contents
    Open APIs are exposed at the northbound interface of an OSS or
    Service Orchestrator, while YANG-based models and automation drive
    the southbound interfaces to network controllers and devices.  The
-   mechanism for mapping defined in this document may operate.
+   mapping can be applied at this northbound boundary.
 
             +----------------------------+
             |   BSS / Customers          |
@@ -276,7 +278,7 @@ Table of Contents
    Implementations MAY use the following YANG extension to annotate the
    mapping root and the mapping method for a particular YANG subtree:
 
-   <CODE BEGINS> file "yang-tmf-map.yang"
+   <CODE BEGINS> file "ietf-yang-tmf-map.yang"
 
    module ietf-yang-tmf-map {
      yang-version 1.1;
@@ -347,7 +349,7 @@ Table of Contents
    module example-toasters {
      yang-version "1.1";
      ...
-     import yang-tmf-map {
+     import ietf-yang-tmf-map {
        prefix tmf;
      }
 
@@ -370,24 +372,31 @@ Table of Contents
    nodes to the corresponding TMF schema elements based on the mapping
    rules defined in the next sections.
 
-2.2.  Mapping containers and lists to (sub)Features
+2.2.  Mapping containers and lists to Features
 
    Implementations MUST support mapping YANG schema trees of arbitrary
    depth below the mapping root.  Each container or list in the schema
-   tree can be represented as a TM Forum Service Feature or Resource
-   Feature within the Service or Resource that it belongs to.
+   tree below the mapping root MUST be represented as a TM Forum Service
+   Feature or Resource Feature within the Service or Resource that it
+   belongs to.
 
-   The current TM Forum Data Model does not support Feature nesting,
-   i.e., there is no subFeature-like construct.  This can be resolved,
-   but requires a change to the TMF Data Model specification and the
-   associated OpenAPI specifications.  The proposed solution is
-   described below.
+   Feature hierarchy MUST be represented as a flat collection of
+   Features linked by relationships.  Each parent Feature MUST contain a
+   relationship to each immediate child Feature, with relationshipType
+   set to composedOf.  In Catalog Specifications, each relationship MUST
+   use featureSpecRelationship, with name set to the child
+   FeatureSpecification's id.  In instance data, each relationship MUST
+   use featureRelationship, with id and name set to the child Feature's
+   id.
 
-   DISCUSSION:
-
-   Should this document contain a proposed change to the TMF Data Model
-   specification, or is there another preferred process for recommending
-   such a change?
+   A Feature id MUST be the path from the mapping root to the
+   corresponding YANG node, excluding the mapping root itself, with node
+   identifiers separated by /. For instance data, each list segment MUST
+   include one predicate of the form [key='value'] for every list key,
+   in key statement order.  Backslashes and single quotes in key values
+   MUST be escaped with a preceding backslash.  This makes Feature
+   identifiers unique while preserving the YANG hierarchy and list
+   identity.
 
 2.3.  Mapping leafs and leaf-lists to Characteristics
 
@@ -401,14 +410,13 @@ Table of Contents
 
    If the container is annotated with the tmf:cfs-service or tmf:rfs-
    service extension, it MUST be mapped to a TMF CFS Service or RFS
-   Resource, respectively.  Otherwise, it MUST be mapped to a TMF
+   Service, respectively.  Otherwise, it MUST be mapped to a TMF
    Feature.
 
    Data nodes located directly under the mapping root MUST be mapped to
-   Service or Resource Characteristics.  Data nodes located in a first-
-   level container or list are mapped to Feature Characteristics, while
-   those located in deeper levels of the YANG schema tree are mapped to
-   subFeature Characteristics and so on.
+   Service or Resource Characteristics.  Data nodes located in a
+   container or list are mapped to Feature Characteristics under the
+   corresponding nested Feature.
 
    The Feature name SHOULD be derived from the YANG node name.  The
    child data nodes of the container are mapped to the corresponding
@@ -513,14 +521,13 @@ Table of Contents
 3.4.  The "list" Statement
 
    If the list is annotated with the tmf:cfs-service or tmf:rfs-service
-   extension, it MUST be mapped to a TMF CFS Service or RFS Resource,
+   extension, it MUST be mapped to a TMF CFS Service or RFS Service,
    respectively.  Otherwise, it MUST be mapped to a TMF Feature.
 
    Data nodes located directly under the mapping root MUST be mapped to
-   Service or Resource Characteristics.  Data nodes located in a first-
-   level container or list are mapped to Feature Characteristics, while
-   those located in deeper levels of the YANG schema tree are mapped to
-   subFeature Characteristics and so on.
+   Service or Resource Characteristics.  Data nodes located in a
+   container or list are mapped to Feature Characteristics under the
+   corresponding nested Feature.
 
    The Feature name SHOULD be derived from the YANG node name.  The
    child data nodes of the list are mapped to the corresponding schema
@@ -596,7 +603,7 @@ Table of Contents
 
    An implementation of the mapping mechanism defined in this document
    SHOULD expose one or more of the following TMF Open APIs to allow TMF
-   API comsumers to query the Catalog Service/ResourceSpecifications:
+   API consumers to query the Catalog Service/ResourceSpecifications:
 
    *  TMF633 Service Catalog Management API [TMF633]
 
@@ -610,18 +617,18 @@ Table of Contents
 
    *  TMF641 Service Order Management API [TMF641]
 
-   *  TMF652 Resource Activation API [TMF652]
+   *  TMF652 Resource Order Management API [TMF652]
 
-   *  TMF702 Resource Order Management API [TMF702]
+   *  TMF702 Resource Activation and Configuration API [TMF702]
 
 6.  IANA Considerations
 
 6.1.  YANG Module Registry
 
-   The YANG module defined in this document, yang-tmf-map, is intended
-   to be registered in the IANA YANG Module registry.  The module
-   defines extensions that can be used to annotate YANG modules with TMF
-   mapping information.
+   The YANG module defined in this document, ietf-yang-tmf-map, is
+   intended to be registered in the IANA YANG Module registry.  The
+   module defines extensions that can be used to annotate YANG modules
+   with TMF mapping information.
 
 7.  Security Considerations
 
@@ -832,18 +839,10 @@ A.3.  Approach 3: Decomposition into Services/Resources
 
 A.4.  Approach 4: Decomposition into Features
 
-   Each data tree layer can be represented as a TM Forum Service Feature
-   or Resource Feature within a Service or Resource.  This approach
-   keeps Catalog entries manageable while still allowing for a
-   structural and hierarchical representation inside the Service or
-   Resource.
-
-   The current TM Forum Data Model does not support Feature nesting,
-   i.e., there is no supportingFeature-like construct.  Such construct
-   COULD be added via a schemaLocation extension to represent feature
-   hierarchy.  However, it is the author's opinion that for maximum
-   interoperability, such nesting SHOULD be standardized in a future TM
-   Forum Open API release.
+   Each data tree layer can be represented as a TM Forum Feature within
+   a Service or Resource.  This approach keeps Catalog entries
+   manageable while still allowing for a structural and hierarchical
+   representation inside the Service or Resource.
 
    This document uses this approach for each YANG container or list that
    is mapped below the root.

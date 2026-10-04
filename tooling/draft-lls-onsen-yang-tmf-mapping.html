@@ -1186,7 +1186,7 @@ svg {
                 <p id="section-toc.1-1.2.2.1.1"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-defining-the-mapping-root" class="internal xref">Defining The Mapping Root</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
-                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-mapping-containers-and-list" class="internal xref">Mapping containers and lists to (sub)Features</a></p>
+                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-mapping-containers-and-list" class="internal xref">Mapping containers and lists to Features</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3">
                 <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="auto internal xref">2.3</a>.  <a href="#name-mapping-leafs-and-leaf-list" class="internal xref">Mapping leafs and leaf-lists to Characteristics</a></p>
@@ -1342,7 +1342,7 @@ svg {
         NETCONF/YANG interfaces (e.g., YANG models <span>[<a href="#RFC7950" class="cite xref">RFC7950</a>]</span>) to
         describe configuration and operational state for network devices and
         services.  Likewise, the TM Forum Open APIs are finding increased adoption in
-        Business Support Systems (BSS) for a number of functions, include ordering
+        Business Support Systems (BSS) for a number of functions, including ordering
         and lifecycle management of services and resources.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">
         These two ecosystems define different data models and interaction styles
@@ -1353,7 +1353,7 @@ svg {
         mapping between YANG schemas and TM Forum Data Models and APIs.
         The goal is to enable consistent representation of resources and services
         across management interfaces and between domains, removing integration
-        barriers and enables the use of YANG models directly in TMF-based BSS/OSS
+        barriers and enabling the use of YANG models directly in TMF-based BSS/OSS
         implementations.<a href="#section-1-3" class="pilcrow">¶</a></p>
 <p id="section-1-4">
         The mapping mechanism is designed to preserve the semantics of the
@@ -1380,9 +1380,11 @@ svg {
         business processes are out of scope, except where they affect the
         interpretation of the mapped data.<a href="#section-1-6" class="pilcrow">¶</a></p>
 <p id="section-1-7">
-        The mapping mechanism is only intended for translating YANG modules to
-        TMF standards compliant Open APIs and payloads. The reverse translation
-        (from OpenAPI to YANG) is not in scope.<a href="#section-1-7" class="pilcrow">¶</a></p>
+        The schema mapping mechanism is only intended to operate in the
+        direction from YANG to TMF standards compliant payloads. Service and
+        Resource instance data is mapped in both directions. TMF Activation and
+        Order Management APIs can retrieve data from the YANG data store and
+        make modifications to the YANG data store.<a href="#section-1-7" class="pilcrow">¶</a></p>
 <section id="section-1.1">
         <h3 id="name-where-the-tmf-mapping-fits">
 <a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-where-the-tmf-mapping-fits" class="section-name selfRef">Where the TMF Mapping Fits</a>
@@ -1409,7 +1411,7 @@ svg {
           APIs are exposed at the northbound interface of an OSS or Service
           Orchestrator, while YANG-based models and automation drive the
           southbound interfaces to network controllers and devices.
-          The mechanism for mapping defined in this document may operate.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
+          The mapping can be applied at this northbound boundary.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
 <span id="name-tmf-mapping-northbound-of-o"></span><figure id="figure-1">
           <div class="alignLeft art-text artwork" id="section-1.1-5.1">
 <pre>
@@ -1532,9 +1534,9 @@ svg {
           Implementations MAY use the following YANG extension to
           annotate the mapping root and the mapping method for a particular
           YANG subtree:<a href="#section-2.1-2" class="pilcrow">¶</a></p>
-<div class="breakable sourcecode" id="section-2.1-3">
+<div class="breakable lang-yang sourcecode" id="section-2.1-3">
 <pre>
-&lt;CODE BEGINS&gt; file "yang-tmf-map.yang"
+&lt;CODE BEGINS&gt; file "ietf-yang-tmf-map.yang"
 
 module ietf-yang-tmf-map {
   yang-version 1.1;
@@ -1609,7 +1611,7 @@ module ietf-yang-tmf-map {
 module example-toasters {
   yang-version "1.1";
   ...
-  import yang-tmf-map {
+  import ietf-yang-tmf-map {
     prefix tmf;
   }
 
@@ -1636,26 +1638,34 @@ module example-toasters {
 </section>
 <section id="section-2.2">
         <h3 id="name-mapping-containers-and-list">
-<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-mapping-containers-and-list" class="section-name selfRef">Mapping containers and lists to (sub)Features</a>
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-mapping-containers-and-list" class="section-name selfRef">Mapping containers and lists to Features</a>
         </h3>
 <p id="section-2.2-1">
           Implementations MUST support mapping YANG schema trees of arbitrary
           depth below the mapping root. Each container or list in the
-          schema tree can be represented as a TM Forum Service
-          Feature or Resource Feature within the Service or Resource that it
-          belongs to.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+          schema tree below the mapping root MUST be represented as a TM Forum
+          Service Feature or Resource Feature within the Service or Resource
+          that it belongs to.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
 <p id="section-2.2-2">
-          The current TM Forum Data Model does not support Feature nesting,
-          i.e., there is no subFeature-like construct. This can be resolved,
-          but requires a change to the TMF Data Model specification and the
-          associated OpenAPI specifications. The proposed solution is described
-          below.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
+          Feature hierarchy MUST be represented as a flat collection of
+          Features linked by relationships. Each parent Feature MUST contain a
+          relationship to each immediate child Feature, with
+          <code>relationshipType</code> set to <code>composedOf</code>. In Catalog
+          Specifications, each relationship MUST use
+          <code>featureSpecRelationship</code>, with <code>name</code> set to
+          the child FeatureSpecification's <code>id</code>. In instance data,
+          each relationship MUST use <code>featureRelationship</code>, with
+          <code>id</code> and <code>name</code> set to the child Feature's <code>id</code>.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
 <p id="section-2.2-3">
-          DISCUSSION:<a href="#section-2.2-3" class="pilcrow">¶</a></p>
-<p id="section-2.2-4">
-          Should this document contain a proposed change to the TMF Data Model
-          specification, or is there another preferred process for recommending
-          such a change?<a href="#section-2.2-4" class="pilcrow">¶</a></p>
+          A Feature <code>id</code> MUST be the path from the mapping root to the
+          corresponding YANG node, excluding the mapping root itself, with node
+          identifiers separated by <code>/</code>. For instance data, each list
+          segment MUST include one predicate of the form
+          <code>[key='value']</code> for every list key, in key statement order.
+          Backslashes and single quotes in key values MUST be escaped with a
+          preceding backslash.
+          This makes Feature identifiers unique while preserving the YANG
+          hierarchy and list identity.<a href="#section-2.2-3" class="pilcrow">¶</a></p>
 </section>
 <section id="section-2.3">
         <h3 id="name-mapping-leafs-and-leaf-list">
@@ -1678,14 +1688,13 @@ module example-toasters {
 <p id="section-3.1-1">
           If the container is annotated with the <code>tmf:cfs-service</code> or
           <code>tmf:rfs-service</code> extension, it MUST be mapped to a TMF CFS
-          Service or RFS Resource, respectively. Otherwise, it MUST be mapped to
+          Service or RFS Service, respectively. Otherwise, it MUST be mapped to
           a TMF Feature.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <p id="section-3.1-2">
           Data nodes located directly under the mapping root MUST be mapped to
           Service or Resource Characteristics.  Data nodes located in a
-          first-level container or list are mapped to Feature Characteristics,
-          while those located in deeper levels of the YANG schema tree are
-          mapped to subFeature Characteristics and so on.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+          container or list are mapped to Feature Characteristics under the
+          corresponding nested Feature.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
 <p id="section-3.1-3">
           The Feature <code>name</code> SHOULD be derived from the YANG node name.
           The child data nodes of the container are mapped to the corresponding
@@ -1855,14 +1864,13 @@ module example-toasters {
 <p id="section-3.4-1">
           If the list is annotated with the <code>tmf:cfs-service</code> or
           <code>tmf:rfs-service</code> extension, it MUST be mapped to a TMF CFS
-          Service or RFS Resource, respectively. Otherwise, it MUST be mapped
+          Service or RFS Service, respectively. Otherwise, it MUST be mapped
           to a TMF Feature.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
 <p id="section-3.4-2">
           Data nodes located directly under the mapping root MUST be mapped to
           Service or Resource Characteristics. Data nodes located in a
-          first-level container or list are mapped to Feature Characteristics,
-          while those located in deeper levels of the YANG schema tree are
-          mapped to subFeature Characteristics and so on.<a href="#section-3.4-2" class="pilcrow">¶</a></p>
+          container or list are mapped to Feature Characteristics under the
+          corresponding nested Feature.<a href="#section-3.4-2" class="pilcrow">¶</a></p>
 <p id="section-3.4-3">
           The Feature <code>name</code> SHOULD be derived from the YANG node name.
           The child data nodes of the list are mapped to the corresponding
@@ -1976,7 +1984,7 @@ module example-toasters {
 <p id="section-5-1">
         An implementation of the mapping mechanism defined in this document
         SHOULD expose one or more of the following TMF Open APIs to allow TMF
-        API comsumers to query the Catalog Service/ResourceSpecifications:<a href="#section-5-1" class="pilcrow">¶</a></p>
+        API consumers to query the Catalog Service/ResourceSpecifications:<a href="#section-5-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5-2.1">TMF633 Service Catalog Management API <span>[<a href="#TMF633" class="cite xref">TMF633</a>]</span><a href="#section-5-2.1" class="pilcrow">¶</a>
 </li>
@@ -1992,9 +2000,9 @@ module example-toasters {
 </li>
         <li class="normal" id="section-5-4.2">TMF641 Service Order Management API <span>[<a href="#TMF641" class="cite xref">TMF641</a>]</span><a href="#section-5-4.2" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-5-4.3">TMF652 Resource Activation API <span>[<a href="#TMF652" class="cite xref">TMF652</a>]</span><a href="#section-5-4.3" class="pilcrow">¶</a>
+        <li class="normal" id="section-5-4.3">TMF652 Resource Order Management API <span>[<a href="#TMF652" class="cite xref">TMF652</a>]</span><a href="#section-5-4.3" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-5-4.4">TMF702 Resource Order Management API <span>[<a href="#TMF702" class="cite xref">TMF702</a>]</span><a href="#section-5-4.4" class="pilcrow">¶</a>
+        <li class="normal" id="section-5-4.4">TMF702 Resource Activation and Configuration API <span>[<a href="#TMF702" class="cite xref">TMF702</a>]</span><a href="#section-5-4.4" class="pilcrow">¶</a>
 </li>
       </ul>
 </section>
@@ -2008,7 +2016,7 @@ module example-toasters {
 <a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-yang-module-registry" class="section-name selfRef">YANG Module Registry</a>
         </h3>
 <p id="section-6.1-1">
-          The YANG module defined in this document, <code>yang-tmf-map</code>,
+          The YANG module defined in this document, <code>ietf-yang-tmf-map</code>,
           is intended to be registered in the IANA YANG Module registry.
           The module defines extensions that can be used to annotate YANG
           modules with TMF mapping information.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
@@ -2255,21 +2263,13 @@ NOTE: '\' line wrapping per RFC 8792
 <a href="#appendix-A.4" class="section-number selfRef">A.4. </a><a href="#name-approach-4-decomposition-in" class="section-name selfRef">Approach 4: Decomposition into Features</a>
         </h3>
 <p id="appendix-A.4-1">
-          Each data tree layer can be represented as a TM Forum Service
-          Feature or Resource Feature within a Service or Resource.
-          This approach keeps Catalog entries manageable while still allowing
-          for a structural and hierarchical representation inside the Service
-          or Resource.<a href="#appendix-A.4-1" class="pilcrow">¶</a></p>
+          Each data tree layer can be represented as a TM Forum Feature
+          within a Service or Resource.  This approach keeps Catalog
+          entries manageable while still allowing for a structural and
+          hierarchical representation inside the Service or Resource.<a href="#appendix-A.4-1" class="pilcrow">¶</a></p>
 <p id="appendix-A.4-2">
-          The current TM Forum Data Model does not support Feature nesting,
-          i.e., there is no supportingFeature-like construct. Such construct
-          COULD be added via a schemaLocation extension to represent feature
-          hierarchy. However, it is the author's opinion that for
-          maximum interoperability, such nesting SHOULD be standardized in a
-          future TM Forum Open API release.<a href="#appendix-A.4-2" class="pilcrow">¶</a></p>
-<p id="appendix-A.4-3">
           This document uses this approach for each YANG container or list that
-          is mapped below the root.<a href="#appendix-A.4-3" class="pilcrow">¶</a></p>
+          is mapped below the root.<a href="#appendix-A.4-2" class="pilcrow">¶</a></p>
 </section>
 <section id="appendix-A.5">
         <h3 id="name-approach-5-encode-schema-in">
