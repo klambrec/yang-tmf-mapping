@@ -86,7 +86,7 @@
         NETCONF/YANG interfaces (e.g., YANG models <xref target="RFC7950"/>) to
         describe configuration and operational state for network devices and
         services.  Likewise, the TM Forum Open APIs are finding increased adoption in
-        Business Support Systems (BSS) for a number of functions, include ordering 
+        Business Support Systems (BSS) for a number of functions, including ordering
         and lifecycle management of services and resources. 
       </t>
 
@@ -100,7 +100,7 @@
         mapping between YANG schemas and TM Forum Data Models and APIs.
         The goal is to enable consistent representation of resources and services 
         across management interfaces and between domains, removing integration
-        barriers and enables the use of YANG models directly in TMF-based BSS/OSS
+        barriers and enabling the use of YANG models directly in TMF-based BSS/OSS
         implementations.
       </t>
        <t>
@@ -132,9 +132,11 @@
       </t>
 
       <t>
-        The mapping mechanism is only intended for translating YANG modules to 
-        TMF standards compliant Open APIs and payloads. The reverse translation
-        (from OpenAPI to YANG) is not in scope.
+        The schema mapping mechanism is only intended to operate in the
+        direction from YANG to TMF standards compliant payloads. Service and
+        Resource instance data is mapped in both directions. TMF Activation and
+        Order Management APIs can retrieve data from the YANG data store and
+        make modifications to the YANG data store.
       </t>
 
       <section>
@@ -160,7 +162,7 @@
           APIs are exposed at the northbound interface of an OSS or Service
           Orchestrator, while YANG-based models and automation drive the
           southbound interfaces to network controllers and devices.
-          The mechanism for mapping defined in this document may operate.
+          The mapping can be applied at this northbound boundary.
         </t> 
         <figure>
           <name>TMF mapping northbound of OSS/Service Orchestrator</name>
@@ -276,8 +278,8 @@
           annotate the mapping root and the mapping method for a particular
           YANG subtree:
         </t>
-        <sourcecode name="yang-tmf-map.yang"><![CDATA[
-<CODE BEGINS> file "yang-tmf-map.yang"
+        <sourcecode name="ietf-yang-tmf-map.yang" type="yang"><![CDATA[
+<CODE BEGINS> file "ietf-yang-tmf-map.yang"
 
 module ietf-yang-tmf-map {
   yang-version 1.1;
@@ -352,7 +354,7 @@ module ietf-yang-tmf-map {
 module example-toasters {
   yang-version "1.1";
   ...
-  import yang-tmf-map {
+  import ietf-yang-tmf-map {
     prefix tmf;
   }
 
@@ -663,7 +665,7 @@ module example-toasters {
       <t>
         An implementation of the mapping mechanism defined in this document
         SHOULD expose one or more of the following TMF Open APIs to allow TMF
-        API comsumers to query the Catalog Service/ResourceSpecifications:
+        API consumers to query the Catalog Service/ResourceSpecifications:
       </t>
       <ul>
         <li>TMF633 Service Catalog Management API <xref target="TMF633"/></li>
@@ -677,8 +679,8 @@ module example-toasters {
       <ul>
         <li>TMF640 Service Activation API <xref target="TMF640"/></li>
         <li>TMF641 Service Order Management API <xref target="TMF641"/></li>
-        <li>TMF652 Resource Activation API <xref target="TMF652"/></li>
-        <li>TMF702 Resource Order Management API <xref target="TMF702"/></li>
+        <li>TMF652 Resource Order Management API <xref target="TMF652"/></li>
+        <li>TMF702 Resource Activation and Configuration API <xref target="TMF702"/></li>
       </ul>
     </section>
     
@@ -687,7 +689,7 @@ module example-toasters {
       <section>
         <name>YANG Module Registry</name>
         <t>
-          The YANG module defined in this document, <tt>yang-tmf-map</tt>,
+          The YANG module defined in this document, <tt>ietf-yang-tmf-map</tt>,
           is intended to be registered in the IANA YANG Module registry.
           The module defines extensions that can be used to annotate YANG
           modules with TMF mapping information.
