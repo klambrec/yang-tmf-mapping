@@ -380,7 +380,7 @@ module example-toasters {
       </t>
       </section>
       <section>
-        <name>Mapping containers and lists to (sub)Features</name>
+        <name>Mapping containers and lists to Features</name>
         <t>
           Implementations MUST support mapping YANG schema trees of arbitrary
           depth below the mapping root. Each container or list in the
@@ -390,14 +390,14 @@ module example-toasters {
         </t>
         <t>
           Feature hierarchy MUST be represented as a flat collection of
-          Features linked by relationships. Each Feature below the first level
-          MUST contain one relationship to its immediate parent, with
-          <tt>relationshipType</tt> set to <tt>parent</tt>. In Catalog
-          Specifications, this relationship MUST use
-          <tt>featureSpecRelationship</tt> and identify the parent in its
-          <tt>featureId</tt> field. In instance data, it MUST use
-          <tt>featureRelationship</tt> and identify the parent in its
-          <tt>id</tt> field.
+          Features linked by relationships. Each parent Feature MUST contain a
+          relationship to each immediate child Feature, with
+          <tt>relationshipType</tt> set to <tt>composedOf</tt>. In Catalog
+          Specifications, each relationship MUST use
+          <tt>featureSpecRelationship</tt>, with <tt>name</tt> set to
+          the child FeatureSpecification's <tt>id</tt>. In instance data,
+          each relationship MUST use <tt>featureRelationship</tt>, with
+          <tt>id</tt> and <tt>name</tt> set to the child Feature's <tt>id</tt>.
         </t>
         <t>
           A Feature <tt>id</tt> MUST be the path from the mapping root to the
