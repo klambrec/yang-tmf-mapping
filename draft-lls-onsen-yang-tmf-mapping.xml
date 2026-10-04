@@ -12,7 +12,7 @@
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
   category="std"
-  docName="draft-lambrechts-onsen-yang-tmf-mapping-00"
+  docName="draft-lls-onsen-yang-tmf-mapping-latest"
   ipr="trust200902"
   obsoletes=""
   updates=""
@@ -25,8 +25,8 @@
       Mapping YANG Schemas and Instance Data to TM Forum Data Models and APIs
     </title>
 
-    <seriesInfo name="Internet-Draft" value="draft-lambrechts-onsen-yang-tmf-mapping-00"/>
-   
+    <seriesInfo name="Internet-Draft" value="draft-lls-onsen-yang-tmf-mapping-latest"/>
+
     <author fullname="Kris Lambrechts" initials="K." surname="Lambrechts">
       <organization>Intwine</organization>
       <address>
@@ -82,11 +82,11 @@
         and Activation Management (i.e. TMF640/702) APIs are described.
       </t>
     </abstract>
- 
+
   </front>
 
   <middle>
-    
+
     <section>
       <name>Introduction</name>
       <t>
@@ -95,18 +95,18 @@
         describe configuration and operational state for network devices and
         services.  Likewise, the TM Forum Open APIs are finding increased adoption in
         Business Support Systems (BSS) for a number of functions, including ordering
-        and lifecycle management of services and resources. 
+        and lifecycle management of services and resources.
       </t>
 
       <t>
-        These two ecosystems define different data models and interaction styles 
-        for overlapping concepts, which can lead to duplicated modeling effort 
+        These two ecosystems define different data models and interaction styles
+        for overlapping concepts, which can lead to duplicated modeling effort
         and inconsistent behavior across platforms.
       </t>
       <t>
-        This document addresses this overlap by specifying a mechanism for 
+        This document addresses this overlap by specifying a mechanism for
         mapping between YANG schemas and TM Forum Data Models and APIs.
-        The goal is to enable consistent representation of resources and services 
+        The goal is to enable consistent representation of resources and services
         across management interfaces and between domains, removing integration
         barriers and enabling the use of YANG models directly in TMF-based BSS/OSS
         implementations.
@@ -171,7 +171,7 @@
           Orchestrator, while YANG-based models and automation drive the
           southbound interfaces to network controllers and devices.
           The mapping can be applied at this northbound boundary.
-        </t> 
+        </t>
         <figure>
           <name>TMF mapping northbound of OSS/Service Orchestrator</name>
           <artwork><![CDATA[
@@ -233,12 +233,12 @@
         </figure>
         <t>
           These boundaries are illustrative and can be adapted to operator
-          architecture as needed. The key principle is that the mapping 
-          mechanism defined in this document can be applied at any 
+          architecture as needed. The key principle is that the mapping
+          mechanism defined in this document can be applied at any
           point where YANG-based models and TMF Open APIs intersect.
         </t>
       </section>
-      
+
       <section>
         <name>Requirements Language</name>
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL",
@@ -312,7 +312,7 @@ module ietf-yang-tmf-map {
      forth in Section 4.c of the IETF Trust's Legal Provisions
      Relating to IETF Documents
      (https://trustee.ietf.org/license-info).
-     
+
      This version of this YANG module is part of RFC XXXX
      (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
      for full legal notices.";
@@ -423,7 +423,7 @@ module example-toasters {
         <name>Mapping leafs and leaf-lists to Characteristics</name>
          <t>
           YANG leafs and leaf-lists represent the fundamental data elements in a
-          YANG data tree. Each leaf and leaf-list is to be mapped to a corresponding 
+          YANG data tree. Each leaf and leaf-list is to be mapped to a corresponding
           TMF Characteristic.
         </t>
       </section>
@@ -689,7 +689,7 @@ module example-toasters {
         <li>TMF702 Resource Activation and Configuration API <xref target="TMF702"/></li>
       </ul>
     </section>
-    
+
     <section anchor="IANA">
       <name>IANA Considerations</name>
       <section>
@@ -702,7 +702,7 @@ module example-toasters {
         </t>
       </section>
     </section>
-    
+
     <section anchor="Security">
       <name>Security Considerations</name>
       <t>
@@ -733,7 +733,7 @@ module example-toasters {
         interpretation or security policy violations.
       </t>
     </section>
-    
+
   </middle>
 
   <back>
@@ -741,7 +741,7 @@ module example-toasters {
       <name>References</name>
       <references>
         <name>Normative References</name>
-        
+
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8299.xml"/>
@@ -749,7 +749,7 @@ module example-toasters {
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7950.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9182.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9291.xml"/>
-        
+
       </references>
       <references>
         <name>Informative References</name>
@@ -881,7 +881,7 @@ module example-toasters {
         <name>Approach 2: Complex Characteristics</name>
         <t>
           A complete data structure can be embedded into a single Characteristic
-          by using the TM Forum "Object" Value Type. 
+          by using the TM Forum "Object" Value Type.
         </t>
         <sourcecode><![CDATA[
 NOTE: '\' line wrapping per RFC 8792
