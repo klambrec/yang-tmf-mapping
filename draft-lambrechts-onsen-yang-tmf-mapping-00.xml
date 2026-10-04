@@ -435,15 +435,14 @@ module example-toasters {
         <t>
           If the container is annotated with the <tt>tmf:cfs-service</tt> or
           <tt>tmf:rfs-service</tt> extension, it MUST be mapped to a TMF CFS
-          Service or RFS Resource, respectively. Otherwise, it MUST be mapped to
+          Service or RFS Service, respectively. Otherwise, it MUST be mapped to
           a TMF Feature.
         </t>
         <t>
           Data nodes located directly under the mapping root MUST be mapped to
-          Service or Resource Characteristics.  Data nodes located in a 
-          first-level container or list are mapped to Feature Characteristics, 
-          while those located in deeper levels of the YANG schema tree are 
-          mapped to the Characteristics of the corresponding nested Feature.
+          Service or Resource Characteristics.  Data nodes located in a
+          container or list are mapped to Feature Characteristics under the
+          corresponding nested Feature.
         </t>
         <t>
           The Feature <tt>name</tt> SHOULD be derived from the YANG node name.
@@ -560,15 +559,14 @@ module example-toasters {
         <t>
           If the list is annotated with the <tt>tmf:cfs-service</tt> or
           <tt>tmf:rfs-service</tt> extension, it MUST be mapped to a TMF CFS
-          Service or RFS Resource, respectively. Otherwise, it MUST be mapped
+          Service or RFS Service, respectively. Otherwise, it MUST be mapped
           to a TMF Feature.
         </t>
         <t>
           Data nodes located directly under the mapping root MUST be mapped to
           Service or Resource Characteristics. Data nodes located in a
-          first-level container or list are mapped to Feature Characteristics,
-          while those located in deeper levels of the YANG schema tree are
-          mapped to the Characteristics of the corresponding nested Feature.
+          container or list are mapped to Feature Characteristics under the
+          corresponding nested Feature.
         </t>
         <t>
           The Feature <tt>name</tt> SHOULD be derived from the YANG node name.
@@ -959,15 +957,10 @@ NOTE: '\' line wrapping per RFC 8792
       <section>
         <name>Approach 4: Decomposition into Features</name>
         <t>
-          Each data tree layer can be represented as a TM Forum Service
-          Feature or Resource Feature within a Service or Resource.
-          This approach keeps Catalog entries manageable while still allowing
-          for a structural and hierarchical representation inside the Service
-          or Resource.
-        </t>
-        <t>
-          Feature hierarchy is represented as a flat collection of Features
-          linked by relationships.
+          Each data tree layer can be represented as a TM Forum Feature
+          within a Service or Resource.  This approach keeps Catalog
+          entries manageable while still allowing for a structural and
+          hierarchical representation inside the Service or Resource.
         </t>
         <t>
           This document uses this approach for each YANG container or list that
