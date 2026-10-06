@@ -1,0 +1,446 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2026-10-06T00:24:13.715683+00:00",
+  "repo": "klambrec/yang-tmf-mapping",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 5,
+      "id": "I_kwDORKFuu88AAAABOydFbg",
+      "title": "ID / key format",
+      "url": "https://github.com/klambrec/yang-tmf-mapping/issues/5",
+      "state": "OPEN",
+      "author": "klambrec",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "@vances reviewed a sample dataset from the StratoWeave implementation of the draft which included:\n\n```json\n\n{\n    \"id\": \"/l3vpn-svc/vpn-services/vpn-service\",\n    \"href\": \"/tmf-api/serviceCatalogManagement/v4/serviceSpecification/%2Fl3vpn-svc%2Fvpn-services%2Fvpn-service\",\n    \"name\": \"L3VPN VPN Service Service Specification\",\n    \"description\": \"List of VPN services. Service Specification\",\n    \"@type\": \"CustomerFacingServiceSpecification\",\n    \"@baseType\": \"ServiceSpecification\",\n    \"@schemaLocation\": \"/tmf-api/schema/Service/CustomerFacingServiceSpecification.schema.json\",  \n    ...\n}\n```\n\nHis comment was:\n> id should ideally be something like a UUID. TMF630 Guidelines 2.2. Resource Model and Naming provides:\n\"If the Id is a composite key then it should be split into the following elements: key = {part}-{part}*.\"\nThat your id contains slashes (/) is bound likely to trigger issues with implementations, even if it is technically legal.\n\nThe current StratoWeave implementation effectively uses the YANG path syntax for both these catalog entries as well as instance data identifiers, but that is not specified in the draft.\n\nThis leads to a number of questions:\n- Should the draft be prescriptive on the TMF ID format or is it left up to the implementations?\n- Are deterministic IDs such as the current YANG path desirable or is it preferable to allocate random IDs?\n  - It would implementations much more stateful, which is a downside? \n- Maximum interoperability with existing TMF implementations is highly desirable and worth compromising on some other factors for?",
+      "createdAt": "2026-08-29T15:31:17Z",
+      "updatedAt": "2026-08-30T06:22:01Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "vances",
+          "authorAssociation": "COLLABORATOR",
+          "body": "In all TM Forum Open APIs, as with all REST APIs, a POST operation on a _Collection_ does not provide the _Item_ identifier, it is the responsibility of the API producer managing the _Collection_ to assign the `id` and `href` values. The recommended format for `id` is a UUID ([RFC4122](https://datatracker.ietf.org/doc/html/rfc4122)).\n\nSee [TMF630](https://www.tmforum.org/resources/specifications/tmf630-rest-api-design-guidelines-4-2-0/) _REST API Design Guidelines_.\n\nSo no, the IETF draft should not prescribe a scheme for the value of `id` and `href`. If it is desirable to maintain a mapping back to the YANG the `name` property would be an appropriate property to use.\n",
+          "createdAt": "2026-08-30T06:22:01Z",
+          "updatedAt": "2026-08-30T06:22:01Z"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "id": "I_kwDORKFuu88AAAABOyfchA",
+      "title": "How to represent nested YANG",
+      "url": "https://github.com/klambrec/yang-tmf-mapping/issues/6",
+      "state": "OPEN",
+      "author": "klambrec",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "The current StratoWeave implementation  and intended next draft revision results in schemas such as:\n```json\n{\n        \"id\": \"cloud-accesses/cloud-access\",\n        \"isBundle\": true,\n        \"isEnabled\": true,\n        \"name\": \"Cloud access configuration.\",\n        \"version\": \"2025-11-01\",\n        \"constraint\": [],\n        \"featureSpecCharacteristic\": [\n...\n        ],\n        \"featureSpecRelationship\": [\n          {\n            \"featureId\": \"cloud-accesses\",\n            \"name\": \"cloud-accesses\",\n            \"parentSpecificationHref\": \"/tmf-api/serviceCatalogManagement/v4/serviceSpecification/%2Fl3vpn-svc%2Fvpn-services%2Fvpn-service\",\n            \"parentSpecificationId\": \"/l3vpn-svc/vpn-services/vpn-service\",\n            \"relationshipType\": \"parent\",\n            \"validFor\": {\n              \"endDateTime\": null,\n              \"startDateTime\": \"1970-01-01T00:00:00\"\n            }\n          }\n        ],\n...\n      },\n```\n\n@vances raised the following concerns:\n- I need to look into these parentSpecification[Id|Href] properties. I think there's something broken there in the data model.\n- normally I would say: \"don't include the parent in a relationship. avoid circular (i.e. up) references\"\n",
+      "createdAt": "2026-08-29T15:39:44Z",
+      "updatedAt": "2026-08-31T07:24:52Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "vances",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Remove all `parentSpecification[Id|Href]` properties. These are required only when the reference is to a _FeatureSpecification_ in another _ServiceSpecification_, otherwise the _FeatureSpecification_ is implicitly within the same _ServiceSpecification_.\n\nThe `featureId` property is optional in _FeatureSpecificationRelationship_.\n\nThe value of `featureId` MUST be unique within the _ServiceSpecification_, and SHOULD be a UUID.\n\nThe `name` property is mandatory in _FeatureSpecificationRelationship_ and MUST be unique within the _ServiceSpecification_. If no `featureId` property is present the `name` value is used to identify the referenced _FeatureSpecification_.\n\nIt would make the IETF draft less noisy if `featureId` were omitted.\n\n[TR255](https://www.tmforum.org/resources/technical-report/tr255-resource-function-activation-and-configuration-v5-0/) describes _Feature Groups_.  In TM Forum Open APIs, notably TMF634, grouping is accomplished with the `isBundle` and `<Entity>Relationship` properties. For example,  _Feature Group_ A would have `isBundle=true` and include _Feature_ B and C in _Feature[Spec]Relationship_.\n\nAvoid circular relationships, so only include the group members in the group's `featureSpecRelationship` property. An implementation is free to include both relationships if that is convenient, however the IETF draft shouldn't recommend it.\n\nAlthough there are currently no enumerated values, I recommend the `relationshipType` value `\"composedOf\"`, which aligns with the TM Forum information model ([SID](https://www.tmforum.org/open-digital-architecture/information-framework-sid)) which uses the pattern _<Entity>ComposedOf_  / _<Entity>ComposedBy_ for compound entity relationships.\n\nThe problem (\"something broken there\") I spotted was about mandatory properties, and was actually in the schema for _CharacteristicSpecificationRelationship_ and not _FeatureSpecificationRelationship_, so no impact here. I opened Jira issue [AP-7699](https://projects.tmforum.org/jira/browse/AP-7699) on that.",
+          "createdAt": "2026-08-30T07:58:20Z",
+          "updatedAt": "2026-08-30T08:04:33Z"
+        },
+        {
+          "author": "klambrec",
+          "authorAssociation": "OWNER",
+          "body": "> Remove all parentSpecification[Id|Href] properties. These are required only when the reference is to a FeatureSpecification in another ServiceSpecification, otherwise the FeatureSpecification is implicitly within the same ServiceSpecification.\n\nOk, can do!\n\n> Avoid circular relationships, so only include the group members in the group's featureSpecRelationship property. An implementation is free to include both relationships if that is convenient, however the IETF draft shouldn't recommend it.\n> Although there are currently no enumerated values, I recommend the relationshipType value \"composedOf\", which aligns with the TM Forum information model ([SID](https://www.tmforum.org/open-digital-architecture/information-framework-sid)) which uses the pattern ComposedOf / ComposedBy for compound entity relationships.\n\nOk, so you are recommending that the draft specify the inverse relationship of what I currently have, meaning to list all the children as  `relationshipType` value `\"composedOf\"` on the parent. Can do!\n\n> The name property is mandatory in FeatureSpecificationRelationship and MUST be unique within the ServiceSpecification. If no featureId property is present the name value is used to identify the referenced FeatureSpecification.\n\nIdentify it how? Should the FeatureSpecificationRelationship's `name` then match the FeatureSpecification's `name` or its `id`?",
+          "createdAt": "2026-08-30T10:32:21Z",
+          "updatedAt": "2026-08-30T10:35:19Z"
+        },
+        {
+          "author": "vances",
+          "authorAssociation": "COLLABORATOR",
+          "body": "A _FeatureSpecificationRelationship_ references a _FeatureSpecification_ by matching on `featureId` if present or `name` if not.",
+          "createdAt": "2026-08-30T11:27:28Z",
+          "updatedAt": "2026-08-30T13:16:00Z"
+        },
+        {
+          "author": "klambrec",
+          "authorAssociation": "OWNER",
+          "body": "> A _FeatureSpecificationRelationship_ references a _FeatureSpecification by matching on `featureId` if present or `name` if not.\n\nSorry to ask a third time, but the terms confuse me, my question is on the `FeatureSpecification`  end of things and that one has no property called `featureId` \ud83d\ude01 \n- I'm ok to lose the `FeatureSpecificationRelationship/featureId`, so that would not be present\n- So `FeatureSpecificationRelationship/name` references a `FeatureSpecification`\n\nBut I'm still unclear on what the value of `FeatureSpecificationRelationship/name` should contain:\n- Should it match `FeatureSpecification/id` OR\n- Should it match `FeatureSpecification/name`",
+          "createdAt": "2026-08-30T11:43:48Z",
+          "updatedAt": "2026-08-30T11:43:48Z"
+        },
+        {
+          "author": "vances",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Sorry, yes, you are correct.  So the statement should be:\nIf a _FeatureSpecificationRelationship_ includes the `featureId` property, it's value is used  to match the `id` property of a _FeatureSpecification_, otherwise the `name` property value in the _FeatureSpecificationRelationship_ is matched with the `name` property of a _FeatureSpecification_.\n\nThe names in italics are schema class names.",
+          "createdAt": "2026-08-30T13:25:46Z",
+          "updatedAt": "2026-08-30T13:25:46Z"
+        },
+        {
+          "author": "vances",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Note: I would use `name` instead of `featureId` in the IETF draft for readability, however in an implementation (i.e. StratoWeave) it would be good to be explicit with `featureId`.",
+          "createdAt": "2026-08-30T13:28:14Z",
+          "updatedAt": "2026-08-30T13:28:14Z"
+        },
+        {
+          "author": "klambrec",
+          "authorAssociation": "OWNER",
+          "body": "> Note: I would use `name` instead of `featureId` in the IETF draft for readability, however in an implementation (i.e. StratoWeave) it would be good to be explicit with `featureId`.\n\nCan you elaborate?\n\nMaybe this is a bit of a philosophical difference between IETF and TMF standards. I'd argue that if your actual recommendation for implementers is to use `featureId` to make the connection then that's what it should say in the draft? IETF standards tend to be precise. One should be able to write a working (interoperable) implementation solely by reading the draft/RFC.",
+          "createdAt": "2026-08-31T07:05:31Z",
+          "updatedAt": "2026-08-31T07:05:40Z"
+        },
+        {
+          "author": "vances",
+          "authorAssociation": "COLLABORATOR",
+          "body": "For the purposes of the draft it makes sense to use `name` as the primary identifier for _Feature_.\nMy comment about implementation details may be dismissed as out of scope. ",
+          "createdAt": "2026-08-31T07:24:52Z",
+          "updatedAt": "2026-08-31T07:24:52Z"
+        }
+      ]
+    }
+  ],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDORKFuu8786R7F",
+      "title": "add tmf664 resource function activation api",
+      "url": "https://github.com/klambrec/yang-tmf-mapping/pull/1",
+      "state": "CLOSED",
+      "author": "vances",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This pull request adds TMF664 to the API list and references.\r\n\r\nTM Forum's _Resource Functions_ (RF) are managed entities in the _Resource_ domain which take inputs to produce outputs. Examples of RF include ETSI NFV entities: Network Service (NS), Virtual Network Function (VNF) and VNF Forwarding Graph (VFG) as well as Software Defined Networking (SDN) concepts of Service Function and Service Function Chain.\r\n\r\nThe TMF664 API is used for RF activation and configuration. The API is aligned with TMF702 for generic _Resources_ with the addition of properties to describe _Connection Points_ (inputs, outputs) and internal _Topology_.",
+      "createdAt": "2026-08-10T08:47:37Z",
+      "updatedAt": "2026-08-31T06:50:42Z",
+      "baseRepository": "klambrec/yang-tmf-mapping",
+      "baseRefName": "main",
+      "baseRefOid": "c55f1fcef15045b429228c06cde0b8000fb74995",
+      "headRepository": "vances/draft-lambrechts-onsen-yang-tmf-mapping",
+      "headRefName": "main",
+      "headRefOid": "230669378f2e0c69649070205a8d8ed4ed71e345",
+      "closedAt": "2026-08-31T06:50:41Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "klambrec",
+          "authorAssociation": "OWNER",
+          "body": "Hi @vances,\r\n\r\nCan you clarify why we'd want to add TMF664 as a reference in this draft? Are you proposing a mapping of some YANG structures into this API? What would we do with it, that cannot be achieved through TMF702?",
+          "createdAt": "2026-08-21T20:01:00Z",
+          "updatedAt": "2026-08-21T20:01:00Z"
+        },
+        {
+          "author": "vances",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The TMF639, TMF702 and TMF664 APIs all perform CRUD operations on managed entities in the _Resource_ domain. There is almost zero difference between 639 and 702 other than the base path, the distinction is just the semantics of the use case, one is \"inventory\" while the other is \"activation\". Both 702 and 664 are \"activation\" APIs, with 664 introducing the _ResourceFunction_ subclass and providing _Task_ resources required by VNFs ( _Scale_, _Migrate_, _Heal_).  Importantly _ResourceFunction_ adds properties for endpoints and internal topology (_ConnectionPointRef_, _ResourceGraph_) which are required for modeling  NS, VFG, etc..",
+          "createdAt": "2026-08-23T04:35:19Z",
+          "updatedAt": "2026-08-23T04:35:19Z"
+        },
+        {
+          "author": "vances",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Given that all configuration is being done declaratively using _FeatureSpecifications_ there may not be much purpose in referencing _ResourceFunctions_. ",
+          "createdAt": "2026-08-30T08:02:37Z",
+          "updatedAt": "2026-08-30T08:02:37Z"
+        },
+        {
+          "author": "klambrec",
+          "authorAssociation": "OWNER",
+          "body": "Agreed, hence closing this PR.",
+          "createdAt": "2026-08-31T06:50:41Z",
+          "updatedAt": "2026-08-31T06:50:41Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 2,
+      "id": "PR_kwDORKFuu8787Kth",
+      "title": "Clarify features",
+      "url": "https://github.com/klambrec/yang-tmf-mapping/pull/2",
+      "state": "CLOSED",
+      "author": "vances",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "TM Forum _Features_ and _Feature Groups_ are described in TR255 as \"intent-based\" configuration as opposed to \"detail-based\" with Resource/Service _Characteristics_.\r\n\r\nI like to use the example of instantiating with a _Feature_ named `speed ` given value `fast` and getting back an instance wiith a _Characteristic_ name `speed` having a value of `100mbs`.",
+      "createdAt": "2026-08-10T09:22:00Z",
+      "updatedAt": "2026-10-04T20:02:03Z",
+      "baseRepository": "klambrec/yang-tmf-mapping",
+      "baseRefName": "main",
+      "baseRefOid": "3a92d0a6d92ac62657ebd072c1914c38cf7c1bca",
+      "headRepository": "vances/draft-lambrechts-onsen-yang-tmf-mapping",
+      "headRefName": "clarify-features",
+      "headRefOid": "fdd547e54893ea763b5845d3f59c3be65b7b52ad",
+      "closedAt": "2026-10-04T20:02:03Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "klambrec",
+          "authorAssociation": "OWNER",
+          "body": "Separately merged remaining comments.",
+          "createdAt": "2026-10-04T20:02:03Z",
+          "updatedAt": "2026-10-04T20:02:03Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 3,
+      "id": "PR_kwDORKFuu8788t0n",
+      "title": "clean up example json payloads for clarity and correctness",
+      "url": "https://github.com/klambrec/yang-tmf-mapping/pull/3",
+      "state": "MERGED",
+      "author": "vances",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The strongly typed example had a `serviceSpecification` property however the _Characteristic_ example did not!\r\n\r\nRemove unnecessary optional properties for clarity. \r\n\r\nRemoved `[]` in `Characteristic.value`.",
+      "createdAt": "2026-08-10T10:19:54Z",
+      "updatedAt": "2026-08-21T20:20:56Z",
+      "baseRepository": "klambrec/yang-tmf-mapping",
+      "baseRefName": "main",
+      "baseRefOid": "3a92d0a6d92ac62657ebd072c1914c38cf7c1bca",
+      "headRepository": "vances/draft-lambrechts-onsen-yang-tmf-mapping",
+      "headRefName": "appendix-a",
+      "headRefOid": "004a4a3a9650f7e0aa9867c0a1d66872c33c1dca",
+      "closedAt": "2026-08-21T20:20:56Z",
+      "mergedAt": "2026-08-21T20:20:56Z",
+      "mergedBy": "klambrec",
+      "mergeCommit": {
+        "oid": "c12ae7cdb5f30c7a716ec4696298204436db0c5f"
+      },
+      "comments": [
+        {
+          "author": "vances",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Removed \"orderable\" service concern, as exposing _Services_ to order management is an unrelated, and quite solvable, issue.",
+          "createdAt": "2026-08-10T11:09:17Z",
+          "updatedAt": "2026-08-10T11:09:17Z"
+        },
+        {
+          "author": "vances",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> Especially for deeply nested YANG models such as the L3SM, this can\r\n> lead to a large number of Services/Resources in the Catalog, making\r\n> it difficult for operators to manage and for consumers to understand\r\n> the available offerings.\r\n\r\nIs this actually a compelling example? The L3SM is divided into two main\r\ncontainers: `vpn-services` and `sites`. Having those as separate managed\r\nentities seems appropriate.\r\n\r\nWhether we are exposing composition in the catalog/inventory or deeply\r\nnested _Characteristics_  it's just moving the problem around. You could\r\nargue that REST operations on a flat catalog/inventory are simpler and \r\ncheaper than complicated JSON Path operations.",
+          "createdAt": "2026-08-10T11:23:29Z",
+          "updatedAt": "2026-08-10T11:23:29Z"
+        },
+        {
+          "author": "klambrec",
+          "authorAssociation": "OWNER",
+          "body": "> Is this actually a compelling example? The L3SM is divided into two main\r\ncontainers: vpn-services and sites. Having those as separate managed\r\nentities seems appropriate.\r\n\r\nWhat you are suggesting is exactly how I have ended up implementing this draft for `ietf-l3vpn-svc.yang`, e.g.\r\n[vpn-service](https://github.com/stratoweave/sorespo/blob/main/spec/yang/cfs/sorespo-ietf-l3vpn-svc.yang#L26) / [site](https://github.com/stratoweave/sorespo/blob/main/spec/yang/cfs/sorespo-ietf-l3vpn-svc.yang#L31) in our example StratoWeave project.\r\n\r\nThe paragraph you quoted is trying to make the point that if you take Approach 3 to the extreme,  each nested container and list anywhere in a YANG module would become its own TMF Service or Resource, so inside `site` one COULD choose to turn the `locations` container and `location` list and  the `site-diversity` container,  into their own TMF Services.\r\n>    This document uses this approach at the mapping root only.\r\n\r\nHence the last line of that section.\r\n\r\nIf you think the text can be further clarified there, PRs welcome!",
+          "createdAt": "2026-08-21T20:20:26Z",
+          "updatedAt": "2026-08-21T20:20:26Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 4,
+      "id": "PR_kwDORKFuu88AAAABAmi8Hg",
+      "title": "Describe parent feature relationship",
+      "url": "https://github.com/klambrec/yang-tmf-mapping/pull/4",
+      "state": "MERGED",
+      "author": "klambrec",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-08-21T21:33:57Z",
+      "updatedAt": "2026-10-04T19:39:40Z",
+      "baseRepository": "klambrec/yang-tmf-mapping",
+      "baseRefName": "main",
+      "baseRefOid": "c5ec5ce7158b3004e61929bc83bb3cccad1938c2",
+      "headRepository": "klambrec/yang-tmf-mapping",
+      "headRefName": "nested-features",
+      "headRefOid": "ee80478fd5adf07be3e87827fe58e5a393db285f",
+      "closedAt": "2026-10-04T19:39:40Z",
+      "mergedAt": "2026-10-04T19:39:40Z",
+      "mergedBy": "klambrec",
+      "mergeCommit": {
+        "oid": "83cfd5723abb90595b4792ed263f401d68e989a5"
+      },
+      "comments": [
+        {
+          "author": "klambrec",
+          "authorAssociation": "OWNER",
+          "body": "@vances This PR describes what I thought you and Brad had suggested as the solution for describing nested Features a few months ago. The relationshipType with value \"parent\" is a free-form string and the \"/\" delimiter is custom, which isn't great. These require some implementation effort by TMF consumers, but I do otherwise really like this.\r\n\r\nI see that in #2 you took quite a different approach. I'll read up on Feature Groups and TR255, but like my comment in the #1, I don't understand yet how bringing in TMF664 helps?",
+          "createdAt": "2026-08-21T21:42:22Z",
+          "updatedAt": "2026-08-21T21:42:22Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 7,
+      "id": "PR_kwDORKFuu88AAAABBie0gg",
+      "title": "Add author",
+      "url": "https://github.com/klambrec/yang-tmf-mapping/pull/7",
+      "state": "CLOSED",
+      "author": "vances",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Adds vances as author.",
+      "createdAt": "2026-08-31T00:35:03Z",
+      "updatedAt": "2026-08-31T06:44:53Z",
+      "baseRepository": "klambrec/yang-tmf-mapping",
+      "baseRefName": "main",
+      "baseRefOid": "c55f1fcef15045b429228c06cde0b8000fb74995",
+      "headRepository": "vances/draft-lambrechts-onsen-yang-tmf-mapping",
+      "headRefName": "add-author",
+      "headRefOid": "dd10ac37a2906da0ec848add9c17a06f3a6ea5cf",
+      "closedAt": "2026-08-31T06:44:52Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "klambrec",
+          "authorAssociation": "OWNER",
+          "body": "This PR contains a couple of unrelated commits, merged relevant commit in #8.",
+          "createdAt": "2026-08-31T06:44:52Z",
+          "updatedAt": "2026-08-31T06:44:52Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 8,
+      "id": "PR_kwDORKFuu88AAAABBkDnOQ",
+      "title": "Add author",
+      "url": "https://github.com/klambrec/yang-tmf-mapping/pull/8",
+      "state": "MERGED",
+      "author": "klambrec",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-08-31T06:42:47Z",
+      "updatedAt": "2026-08-31T06:43:02Z",
+      "baseRepository": "klambrec/yang-tmf-mapping",
+      "baseRefName": "main",
+      "baseRefOid": "c55f1fcef15045b429228c06cde0b8000fb74995",
+      "headRepository": "klambrec/yang-tmf-mapping",
+      "headRefName": "add-author",
+      "headRefOid": "f7df27e08e2e08577af08bd9ead3afc0d081ef00",
+      "closedAt": "2026-08-31T06:43:02Z",
+      "mergedAt": "2026-08-31T06:43:02Z",
+      "mergedBy": "klambrec",
+      "mergeCommit": {
+        "oid": "3f5657ceb3c70b7f93827836f27527a3d6531573"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 9,
+      "id": "PR_kwDORKFuu88AAAABGkqzkg",
+      "title": "Adopt tooling",
+      "url": "https://github.com/klambrec/yang-tmf-mapping/pull/9",
+      "state": "MERGED",
+      "author": "klambrec",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-10-04T16:59:16Z",
+      "updatedAt": "2026-10-04T20:21:51Z",
+      "baseRepository": "klambrec/yang-tmf-mapping",
+      "baseRefName": "main",
+      "baseRefOid": "e85dfcaeee70b1225676e9757a97aae7cfd39b71",
+      "headRepository": "klambrec/yang-tmf-mapping",
+      "headRefName": "tooling",
+      "headRefOid": "df89526063aa1345b4810be011b04094512588f6",
+      "closedAt": "2026-10-04T20:21:50Z",
+      "mergedAt": "2026-10-04T20:21:50Z",
+      "mergedBy": "klambrec",
+      "mergeCommit": {
+        "oid": "e7077d0384110e70e665ea07231a3cf4b2f5e8f6"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 10,
+      "id": "PR_kwDORKFuu88AAAABGlvfUQ",
+      "title": "Clarify features",
+      "url": "https://github.com/klambrec/yang-tmf-mapping/pull/10",
+      "state": "MERGED",
+      "author": "klambrec",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Merge remaining aspects of @vances's clarify-features branch.",
+      "createdAt": "2026-10-04T20:00:39Z",
+      "updatedAt": "2026-10-04T20:00:48Z",
+      "baseRepository": "klambrec/yang-tmf-mapping",
+      "baseRefName": "main",
+      "baseRefOid": "83cfd5723abb90595b4792ed263f401d68e989a5",
+      "headRepository": "klambrec/yang-tmf-mapping",
+      "headRefName": "clarify-features",
+      "headRefOid": "693817368c3651153a1d721d03e652db5678bf23",
+      "closedAt": "2026-10-04T20:00:48Z",
+      "mergedAt": "2026-10-04T20:00:47Z",
+      "mergedBy": "klambrec",
+      "mergeCommit": {
+        "oid": "e85dfcaeee70b1225676e9757a97aae7cfd39b71"
+      },
+      "comments": [],
+      "reviews": []
+    }
+  ]
+}
