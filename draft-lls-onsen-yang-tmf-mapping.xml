@@ -410,12 +410,12 @@ module example-toasters {
         <t>
           A Feature <tt>name</tt> MUST be the path from the mapping root to the
           corresponding YANG node, excluding the mapping root itself, with node
-          identifiers separated by <tt>/</tt>. For instance data, each list
+          names separated by <tt>/</tt>. For instance data, each list
           segment MUST include one predicate of the form
           <tt>[key='value']</tt> for every list key, in key statement order.
           Backslashes and single quotes in key values MUST be escaped with a
           preceding backslash.
-          This makes Feature identifiers unique while preserving the YANG
+          This makes Feature names unique while preserving the YANG
           hierarchy and list identity.
         </t>
       </section>
