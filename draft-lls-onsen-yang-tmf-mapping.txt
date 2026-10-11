@@ -391,12 +391,11 @@ Table of Contents
 
    A Feature name MUST be the path from the mapping root to the
    corresponding YANG node, excluding the mapping root itself, with node
-   identifiers separated by /. For instance data, each list segment MUST
+   names separated by /. For instance data, each list segment MUST
    include one predicate of the form [key='value'] for every list key,
    in key statement order.  Backslashes and single quotes in key values
-   MUST be escaped with a preceding backslash.  This makes Feature
-   identifiers unique while preserving the YANG hierarchy and list
-   identity.
+   MUST be escaped with a preceding backslash.  This makes Feature names
+   unique while preserving the YANG hierarchy and list identity.
 
 2.3.  Mapping leafs and leaf-lists to Characteristics
 
