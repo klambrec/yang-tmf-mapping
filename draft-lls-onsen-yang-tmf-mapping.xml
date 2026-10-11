@@ -108,7 +108,7 @@
         mapping between YANG schemas and TM Forum Data Models and APIs.
         The goal is to enable consistent representation of resources and services
         across management interfaces and between domains, removing integration
-        barriers and enabling the use of YANG models directly in TMF-based BSS/OSS
+        barriers and enabling the use of YANG models directly in TMF-based OSS/BSS
         implementations.
       </t>
        <t>
@@ -176,8 +176,8 @@
           <name>TMF mapping northbound of OSS/Service Orchestrator</name>
           <artwork><![CDATA[
          +----------------------------+
-         |   BSS / Customers          |
-         | (Consumes TMF APIs)        |
+         |      BSS / Customers       |
+         |    (Consumes TMF APIs)     |
          +-------------+--------------+
                        | TMF Open APIs
                        v (Service/Resource)
@@ -208,14 +208,14 @@
           <name>TMF mapping northbound of Network Controller</name>
           <artwork><![CDATA[
          +----------------------------+
-         |   BSS / Customers          |
-         | (Consumes TMF APIs)        |
+         |      BSS / Customers       |
+         |                            |
          +-------------+--------------+
                        | TMF Open APIs
                        v (Product/Service/Resource)
          +----------------------------+
          | OSS / Service Orchestrator |
-         |    (YANG Service Model)    |
+         |    (Consumes TMF APIs)     |
          +-------------+--------------+
                        | TMF Open APIs
                        v (Service/Resource)
@@ -298,7 +298,7 @@ module ietf-yang-tmf-map {
     "IETF ONSEN Working Group.";
   contact
     "Kris Lambrechts
-     Email: kris@netedge.plus";
+     Email: kris@intwine.net";
   description
     "This YANG module defines a set of YANG extensions to annotate
      YANG schema nodes with mapping information to TMF Data Models.
@@ -403,12 +403,12 @@ module example-toasters {
           <tt>relationshipType</tt> set to <tt>composedOf</tt>. In Catalog
           Specifications, each relationship MUST use
           <tt>featureSpecRelationship</tt>, with <tt>name</tt> set to
-          the child FeatureSpecification's <tt>id</tt>. In instance data,
+          the child FeatureSpecification's <tt>name</tt>. In instance data,
           each relationship MUST use <tt>featureRelationship</tt>, with
-          <tt>id</tt> and <tt>name</tt> set to the child Feature's <tt>id</tt>.
+          <tt>name</tt> set to the child Feature's <tt>name</tt>.
         </t>
         <t>
-          A Feature <tt>id</tt> MUST be the path from the mapping root to the
+          A Feature <tt>name</tt> MUST be the path from the mapping root to the
           corresponding YANG node, excluding the mapping root itself, with node
           identifiers separated by <tt>/</tt>. For instance data, each list
           segment MUST include one predicate of the form
