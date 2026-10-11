@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-10-06T00:24:13.715683+00:00",
+  "timestamp": "2026-10-11T00:27:05.930395+00:00",
   "repo": "klambrec/yang-tmf-mapping",
   "labels": [
     {
@@ -62,7 +62,7 @@
       "labels": [],
       "body": "@vances reviewed a sample dataset from the StratoWeave implementation of the draft which included:\n\n```json\n\n{\n    \"id\": \"/l3vpn-svc/vpn-services/vpn-service\",\n    \"href\": \"/tmf-api/serviceCatalogManagement/v4/serviceSpecification/%2Fl3vpn-svc%2Fvpn-services%2Fvpn-service\",\n    \"name\": \"L3VPN VPN Service Service Specification\",\n    \"description\": \"List of VPN services. Service Specification\",\n    \"@type\": \"CustomerFacingServiceSpecification\",\n    \"@baseType\": \"ServiceSpecification\",\n    \"@schemaLocation\": \"/tmf-api/schema/Service/CustomerFacingServiceSpecification.schema.json\",  \n    ...\n}\n```\n\nHis comment was:\n> id should ideally be something like a UUID. TMF630 Guidelines 2.2. Resource Model and Naming provides:\n\"If the Id is a composite key then it should be split into the following elements: key = {part}-{part}*.\"\nThat your id contains slashes (/) is bound likely to trigger issues with implementations, even if it is technically legal.\n\nThe current StratoWeave implementation effectively uses the YANG path syntax for both these catalog entries as well as instance data identifiers, but that is not specified in the draft.\n\nThis leads to a number of questions:\n- Should the draft be prescriptive on the TMF ID format or is it left up to the implementations?\n- Are deterministic IDs such as the current YANG path desirable or is it preferable to allocate random IDs?\n  - It would implementations much more stateful, which is a downside? \n- Maximum interoperability with existing TMF implementations is highly desirable and worth compromising on some other factors for?",
       "createdAt": "2026-08-29T15:31:17Z",
-      "updatedAt": "2026-08-30T06:22:01Z",
+      "updatedAt": "2026-10-09T04:51:44Z",
       "closedAt": null,
       "comments": [
         {
@@ -71,6 +71,27 @@
           "body": "In all TM Forum Open APIs, as with all REST APIs, a POST operation on a _Collection_ does not provide the _Item_ identifier, it is the responsibility of the API producer managing the _Collection_ to assign the `id` and `href` values. The recommended format for `id` is a UUID ([RFC4122](https://datatracker.ietf.org/doc/html/rfc4122)).\n\nSee [TMF630](https://www.tmforum.org/resources/specifications/tmf630-rest-api-design-guidelines-4-2-0/) _REST API Design Guidelines_.\n\nSo no, the IETF draft should not prescribe a scheme for the value of `id` and `href`. If it is desirable to maintain a mapping back to the YANG the `name` property would be an appropriate property to use.\n",
           "createdAt": "2026-08-30T06:22:01Z",
           "updatedAt": "2026-08-30T06:22:01Z"
+        },
+        {
+          "author": "vances",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I [commented](https://github.com/klambrec/yang-tmf-mapping/commit/ee80478fd5adf07be3e87827fe58e5a393db285f#commitcomment-203980218) on commit [ee80478](https://github.com/klambrec/yang-tmf-mapping/commit/ee80478fd5adf07be3e87827fe58e5a393db285f) about the statement mapping `id` to `name` which is an error.  The mapping is `featuredId` -> `id` and `name` -> `name`.",
+          "createdAt": "2026-10-08T05:15:53Z",
+          "updatedAt": "2026-10-08T05:15:53Z"
+        },
+        {
+          "author": "klambrec",
+          "authorAssociation": "OWNER",
+          "body": "My fault, you already told me this and I even fixed the StratoWeave implementation but I did not put enough diligence in the draft statements in this area. \ud83e\udd26 Will re-read and fix latest tomorrow.",
+          "createdAt": "2026-10-08T07:25:23Z",
+          "updatedAt": "2026-10-08T07:25:23Z"
+        },
+        {
+          "author": "vances",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I have recommend using `name` to hold the YANG node path.\n\nThis is just simpler, and more backward compatible as `id` and `featuredId` were later additions. More importantly, `id` is meant to be something like a UUID, not used for any other purpose than as a key.\n\nI made the same comment about the JSON samples which use that form for the `id` of the outer _Service[Specification]_. While that is an implementation choice in _StratoWeave_, and not part of the IETF draft, it's worth noting that the pattern I suggest would be beneficial here:\n\nRather than this:\n```json\n\"id\": \"/l3vpn-svc/vpn-services/vpn-service\",\n\"href\": \"/tmf-api/serviceCatalogManagement/v4/serviceSpecification/%2Fl3vpn-svc%2Fvpn-services%2Fvpn-service\",\n\"name\": \"L3VPN VPN Service Service Specification\",\n\"description\": \"List of VPN services. Service Specification\",\n```\nI suggest the pattern should be this:\n```json\n\"id\": \"679807b1-c174-48a3-91be-97e5b2703c88\",\n\"href\": \"/tmf-api/serviceCatalogManagement/v4/serviceSpecification/679807b1-c174-48a3-91be-97e5b2703c88\",\n\"name\": \"/l3vpn-svc/vpn-services/vpn-service\",\n\"description\": \"L3VPN VPN Service Service Specification\",\n```\nThe YANG node path is found in `name`, the name from the node may be used as the value for `description`.\n\nWhen we put a _[Service|Resource]Specification_ into a regular _ODA Component_, such as a _Catalog_ or _Inventory_, you MAY NOT include `id` or `href` in a `POST`, so the YANG node path would be lost.\n\n**However**, managing the top level _[Service|Resource]Specification_ must be left to the implementors. The `id`, `href`, `name` and `description` properties may have to fit local policy and are prime targets for _bike-shedding_. Specification designers need the freedom to decompose _Specifications_ into composites, at whatever level they choose. When they do it is up to them to manage the composition with `serviceSpecRelationship` and that remains out of scope for the IETF draft.\n",
+          "createdAt": "2026-10-09T03:44:47Z",
+          "updatedAt": "2026-10-09T04:51:44Z"
         }
       ]
     },
