@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-10-11T00:27:05.930395+00:00",
+  "timestamp": "2026-10-13T00:26:04.677771+00:00",
   "repo": "klambrec/yang-tmf-mapping",
   "labels": [
     {
@@ -62,7 +62,7 @@
       "labels": [],
       "body": "@vances reviewed a sample dataset from the StratoWeave implementation of the draft which included:\n\n```json\n\n{\n    \"id\": \"/l3vpn-svc/vpn-services/vpn-service\",\n    \"href\": \"/tmf-api/serviceCatalogManagement/v4/serviceSpecification/%2Fl3vpn-svc%2Fvpn-services%2Fvpn-service\",\n    \"name\": \"L3VPN VPN Service Service Specification\",\n    \"description\": \"List of VPN services. Service Specification\",\n    \"@type\": \"CustomerFacingServiceSpecification\",\n    \"@baseType\": \"ServiceSpecification\",\n    \"@schemaLocation\": \"/tmf-api/schema/Service/CustomerFacingServiceSpecification.schema.json\",  \n    ...\n}\n```\n\nHis comment was:\n> id should ideally be something like a UUID. TMF630 Guidelines 2.2. Resource Model and Naming provides:\n\"If the Id is a composite key then it should be split into the following elements: key = {part}-{part}*.\"\nThat your id contains slashes (/) is bound likely to trigger issues with implementations, even if it is technically legal.\n\nThe current StratoWeave implementation effectively uses the YANG path syntax for both these catalog entries as well as instance data identifiers, but that is not specified in the draft.\n\nThis leads to a number of questions:\n- Should the draft be prescriptive on the TMF ID format or is it left up to the implementations?\n- Are deterministic IDs such as the current YANG path desirable or is it preferable to allocate random IDs?\n  - It would implementations much more stateful, which is a downside? \n- Maximum interoperability with existing TMF implementations is highly desirable and worth compromising on some other factors for?",
       "createdAt": "2026-08-29T15:31:17Z",
-      "updatedAt": "2026-10-09T04:51:44Z",
+      "updatedAt": "2026-10-12T07:34:01Z",
       "closedAt": null,
       "comments": [
         {
@@ -92,6 +92,13 @@
           "body": "I have recommend using `name` to hold the YANG node path.\n\nThis is just simpler, and more backward compatible as `id` and `featuredId` were later additions. More importantly, `id` is meant to be something like a UUID, not used for any other purpose than as a key.\n\nI made the same comment about the JSON samples which use that form for the `id` of the outer _Service[Specification]_. While that is an implementation choice in _StratoWeave_, and not part of the IETF draft, it's worth noting that the pattern I suggest would be beneficial here:\n\nRather than this:\n```json\n\"id\": \"/l3vpn-svc/vpn-services/vpn-service\",\n\"href\": \"/tmf-api/serviceCatalogManagement/v4/serviceSpecification/%2Fl3vpn-svc%2Fvpn-services%2Fvpn-service\",\n\"name\": \"L3VPN VPN Service Service Specification\",\n\"description\": \"List of VPN services. Service Specification\",\n```\nI suggest the pattern should be this:\n```json\n\"id\": \"679807b1-c174-48a3-91be-97e5b2703c88\",\n\"href\": \"/tmf-api/serviceCatalogManagement/v4/serviceSpecification/679807b1-c174-48a3-91be-97e5b2703c88\",\n\"name\": \"/l3vpn-svc/vpn-services/vpn-service\",\n\"description\": \"L3VPN VPN Service Service Specification\",\n```\nThe YANG node path is found in `name`, the name from the node may be used as the value for `description`.\n\nWhen we put a _[Service|Resource]Specification_ into a regular _ODA Component_, such as a _Catalog_ or _Inventory_, you MAY NOT include `id` or `href` in a `POST`, so the YANG node path would be lost.\n\n**However**, managing the top level _[Service|Resource]Specification_ must be left to the implementors. The `id`, `href`, `name` and `description` properties may have to fit local policy and are prime targets for _bike-shedding_. Specification designers need the freedom to decompose _Specifications_ into composites, at whatever level they choose. When they do it is up to them to manage the composition with `serviceSpecRelationship` and that remains out of scope for the IETF draft.\n",
           "createdAt": "2026-10-09T03:44:47Z",
           "updatedAt": "2026-10-09T04:51:44Z"
+        },
+        {
+          "author": "klambrec",
+          "authorAssociation": "OWNER",
+          "body": "Scrap the statement on this already being implemented, it isn't. I started moving things around in StratoWeave on a branch only to realize that UUID generation would require more thought. YANG datastores work with natural keys only, there is never a need to generate IDs, UUIDs or otherwise. There's a bunch of implications / scenarios I wanted to discuss with Kristian first. That has not yet happened.\n\nI have corrected the draft to only reference `name` for now.\n\nIn a next revision, we probably should write more sections on what you said above.",
+          "createdAt": "2026-10-12T07:34:01Z",
+          "updatedAt": "2026-10-12T07:34:01Z"
         }
       ]
     },
@@ -165,6 +172,30 @@
           "body": "For the purposes of the draft it makes sense to use `name` as the primary identifier for _Feature_.\nMy comment about implementation details may be dismissed as out of scope. ",
           "createdAt": "2026-08-31T07:24:52Z",
           "updatedAt": "2026-08-31T07:24:52Z"
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "id": "I_kwDORKFuu88AAAABWociCQ",
+      "title": "How to represent presence containers",
+      "url": "https://github.com/klambrec/yang-tmf-mapping/issues/11",
+      "state": "OPEN",
+      "author": "klambrec",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "@vances any suggestions on who to represent presence containers, both in the Catalog and in instance data?\nhttps://www.rfc-editor.org/info/rfc7950/#section-7.5.1\n\nContainers in general are mapped to Features:\n- In instance data, `isEnabled` seems to be a good equivalent, e.g. the Feature is enabled is a good approximation for the presence container existing\n- But is there a Catalog equivalent for communicating that a Feature instance existing in the data tree has (presence true)/ has no meaning (presence false)?\n",
+      "createdAt": "2026-10-12T12:31:55Z",
+      "updatedAt": "2026-10-12T16:34:15Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "vances",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I would just use a `boolean()` value with a default of `false`.\n\nFYI: TM Forum Open APIs do not use the JSON `null` value, at all, ever.",
+          "createdAt": "2026-10-12T16:33:43Z",
+          "updatedAt": "2026-10-12T16:34:15Z"
         }
       ]
     }
